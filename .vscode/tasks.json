@@ -1,0 +1,33 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "NMake build (debug)",
+            "type": "shell",
+            "group": "build",
+            "command": "nmake all",
+            "problemMatcher": []
+        },
+        {
+            "label": "NMake rebuild (debug)",
+            "type": "shell",
+            "command": "nmake rebuild",
+            "problemMatcher": []
+        },
+        {
+            "label": "NMake rebuild (release)",
+            "type": "shell",
+            "command": "nmake BUILDMODE=Release rebuild",
+            "problemMatcher": []
+        },
+        {
+            "label": "NMake clean",
+            "type": "shell",
+            "command": "nmake clean",
+            "problemMatcher": []
+        }
+    ]
+}

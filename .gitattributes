@@ -1,0 +1,10 @@
+* text=auto
+
+*.c text linguist-language=C
+*.h text linguist-language=C
+
+makefile text eol=crlf
+
+*.ico binary
+*.png binary
+*.xcf binary
