@@ -1,7 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-License-Identifier: CC0-1.0
+-->
+
 This file is part of µHashtools.
 µHashtools is a small graphical file hashing tool for Microsoft Windows.
 
-SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-FileCopyrightText: 2024 Marcel Gosmann \<thafiredragonofdeath@gmail.com\>  
 SPDX-License-Identifier: CC0-1.0
 
 # µHashtools
