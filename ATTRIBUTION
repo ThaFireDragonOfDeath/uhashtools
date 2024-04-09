@@ -1,24 +1,17 @@
-ATTRIBUTION NOTICE
-Copyright (C) 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+This file is part of µHashtools.
+µHashtools is a small graphical file hashing tool for Microsoft Windows.
 
-This file is licensed under the terms of the "Creative Commons CC0 1.0
-Universal" as published by the Creative Commons Corporation.
-You should have received a copy of the "Creative Commons CC0 1.0
-Universal" (see the file "LICENSE.CC0") along with this software.
-If not you can get the license text at
-"https://creativecommons.org/publicdomain/zero/1.0/legalcode".
+SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-License-Identifier: CC0-1.0
 
----------------------------------------------------------------------
+
+-ATTRIBUTION NOTICE--------------------------------------------------
 
 This software incorporates the following components:
 
 Creative Commons Attribution 4.0 International
 Author:             Creative Commons Corporation
 Source:             https://creativecommons.org/licenses/by/4.0/legalcode
-
-Creative Commons Attribution-NoDerivs 4.0 International
-Author:             Creative Commons Corporation
-Source:             https://creativecommons.org/licenses/by-nd/4.0/legalcode
 
 Creative Commons CC0 1.0 Universal
 Author:             Creative Commons Corporation
@@ -31,13 +24,6 @@ Copyright notice:   Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
                     Everyone is permitted to copy and distribute verbatim copies
                     of this license document, but changing it is not allowed.
 Source:             https://www.gnu.org/licenses/gpl-2.0
-
-GNU General Public License version 3
-Author:             Free Software Foundation Inc.
-Copyright notice:   Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
-                    Everyone is permitted to copy and distribute verbatim copies
-                    of this license document, but changing it is not allowed.
-Source:             https://www.gnu.org/licenses/gpl-3.0
 
 Microsoft Windows SDK
 Author:             Microsoft Corporation

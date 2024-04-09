@@ -1,89 +1,12 @@
-COPYRIGHT AND PERMISSION NOTICE
-Copyright (C) 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+This file is part of µHashtools.
+µHashtools is a small graphical file hashing tool for Microsoft Windows.
 
-Everyone is permitted to copy and distribute verbatim copies of this
-copyright and permission notice document, but changing it is not
-allowed.
+SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-License-Identifier: CC0-1.0
 
----------------------------------------------------------------------
 
-This software and it's source code (the file "makefile" and all
-"*.c", "*.h", "*.rc" files in the "src" directory) are licensed under
-the terms of the "GNU General Public License" as published by the
-Free Software Foundation either version 3, or (at your option) any
-later version.
-You should have received a copy of the "GNU General Public License"
-version 2 and version 3 (see the files "LICENSE.GPL-2" and
-"LICENSE.GPL-3") along with this software.
-If not you can get the license texts at
-"https://www.gnu.org/licenses/gpl-2.0.html" and
-"https://www.gnu.org/licenses/gpl-3.0.html".
+-COPYRIGHT AND PERMISSION NOTICE-------------------------------------
 
-All image files (all files in the "res/application_icon"
-directory and all *.ico files in the "src" directory) are licensed
-under the terms of the "Creative Commons Attribution 4.0
-International" as published by the Creative Commons Corporation.
-You should have received a copy of the "Creative Commons Attribution
-4.0 International" (see the file "LICENSE.CC-BY-4.0") along with
-this software.
-If not you can get the license text at
-"https://creativecommons.org/licenses/by/4.0/legalcode".
-
-All documentation files (the file "ATTRIBUTION" and the file
-"README.md" and all files in the  "developer_documentation" directory
-and it's sub directories and all files in the
-"res/user_documentation" directory and it's sub directories) are
-licensed under the terms of the "Creative Commons CC0 1.0 Universal"
-as published by the Creative Commons Corporation.
-You should have received a copy of the "Creative Commons CC0 1.0
-Universal" (see the file "LICENSE.CC0") along with this software.
-If not you can get the license text at
-"https://creativecommons.org/publicdomain/zero/1.0/legalcode".
-
-All Visual Studio Code setting files (all files in the ".vscode"
-directory and it's sub directories) are licensed under the terms
-of the "Creative Commons CC0 1.0 Universal" as published by the
-Creative Commons Corporation.
-You should have received a copy of the "Creative Commons CC0 1.0
-Universal" (see the file "LICENSE.CC0") along with this software.
-If not you can get the license text at
-"https://creativecommons.org/publicdomain/zero/1.0/legalcode".
-
-All Git configuration files (the files ".gitattributes" and
-.gitignore) are licensed under the terms of the "Creative Commons
-CC0 1.0 Universal" as published by the Creative Commons Corporation.
-You should have received a copy of the "Creative Commons CC0 1.0
-Universal" (see the file "LICENSE.CC0") along with this software.
-If not you can get the license text at
-"https://creativecommons.org/publicdomain/zero/1.0/legalcode".
-
-This software also incorporates components from 3rd parties.
-Those are documented in the "ATTRIBUTION" file.
-
----------------------------------------------------------------------
-
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: https://github.com/ThaFireDragonOfDeath/uhashtools
-Upstream-Name: uhashtools
-
-Files: makefile
-       src/*.c
-       src/*.h
-       src/*.rc
-Copyright: 2024, Marcel Gosmann <thafiredragonofdeath@gmail.com>
-License: GPL-2+
-
-Files: res/application_icon/*
-       src/*.ico
-Copyright: 2024, Marcel Gosmann <thafiredragonofdeath@gmail.com>
-License: CC-BY-4.0
-
-Files: ATTRIBUTION
-       README.md
-       developer_documentation/*
-       res/user_documentation/*
-       .vscode/*
-       .gitattributes
-       .gitignore
-Copyright: 2024, Marcel Gosmann <thafiredragonofdeath@gmail.com>
-License: CC0-1.0
+This software follows the REUSE Specification – Version 3.0 to
+declare the copyright and permission notices.
+You can get the REUSE specification at: https://reuse.software/spec

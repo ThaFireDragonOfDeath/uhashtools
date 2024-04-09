@@ -1,9 +1,11 @@
+This file is part of µHashtools.
+µHashtools is a small graphical file hashing tool for Microsoft Windows.
+
+SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-License-Identifier: CC0-1.0
+
+
 -Copyright and license notices---------------------------------------
-
-µHashtools - A small graphical file hashing tool for Microsoft Windows
-Copyright (C) 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
-
-This file is part of the user documentation of µHashtools.
 
 µHashtools is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,10 +18,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-(see "documentation/LICENSE.GPL-2.txt" and
-"documentation/LICENSE.GPL-3.txt") along with this µHashtools
-distribution.
-If not can get the license texts at <https://www.gnu.org/licenses/>.
+(see "documentation/LICENSE.GPL-2.0-or-later.txt" and along with this
+µHashtools distribution.
+If not can get the license text of the GNU General Public License
+version 2 and newer versions at "https://www.gnu.org/licenses/".
 
 The application logo is licensed under the terms of the "Creative
 Commons Attribution 4.0 International" as published by the Creative
@@ -29,26 +31,6 @@ You should have received a copy of the "Creative Commons Attribution
 along with this µHashtools distribution.
 If not you can get the license text at
 "https://creativecommons.org/licenses/by/4.0/legalcode".
-
-This documentation file itself is licensed under the terms of the
-"Creative Commons CC0 1.0 Universal" as published by the Creative
-Commons Corporation.
-You should have received a copy of the "Creative Commons CC0 1.0
-Universal" (see the file "documentation/LICENSE.CC0") along with this
-µHashtools distribution.
-If not you can get the license text at
-"https://creativecommons.org/publicdomain/zero/1.0/legalcode".
-
-µHashtools also incorporates components from 3rd parties.
-Those are documented in the "documentation/ATTRIBUTION.txt" file.
-This "ATTRIBUTION.txt" is licensed under the terms of the "Creative
-Commons CC0 1.0 Universal" as published by the Creative Commons
-Corporation.
-You should have received a copy of the "Creative Commons CC0 1.0
-Universal" (see the file "documentation/LICENSE.CC0") along with this
-µHashtools distribution.
-If not you can get the license text at
-"https://creativecommons.org/publicdomain/zero/1.0/legalcode".
 
 This copyright information is for documentation and attribution
 purposes and is required to be in conformity with the information
@@ -67,6 +49,7 @@ https://github.com/ThaFireDragonOfDeath/uhashtools
 
 
 -Basic Usage---------------------------------------------------------
+
 1.  Double click on the .exe file for the target hash algorithm
     ("usha256.exe" for SHA-256, "usha1.exe" for SHA-1 and "umd5.exe"
     for MD5).
@@ -79,5 +62,6 @@ https://github.com/ThaFireDragonOfDeath/uhashtools
 
 
 -Known Issues--------------------------------------------------------
+
 *  The visible value of the progress bar is a little behind the
    actual calculation progress.

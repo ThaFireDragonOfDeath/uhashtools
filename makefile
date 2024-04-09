@@ -1,20 +1,7 @@
-# µHashtools - A small graphical file hashing tool for Microsoft Windows
-# Copyright (C) 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
-# 
 # This file is part of µHashtools.
+# µHashtools is a small graphical file hashing tool for Microsoft Windows.
 # 
-# µHashtools is free software: you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation, either version 2 of the License, or (at your option) any later
-# version.
-# 
-# µHashtools is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along with
-# µHashtools. If not, see <https://www.gnu.org/licenses/>.
-#
+# SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 
@@ -249,10 +236,9 @@ UHASHTOOLS_DISTOUT_FILES        = $(DISTOUT_DIR)\$(USHA256_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\$(UMD5_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\README.txt \
                                   $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt \
-                                  $(DISTOUT_DOC_DIR)\LICENSE.CC0.txt \
+                                  $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt \
                                   $(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt \
-                                  $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.txt \
-                                  $(DISTOUT_DOC_DIR)\LICENSE.GPL-3.txt
+                                  $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt
 
 
 #
@@ -386,14 +372,11 @@ $(DISTOUT_DIR)\README.txt: $(DISTOUT_DIR) res\user_documentation\README.txt
 $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt: $(DISTOUT_DOC_DIR) ATTRIBUTION
     $(CP) ATTRIBUTION $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt
 
-$(DISTOUT_DOC_DIR)\LICENSE.CC0.txt: $(DISTOUT_DOC_DIR) LICENSE.CC0
-    $(CP) LICENSE.CC0 $(DISTOUT_DOC_DIR)\LICENSE.CC0.txt
+$(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt: $(DISTOUT_DOC_DIR) LICENSES\CC0-1.0.txt
+    $(CP) LICENSES\CC0-1.0.txt $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt
 
-$(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt: $(DISTOUT_DOC_DIR) LICENSE.CC-BY-4.0
-    $(CP) LICENSE.CC-BY-4.0 $(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt
+$(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt: $(DISTOUT_DOC_DIR) LICENSES\CC-BY-4.0.txt
+    $(CP) LICENSES\CC-BY-4.0.txt $(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt
 
-$(DISTOUT_DOC_DIR)\LICENSE.GPL-2.txt: $(DISTOUT_DOC_DIR) LICENSE.GPL-2
-    $(CP) LICENSE.GPL-2 $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.txt
-
-$(DISTOUT_DOC_DIR)\LICENSE.GPL-3.txt: $(DISTOUT_DOC_DIR) LICENSE.GPL-3
-    $(CP) LICENSE.GPL-3 $(DISTOUT_DOC_DIR)\LICENSE.GPL-3.txt
+$(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt: $(DISTOUT_DOC_DIR) LICENSES\GPL-2.0-or-later.txt
+    $(CP) LICENSES\GPL-2.0-or-later.txt $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt
