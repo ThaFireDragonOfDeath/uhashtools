@@ -17,8 +17,8 @@ HWND
 uhashtools_pb_calc_result_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
-    int right_anker_win_x
+    HWND parent_window,
+    int right_anchor_win_x
 );
 
 extern
@@ -27,7 +27,7 @@ uhashtools_pb_calc_result_on_parent_resize
 (
     HWND self,
     UINT mainwin_new_width,
-    int right_anker_win_x
+    int right_anchor_win_x
 );
 
 extern

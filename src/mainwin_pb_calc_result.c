@@ -25,9 +25,9 @@ const DWORD PB_CALC_RESULT_STYLE = WS_CHILD;
 const DWORD PB_CALC_RESULT_STYLE_EX = 0;
 const int PB_CALC_RESULT_HIGHT = PB_EB_DEFAULT_HIGHT;
 const int PB_CALC_RESULT_X = MW_FC_LBL_WIDTH + DEFAULT_DISTANCE * 2;
-static int dyn_PB_CALC_RESULT_WIDTH(int right_anker_element_x)
+static int dyn_PB_CALC_RESULT_WIDTH(int right_anchor_element_x)
 {
-    return right_anker_element_x - DEFAULT_DISTANCE - PB_CALC_RESULT_X;
+    return right_anchor_element_x - DEFAULT_DISTANCE - PB_CALC_RESULT_X;
 }
 static int dyn_PB_CALC_RESULT_Y(int main_win_hight)
 {
@@ -38,22 +38,22 @@ HWND
 uhashtools_pb_calc_result_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
-    int right_anker_win_x
+    HWND parent_window,
+    int right_anchor_win_x
 )
 {
     HWND ret = NULL;
-    int current_y = dyn_PB_CALC_RESULT_Y(uhashtools_gui_elm_get_height(parant_window));
-    int current_width = dyn_PB_CALC_RESULT_WIDTH(right_anker_win_x);
+    int current_y = dyn_PB_CALC_RESULT_Y(uhashtools_gui_elm_get_height(parent_window));
+    int current_width = dyn_PB_CALC_RESULT_WIDTH(right_anchor_win_x);
 
     ret = uhashtools_pb_create(app_instance,
-                            parant_window,
-                            PB_CALC_RESULT_STYLE,
-                            PB_CALC_RESULT_STYLE_EX,
-                            PB_CALC_RESULT_X,
-                            current_y,
-                            current_width,
-                            PB_CALC_RESULT_HIGHT);
+                               parent_window,
+                               PB_CALC_RESULT_STYLE,
+                               PB_CALC_RESULT_STYLE_EX,
+                               PB_CALC_RESULT_X,
+                               current_y,
+                               current_width,
+                               PB_CALC_RESULT_HIGHT);
 
     return ret;
 }
@@ -63,13 +63,13 @@ uhashtools_pb_calc_result_on_parent_resize
 (
     HWND self,
     UINT mainwin_new_width,
-    int right_anker_win_x
+    int right_anchor_win_x
 )
 {
     int current_width = 0;
     int current_y = 0;
 
-    current_width = dyn_PB_CALC_RESULT_WIDTH(right_anker_win_x);
+    current_width = dyn_PB_CALC_RESULT_WIDTH(right_anchor_win_x);
     current_y = dyn_PB_CALC_RESULT_Y(mainwin_new_width);
 
     uhashtools_gui_elm_resize(self, current_width, PB_CALC_RESULT_HIGHT);

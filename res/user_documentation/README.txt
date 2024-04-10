@@ -59,9 +59,3 @@ https://github.com/ThaFireDragonOfDeath/uhashtools
     label.
 5.  You can use the copy button right next to the calculated hash
     result to copy the calculated hash into the clipboard.
-
-
--Known Issues--------------------------------------------------------
-
-*  The visible value of the progress bar is a little behind the
-   actual calculation progress.
