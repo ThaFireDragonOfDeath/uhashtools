@@ -61,6 +61,9 @@ uhashtools_pb_set_progress
      * we first set the current progress to a slightly bigger value and
      * then immediately decrease it again to stop the animation and show
      * the accurate progress.
+     * 
+     * This is the C equivalent to the code from this reference:
+     * https://stackoverflow.com/a/10452817
      */
     if (progress_in_percent < 100)
     {
