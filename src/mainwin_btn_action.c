@@ -13,7 +13,7 @@
 #include "errorutils.h"
 #include "gui_btn_common.h"
 #include "gui_common.h"
-#include "mainwin.h"
+#include "mainwin_state_enum.h"
 
 const DWORD BTN_ACTION_STYLE = WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON | BS_ICON;
 const DWORD BTN_ACTION_STYLE_EX = 0;
@@ -33,6 +33,7 @@ static HICON dyn_BTN_ACTION_ICON(enum MainWindowState state)
             break;
         case MAINWINDOWSTATE_CANCELED:
         case MAINWINDOWSTATE_FINISHED_ERROR:
+        case MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED:
             ExtractIconExW(L"%SystemRoot%\\System32\\shell32.dll", 238, NULL, &ret, 1); /* Retry icon */
             break;
         default:
@@ -52,6 +53,7 @@ static BOOL dyn_BTN_ACTION_ENABLED(enum MainWindowState state)
         case MAINWINDOWSTATE_CANCELED:
         case MAINWINDOWSTATE_FINISHED_SUCCESS:
         case MAINWINDOWSTATE_FINISHED_ERROR:
+        case MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED:
             return TRUE;
 
         default:
@@ -63,24 +65,24 @@ HWND
 uhashtools_btn_action_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     enum MainWindowState mainwin_state
 )
 {
     HWND ret = NULL;
-    int current_x = dyn_BTN_ACTION_X(uhashtools_gui_elm_get_width(parant_window));
-    int current_y = dyn_BTN_ACTION_Y(uhashtools_gui_elm_get_height(parant_window));
+    int current_x = dyn_BTN_ACTION_X(uhashtools_gui_elm_get_width(parent_window));
+    int current_y = dyn_BTN_ACTION_Y(uhashtools_gui_elm_get_height(parent_window));
     HICON current_icon = dyn_BTN_ACTION_ICON(mainwin_state);
 
     ret = uhashtools_btn_create(app_instance,
-                             parant_window,
-                             BTN_ACTION_STYLE,
-                             BTN_ACTION_STYLE_EX,
-                             current_x,
-                             current_y,
-                             BTN_ACTION_WIDTH,
-                             BTN_ACTION_HIGHT,
-                             current_icon);
+                                parent_window,
+                                BTN_ACTION_STYLE,
+                                BTN_ACTION_STYLE_EX,
+                                current_x,
+                                current_y,
+                                BTN_ACTION_WIDTH,
+                                BTN_ACTION_HIGHT,
+                                current_icon);
 
     return ret;
 }

@@ -7,28 +7,6 @@
 {
     "explorer.excludeGitIgnore": true,
     "files.associations": {
-        "commctrl.h": "c",
-        "errorutils.h": "c",
-        "windows.h": "c",
-        "windows.ui.viewmanagement.h": "c",
-        "windowsx.h": "c",
-        "mainwin_lbl_selected_file.h": "c",
-        "mainwin_lbl_filedrop.h": "c"
-    },
-    "cSpell.words": [
-        "CLASSW",
-        "dropzone",
-        "Gosmann",
-        "Hashtools",
-        "HINSTANCE",
-        "HWND",
-        "LPARAM",
-        "mainwin",
-        "MAINWINDOWSTATE",
-        "MAKELPARAM",
-        "SETRANGE",
-        "uhashtools",
-        "usha",
-        "WPARAM"
-    ]
+        "*.h": "c"
+    }
 }

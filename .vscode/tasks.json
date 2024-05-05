@@ -26,7 +26,7 @@
         {
             "label": "NMake rebuild (release)",
             "type": "shell",
-            "command": "nmake BUILDMODE=Release rebuild",
+            "command": "nmake BUILD_MODE=Release rebuild",
             "problemMatcher": []
         },
         {

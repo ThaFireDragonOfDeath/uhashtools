@@ -10,14 +10,14 @@
 
 #include <Windows.h>
 
-#include "mainwin.h"
+#include "mainwin_state_enum.h"
 
 extern
 HWND
 uhashtools_btn_action_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     enum MainWindowState mainwin_state
 );
 

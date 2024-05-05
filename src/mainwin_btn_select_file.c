@@ -13,6 +13,7 @@
 #include "errorutils.h"
 #include "gui_btn_common.h"
 #include "gui_common.h"
+#include "mainwin_state_enum.h"
 
 
 /* Static GUI element properties */
@@ -83,7 +84,7 @@ HWND
 uhashtools_btn_select_file_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     int bottom_anker_y
 )
 {
@@ -92,19 +93,19 @@ uhashtools_btn_select_file_create
     int current_y = 0;
     HICON current_icon = NULL;
 
-    current_x = dyn_BTN_SELECT_FILE_X(uhashtools_gui_elm_get_width(parant_window));
+    current_x = dyn_BTN_SELECT_FILE_X(uhashtools_gui_elm_get_width(parent_window));
     current_y = dyn_BTN_SELECT_FILE_Y(bottom_anker_y);
     current_icon = dyn_BTN_SELECT_FILE_ICON();
 
     ret = uhashtools_btn_create(app_instance,
-                             parant_window,
-                             BTN_SELECT_FILE_STYLE,
-                             BTN_SELECT_FILE_STYLE_EX,
-                             current_x,
-                             current_y,
-                             BTN_SELECT_FILE_WIDTH,
-                             BTN_SELECT_FILE_HIGHT,
-                             current_icon);
+                                parent_window,
+                                BTN_SELECT_FILE_STYLE,
+                                BTN_SELECT_FILE_STYLE_EX,
+                                current_x,
+                                current_y,
+                                BTN_SELECT_FILE_WIDTH,
+                                BTN_SELECT_FILE_HIGHT,
+                                current_icon);
 
     return ret;
 }

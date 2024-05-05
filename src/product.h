@@ -12,28 +12,28 @@
 
 extern
 const wchar_t*
-uhashes_product_get_mainwin_classname
+uhashtools_product_get_mainwin_classname
 (
     void
 );
 
 extern
 const wchar_t*
-uhashes_product_get_mainwin_title
+uhashtools_product_get_mainwin_title
 (
     void
 );
 
 extern
 int
-uhashes_product_get_recommended_mainwin_width
+uhashtools_product_get_recommended_mainwin_width
 (
     void
 );
 
 extern
 const wchar_t*
-uhashes_product_get_bcrypt_algorithm_str
+uhashtools_product_get_bcrypt_algorithm_str
 (
     void
 );

@@ -14,6 +14,7 @@
 #include "errorutils.h"
 #include "gui_eb_common.h"
 #include "gui_common.h"
+#include "mainwin_state_enum.h"
 
 
 /* Static GUI element properties */
@@ -46,6 +47,7 @@ static wchar_t* dyn_EB_CURRENT_SELECTED_FILE_TXT(const enum MainWindowState main
         case MAINWINDOWSTATE_CANCELED:
         case MAINWINDOWSTATE_FINISHED_SUCCESS:
         case MAINWINDOWSTATE_FINISHED_ERROR:
+        case MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED:
         {
             UHASHTOOLS_ASSERT(current_target_file, L"Entered with current_target_file == NULL!");
             wcscpy_s(txt_buf, FILEPATH_BUFFER_TSIZE, current_target_file);

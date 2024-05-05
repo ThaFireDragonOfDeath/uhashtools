@@ -10,8 +10,6 @@
 
 #include <Windows.h>
 
-#include "mainwin.h"
-
 extern
 HWND
 uhashtools_lbl_selected_file_create

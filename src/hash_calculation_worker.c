@@ -300,38 +300,38 @@ uhashtools_hash_calculation_worker_thread_function
 
     uhashtools_thread_message_queue_init();
     uhashtools_send_worker_initialized_message(hash_calc_worker_param->event_message_receiver,
-                                            hash_calc_worker_param->event_message_buf,
-                                            hash_calc_worker_param->event_message_buf_is_writeable_event);
+                                               hash_calc_worker_param->event_message_buf,
+                                               hash_calc_worker_param->event_message_buf_is_writeable_event);
 
     calculation_result_code = uhashtools_hash_calculator_impl_hash_file(calculation_result_string,
-                                                                     calculation_result_string_tsize,
-                                                                     hash_calc_worker_param->target_file,
-                                                                     &uhashtools_check_is_cancel_requests_callback,
-                                                                     &received_thread_messages,
-                                                                     &uhashtools_on_progress_callback,
-                                                                     &event_message_target);
+                                                                        calculation_result_string_tsize,
+                                                                        hash_calc_worker_param->target_file,
+                                                                        &uhashtools_check_is_cancel_requests_callback,
+                                                                        &received_thread_messages,
+                                                                        &uhashtools_on_progress_callback,
+                                                                        &event_message_target);
 
     switch (calculation_result_code)
     {
         case HashCalculatorResultCode_SUCCESS:
         {
             uhashtools_send_calculation_complete_message(hash_calc_worker_param->event_message_receiver,
-                                                      hash_calc_worker_param->event_message_buf,
-                                                      hash_calc_worker_param->event_message_buf_is_writeable_event,
-                                                      calculation_result_string);
+                                                         hash_calc_worker_param->event_message_buf,
+                                                         hash_calc_worker_param->event_message_buf_is_writeable_event,
+                                                         calculation_result_string);
         } break;
         case HashCalculatorResultCode_CANCELED:
         {
             uhashtools_send_worker_canceled_message(hash_calc_worker_param->event_message_receiver,
-                                                 hash_calc_worker_param->event_message_buf,
-                                                 hash_calc_worker_param->event_message_buf_is_writeable_event);
+                                                    hash_calc_worker_param->event_message_buf,
+                                                    hash_calc_worker_param->event_message_buf_is_writeable_event);
         } break;
         case HashCalculatorResultCode_FAILED:
         {
             uhashtools_send_calculation_failed_message(hash_calc_worker_param->event_message_receiver,
-                                                    hash_calc_worker_param->event_message_buf,
-                                                    hash_calc_worker_param->event_message_buf_is_writeable_event,
-                                                    calculation_result_string);
+                                                       hash_calc_worker_param->event_message_buf,
+                                                       hash_calc_worker_param->event_message_buf_is_writeable_event,
+                                                       calculation_result_string);
         } break;
         default:
         {

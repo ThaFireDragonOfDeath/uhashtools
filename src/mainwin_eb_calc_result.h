@@ -10,14 +10,14 @@
 
 #include <Windows.h>
 
-#include "mainwin.h"
+#include "mainwin_state_enum.h"
 
 extern
 HWND
 uhashtools_eb_calc_result_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     int right_anker_win_x,
     enum MainWindowState mainwin_state,
     const wchar_t* current_hash_result,

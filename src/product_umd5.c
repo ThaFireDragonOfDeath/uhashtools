@@ -18,7 +18,7 @@ const int MAINWIN_RECOMMENDED_WIDTH = UHASHTOOLS_MAINWIN_RECOMMENDED_WIDTH;
 const wchar_t BCRYPT_HASH_ALGORITHM_NAME[] = UHASHTOOLS_BCRYPT_HASH_ALGORITHM_NAME;
 
 const wchar_t*
-uhashes_product_get_mainwin_classname
+uhashtools_product_get_mainwin_classname
 (
     void
 )
@@ -27,7 +27,7 @@ uhashes_product_get_mainwin_classname
 }
 
 const wchar_t*
-uhashes_product_get_mainwin_title
+uhashtools_product_get_mainwin_title
 (
     void
 )
@@ -36,7 +36,7 @@ uhashes_product_get_mainwin_title
 }
 
 int
-uhashes_product_get_recommended_mainwin_width
+uhashtools_product_get_recommended_mainwin_width
 (
     void
 )
@@ -45,7 +45,7 @@ uhashes_product_get_recommended_mainwin_width
 }
 
 const wchar_t*
-uhashes_product_get_bcrypt_algorithm_str
+uhashtools_product_get_bcrypt_algorithm_str
 (
     void
 )

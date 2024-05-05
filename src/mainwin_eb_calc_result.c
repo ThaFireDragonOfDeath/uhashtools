@@ -16,7 +16,7 @@
 #include "errorutils.h"
 #include "gui_common.h"
 #include "gui_eb_common.h"
-#include "mainwin.h"
+#include "mainwin_state_enum.h"
 
 const DWORD EB_CALC_RESULT_STYLE = WS_CHILD | WS_VISIBLE | ES_LEFT | ES_READONLY;
 const DWORD EB_CALC_RESULT_STYLE_EX = 0;
@@ -71,7 +71,7 @@ HWND
 uhashtools_eb_calc_result_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     int right_anker_win_x,
     enum MainWindowState mainwin_state,
     const wchar_t* current_hash_result,
@@ -83,19 +83,19 @@ uhashtools_eb_calc_result_create
     int current_width = 0;
     wchar_t* current_txt = NULL;
     
-    current_y = dyn_EB_CALC_RESULT_Y(uhashtools_gui_elm_get_height(parant_window));
+    current_y = dyn_EB_CALC_RESULT_Y(uhashtools_gui_elm_get_height(parent_window));
     current_width = dyn_EB_CALC_RESULT_WIDTH(right_anker_win_x);
     current_txt = dyn_EB_CALC_RESULT_TEXT(mainwin_state, current_hash_result, eb_calc_result_txt_buf);
 
     ret = uhashtools_eb_create(app_instance,
-                            parant_window,
-                            EB_CALC_RESULT_STYLE,
-                            EB_CALC_RESULT_STYLE_EX,
-                            EB_CALC_RESULT_X,
-                            current_y,
-                            current_width,
-                            EB_CALC_RESULT_HIGHT,
-                            current_txt);
+                               parent_window,
+                               EB_CALC_RESULT_STYLE,
+                               EB_CALC_RESULT_STYLE_EX,
+                               EB_CALC_RESULT_X,
+                               current_y,
+                               current_width,
+                               EB_CALC_RESULT_HIGHT,
+                               current_txt);
 
     return ret;
 }

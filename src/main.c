@@ -12,26 +12,34 @@
 #error This application must be compiled with the compiler option "/DUNICODE"!
 #endif 
 
-#include <Windows.h>
-
 #include "errorutils.h"
 #include "mainwin.h"
+#include "mainwin_ctx_struct.h"
 
-/* Debug */
+#include <Windows.h>
+
 
 /* Application global variables */
 
-static struct MainWindowCtx main_window_state;
+static struct MainWindowCtx global_main_window_state;
+
+
+/* Internal helper functions */
 
 static
 void
-uhashtools_main_static_init
+uhashtools_main_window_ctx_init
 (
-    void
+    struct MainWindowCtx* main_window_state
 )
 {
+    UHASHTOOLS_ASSERT(main_window_state, L"Internal error: Entered with NULL in uhashtools_main_window_ctx_init()!");
+
     SecureZeroMemory(&main_window_state, sizeof main_window_state);
 }
+
+
+/* Public functions */
 
 int
 WINAPI
@@ -47,8 +55,8 @@ wWinMain
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    uhashtools_main_static_init();
-    uhashtools_start_main_window(hInstance, nShowCmd, &main_window_state);
+    uhashtools_main_window_ctx_init(&global_main_window_state);
+    uhashtools_start_main_window(hInstance, nShowCmd, &global_main_window_state);
 
     return 0;
 }

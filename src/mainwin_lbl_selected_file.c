@@ -40,14 +40,14 @@ uhashtools_lbl_selected_file_create
     current_y = dyn_LBL_SELECTED_FILE_Y(bottom_anker_y);
 
     ret = uhashtools_lbl_create(app_instance,
-                             parent_window,
-                             LBL_SELECTED_FILE_STYLE,
-                             LBL_SELECTED_FILE_STYLE_EX,
-                             LBL_SELECTED_FILE_X,
-                             current_y,
-                             LBL_SELECTED_FILE_WIDTH,
-                             LBL_SELECTED_FILE_HIGHT,
-                             LBL_SELECTED_FILE_TXT);
+                                parent_window,
+                                LBL_SELECTED_FILE_STYLE,
+                                LBL_SELECTED_FILE_STYLE_EX,
+                                LBL_SELECTED_FILE_X,
+                                current_y,
+                                LBL_SELECTED_FILE_WIDTH,
+                                LBL_SELECTED_FILE_HIGHT,
+                                LBL_SELECTED_FILE_TXT);
     
     return ret;
 }

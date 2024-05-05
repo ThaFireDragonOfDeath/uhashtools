@@ -10,7 +10,7 @@
 
 #include "gui_common.h"
 #include "gui_lbl_common.h"
-#include "mainwin.h"
+#include "mainwin_state_enum.h"
 
 
 /* Static GUI element properties */

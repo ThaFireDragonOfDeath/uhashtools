@@ -24,22 +24,42 @@ MT      = mt
 #
 
 PRODUCT_NAME            = µHashtools
-PRODUCT_FILE_NAMEBASE   = uhashtools
+PRODUCT_FILE_NAME_BASE  = uhashtools
 PRODUCT_VERSION         = 0.1.1
 
 #
-# Setting the buildmode.
+# Set minimum Windows API version.
+# Some features of this application are only enabled on certain values.
+# 
+# The value of "MINIMUM_WIN32_API_VERSION" must be one of the following
+# values or higher:
+# 0x0600 - Requires Windows Vista and Windows SDK v6.0a or newer.
+#          This is the lowest supported value.
+# 0x0601 - Requires Windows 7 and Windows SDK v7.0 or newer.
+#          If "MINIMUM_WIN32_API_VERSION" is this value or higher, the
+#          taskbar icon progress bar feature will be enabled.
+#          This feature uses the "ITaskbarList3" COM interface which
+#          requires Windows 7 or newer.
+# 
+# The minimum required Microsoft Visual C++ compiler is unaffected by this
+# value and is at the moment always MSVC 9.0 (VS 2008).
 #
 
-!IF "$(BUILDMODE)" != "Release"
-BUILDMODE = Debug
+MINIMUM_WIN32_API_VERSION = 0x0601
+
+#
+# Setting the build mode.
+#
+
+!IF "$(BUILD_MODE)" != "Release"
+BUILD_MODE = Debug
 !Endif
 
 #
 # Setting artifacts output options.
 #
 
-# Setting the basenames
+# Setting the name bases
 UHASHTOOLS_COMMON_NAME_BASE                 = uhashtools_common
 USHA256_NAME_BASE                           = usha256
 USHA1_NAME_BASE                             = usha1
@@ -76,7 +96,7 @@ UMD5_BUILDOUT_PDB_FILE                      = $(BUILDOUT_BIN_DIR)\$(UMD5_NAME_BA
 
 # Setting the distribution output options.
 DISTOUT_BASE_DIR                            = dist_out
-DIST_TARGET_NAME                            = $(PRODUCT_FILE_NAMEBASE)_v$(PRODUCT_VERSION)
+DIST_TARGET_NAME                            = $(PRODUCT_FILE_NAME_BASE)_v$(PRODUCT_VERSION)
 DISTOUT_DIR                                 = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME)
 DISTOUT_DOC_DIR                             = $(DISTOUT_DIR)\documentation
 DISTOUT_SRC_PKG_DIR                         = $(DISTOUT_DIR)\source_code
@@ -88,11 +108,12 @@ SRC_DIST_TARGET_NAME                        = $(DIST_TARGET_NAME)_src
 # Setting compile options.
 #
 
-CFLAGS_COMMON               = /nologo /W4 /Zi /D_WIN32 /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /DUNICODE /D_UNICODE
+CFLAGS_COMMON               = /nologo /W4 /Zi /D_WIN32 /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /DUNICODE /D_UNICODE \
+                              /DWINVER=$(MINIMUM_WIN32_API_VERSION) /D_WIN32_WINNT=$(MINIMUM_WIN32_API_VERSION)
 CFLAGS_DEBUG                = /Od /MDd /D_CRTDBG_MAP_ALLOC
 CFLAGS_RELEASE              = /O2 /MD
 
-!IF "$(BUILDMODE)" == "Debug"
+!IF "$(BUILD_MODE)" == "Debug"
 CFLAGS                      = $(CFLAGS_COMMON) $(CFLAGS_DEBUG)
 !ELSE
 CFLAGS                      = $(CFLAGS_COMMON) $(CFLAGS_RELEASE)
@@ -109,11 +130,15 @@ CFLAGS_UMD5                 = $(CFLAGS) /Fo$(UMD5_BUILDOUT_OBJ_DIR)\ /Fd$(UMD5_B
 
 UHASHTOOLS_LINK_LIBRARIES   = Gdi32.lib shell32.lib User32.lib UxTheme.lib Comdlg32.lib Bcrypt.lib
 
+!IF $(MINIMUM_WIN32_API_VERSION) >= 0x0601
+UHASHTOOLS_LINK_LIBRARIES   = $(UHASHTOOLS_LINK_LIBRARIES) Ole32.lib
+!Endif
+
 LFLAGS_COMMON               = /nologo /DEBUG
 LFLAGS_DEBUG                = /INCREMENTAL
 LFLAGS_RELEASE              = /INCREMENTAL:NO
 
-!IF "$(BUILDMODE)" == "Debug"
+!IF "$(BUILD_MODE)" == "Debug"
 LFLAGS                      = $(LFLAGS_COMMON) $(LFLAGS_DEBUG)
 !ELSE
 LFLAGS                      = $(LFLAGS_COMMON) $(LFLAGS_RELEASE)
@@ -147,7 +172,10 @@ UHASHTOOLS_SOURCES_COMMON       = src\main.c \
                                   src\selectfiledialog.c \
                                   src\hash_calculation_worker.c \
                                   src\hash_calculation_impl.c \
-                                  src\clipboard_utils.c
+                                  src\clipboard_utils.c \
+                                  src\com_lib.c \
+                                  src\taskbar_icon_pb.c \
+                                  src\taskbarlist_com_api.c
 
 UHASHTOOLS_APP_ICON_COMMON      = res\application_icon\application_icon_64.ico
 UHASHTOOLS_RC_SOURCES_COMMON    = src\uhashtools_common.rc
@@ -187,7 +215,13 @@ UHASHTOOLS_HEADERS_COMMON       = src\product.h \
                                   src\selectfiledialog.h \
                                   src\hash_calculation_worker.h \
                                   src\hash_calculation_impl.h \
-                                  src\clipboard_utils.h
+                                  src\clipboard_utils.h \
+                                  src\com_lib.h \
+                                  src\taskbar_icon_pb.h \
+                                  src\taskbar_icon_pb_ctx.h \
+                                  src\taskbarlist_com_api.h \
+                                  src\mainwin_ctx_struct.h \
+                                  src\mainwin_state_enum.h
 
 USHA256_HEADERS                 = src\product_usha256.h
 USHA1_HEADERS                   = src\product_usha1.h
@@ -216,7 +250,10 @@ UHASHTOOLS_OBJECTS_COMMON       = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\main.obj
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\selectfiledialog.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_worker.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_impl.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\com_lib.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbar_icon_pb.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbarlist_com_api.obj
 
 USHA256_OBJECTS                 = $(USHA256_BUILDOUT_OBJ_DIR)\product_usha256.obj
 USHA256_RES_OBJECTS             = $(USHA256_BUILDOUT_OBJ_DIR)\usha256.res

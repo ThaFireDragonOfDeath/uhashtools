@@ -16,7 +16,7 @@
 #include "errorutils.h"
 #include "gui_lbl_common.h"
 #include "gui_common.h"
-#include "mainwin.h"
+#include "mainwin_state_enum.h"
 
 const wchar_t LBL_FILEDROP_TXT[] = L"File dropzone";
 
@@ -37,7 +37,7 @@ static int dyn_LBL_FILEDROP_HIGHT(int bottom_anker_element_y)
 
 static BOOL dyn_LBL_FILEDROP_IS_ENABLED(enum MainWindowState mainwin_state)
 {
-    UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_ERROR, L"Internal error: MainWindow state is invalid!");
+    UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED, L"Internal error: MainWindow state is invalid!");
     
     switch(mainwin_state)
     {
@@ -45,6 +45,7 @@ static BOOL dyn_LBL_FILEDROP_IS_ENABLED(enum MainWindowState mainwin_state)
         case MAINWINDOWSTATE_CANCELED:
         case MAINWINDOWSTATE_FINISHED_SUCCESS:
         case MAINWINDOWSTATE_FINISHED_ERROR:
+        case MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED:
         {
             return TRUE;
         }

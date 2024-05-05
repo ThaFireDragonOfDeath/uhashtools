@@ -10,7 +10,7 @@
 
 #include <Windows.h>
 
-/* Common ressource compiler definitions */
+/* Common resource compiler definitions */
 #define UHASHTOOLS_RC_FILEVERSION          0,1,1,1
 #define UHASHTOOLS_RC_FILEVERSION_STR      L"0.1.1.1\0"
 #define UHASHTOOLS_RC_FILEFLAGS            (VS_FF_PRERELEASE | VS_FF_DEBUG)

@@ -121,7 +121,7 @@ uhashtools_calculate_current_progress
         return 100u;
     }
 
-    /* Basic formular G / 100% = W/p -> W * 100 / G */
+    /* Basic formula G / 100% = W/p -> W * 100 / G */
     return (unsigned int) ((processed_bytes * 100u) / file_size);
 }
 
@@ -236,7 +236,7 @@ uhashtools_win_cng_hash_impl_prepare
     ret.is_ok = FALSE;
 
     open_algorithm_provider_rc = BCryptOpenAlgorithmProvider(&cng_algorithm_provider_handle,
-                                                             uhashes_product_get_bcrypt_algorithm_str(),
+                                                             uhashtools_product_get_bcrypt_algorithm_str(),
                                                              NULL,
                                                              0);
 
