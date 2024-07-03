@@ -9,37 +9,20 @@
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #ifndef UNICODE
-#error This application must be compiled with the compiler option "/DUNICODE"!
+    #error This application must be compiled with the compiler option "/DUNICODE" and "/D_UNICODE"!
+#endif 
+
+#ifndef _UNICODE
+    #error This application must be compiled with the compiler option "/DUNICODE" and "/D_UNICODE"!
 #endif 
 
 #include "errorutils.h"
 #include "mainwin.h"
-#include "mainwin_ctx_struct.h"
+#include "mainwin_ctx.h"
 
 #include <Windows.h>
 
-
-/* Application global variables */
-
 static struct MainWindowCtx global_main_window_state;
-
-
-/* Internal helper functions */
-
-static
-void
-uhashtools_main_window_ctx_init
-(
-    struct MainWindowCtx* main_window_state
-)
-{
-    UHASHTOOLS_ASSERT(main_window_state, L"Internal error: Entered with NULL in uhashtools_main_window_ctx_init()!");
-
-    SecureZeroMemory(&main_window_state, sizeof main_window_state);
-}
-
-
-/* Public functions */
 
 int
 WINAPI
@@ -55,7 +38,7 @@ wWinMain
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    uhashtools_main_window_ctx_init(&global_main_window_state);
+    uhashtools_mainwin_ctx_init(&global_main_window_state);
     uhashtools_start_main_window(hInstance, nShowCmd, &global_main_window_state);
 
     return 0;

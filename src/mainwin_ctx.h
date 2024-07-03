@@ -10,12 +10,12 @@
 
 #include "buffer_sizes.h"
 #include "hash_calculation_worker.h"
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 #if WINVER >= 0x0601
-#include "com_lib.h"
-#include "taskbar_icon_pb_ctx.h"
-#include "taskbarlist_com_api.h"
+    #include "com_lib.h"
+    #include "taskbar_icon_pb_ctx.h"
+    #include "taskbarlist_com_api.h"
 #endif
 
 #include <Windows.h>
@@ -26,15 +26,15 @@ struct MainWindowCtx
     HINSTANCE app_instance_handle;
     HWND own_window_handle;
 
-#if WINVER >= 0x0601
-    /* COM API */
-    struct ComLibState com_lib_state;
+    #if WINVER >= 0x0601
+        /* COM API */
+        struct ComLibState com_lib_state;
 
-    /* Taskbar progress view */
-    struct TaskbarListComApi taskbar_list_com_api;
-    struct TaskbarIconProgressBarCtx pb_taskbar_icon_ctx;
-    UINT wm_taskbar_button_created;
-#endif
+        /* Taskbar progress view */
+        struct TaskbarListComApi taskbar_list_com_api;
+        struct TaskbarIconProgressBarCtx pb_taskbar_icon_ctx;
+        UINT wm_taskbar_button_created;
+    #endif
 
     /* Window state data */
     enum MainWindowState own_state;
@@ -63,3 +63,19 @@ struct MainWindowCtx
     HWND pb_calc_result;
     HWND btn_action; /* Button for: Cancel operation, Copy result */
 };
+
+/**
+ * Initializes the context data with the initial default state.
+ * Since on every member of the MainWindowCtx structure the default
+ * state is zero this function will do effectively memset zero on
+ * the whole memory block. 
+ * 
+ * @param mainwin_ctx Allocated but uninitialized context data of
+ *                    the target mainwin instance.
+ */
+extern
+void
+uhashtools_mainwin_ctx_init
+(
+    struct MainWindowCtx* mainwin_ctx
+);

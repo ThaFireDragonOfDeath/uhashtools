@@ -11,7 +11,7 @@
 #include "taskbar_icon_pb.h"
 
 #include "errorutils.h"
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 #include <Shobjidl.h>
 

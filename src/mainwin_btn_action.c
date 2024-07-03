@@ -13,7 +13,7 @@
 #include "errorutils.h"
 #include "gui_btn_common.h"
 #include "gui_common.h"
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 const DWORD BTN_ACTION_STYLE = WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON | BS_ICON;
 const DWORD BTN_ACTION_STYLE_EX = 0;

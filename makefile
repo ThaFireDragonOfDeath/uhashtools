@@ -19,13 +19,15 @@ LD      = link
 MKDIR   = MD
 MT      = mt
 
+
 #
 # Setting the product metadata
 #
 
 PRODUCT_NAME            = µHashtools
 PRODUCT_FILE_NAME_BASE  = uhashtools
-PRODUCT_VERSION         = 0.1.1
+PRODUCT_VERSION         = 0.2.0
+
 
 #
 # Set minimum Windows API version.
@@ -47,6 +49,7 @@ PRODUCT_VERSION         = 0.1.1
 
 MINIMUM_WIN32_API_VERSION = 0x0601
 
+
 #
 # Setting the build mode.
 #
@@ -54,6 +57,7 @@ MINIMUM_WIN32_API_VERSION = 0x0601
 !IF "$(BUILD_MODE)" != "Release"
 BUILD_MODE = Debug
 !Endif
+
 
 #
 # Setting artifacts output options.
@@ -104,12 +108,14 @@ DISTOUT_SRC_PKG_DIR                         = $(DISTOUT_DIR)\source_code
 # Setting the source distribution output options.
 SRC_DIST_TARGET_NAME                        = $(DIST_TARGET_NAME)_src
 
+
 #
 # Setting compile options.
 #
 
-CFLAGS_COMMON               = /nologo /W4 /Zi /D_WIN32 /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /DUNICODE /D_UNICODE \
-                              /DWINVER=$(MINIMUM_WIN32_API_VERSION) /D_WIN32_WINNT=$(MINIMUM_WIN32_API_VERSION)
+CFLAGS_COMMON               = /nologo /W4 /we4013 /Zi /D_WIN32 /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS \
+                              /DUNICODE /D_UNICODE /DWINVER=$(MINIMUM_WIN32_API_VERSION) \
+                              /D_WIN32_WINNT=$(MINIMUM_WIN32_API_VERSION)
 CFLAGS_DEBUG                = /Od /MDd /D_CRTDBG_MAP_ALLOC
 CFLAGS_RELEASE              = /O2 /MD
 
@@ -123,6 +129,7 @@ CFLAGS_UHASHTOOLS_COMMON    = $(CFLAGS) /Fo$(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)
 CFLAGS_USHA256              = $(CFLAGS) /Fo$(USHA256_BUILDOUT_OBJ_DIR)\ /Fd$(USHA256_BUILDOUT_OBJ_PDB_FILE)
 CFLAGS_USHA1                = $(CFLAGS) /Fo$(USHA1_BUILDOUT_OBJ_DIR)\ /Fd$(USHA1_BUILDOUT_OBJ_PDB_FILE)
 CFLAGS_UMD5                 = $(CFLAGS) /Fo$(UMD5_BUILDOUT_OBJ_DIR)\ /Fd$(UMD5_BUILDOUT_OBJ_PDB_FILE)
+
 
 #
 # Setting linker options.
@@ -148,32 +155,36 @@ LFLAGS_USHA256              = $(LFLAGS) /MANIFESTFILE:$(USHA256_BUILDOUT_MANIFES
 LFLAGS_USHA1                = $(LFLAGS) /MANIFESTFILE:$(USHA1_BUILDOUT_MANIFEST_FILE) /PDB:$(USHA1_BUILDOUT_PDB_FILE) /OUT:$(USHA1_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE)
 LFLAGS_UMD5                 = $(LFLAGS) /MANIFESTFILE:$(UMD5_BUILDOUT_MANIFEST_FILE) /PDB:$(UMD5_BUILDOUT_PDB_FILE) /OUT:$(UMD5_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE)
 
+
 #
 # Setting the source files.
 # Updating a source file will cause an incremental compilation.
 #
 
-UHASHTOOLS_SOURCES_COMMON       = src\main.c \
+UHASHTOOLS_SOURCES_COMMON       = src\clipboard_utils.c \
+                                  src\com_lib.c \
                                   src\errorutils.c \
-                                  src\gui_common.c \
                                   src\gui_btn_common.c \
-                                  src\gui_pb_common.c \
+                                  src\gui_common.c \
                                   src\gui_eb_common.c \
                                   src\gui_lbl_common.c \
+                                  src\gui_pb_common.c \
+                                  src\hash_calculation_impl.c \
+                                  src\hash_calculation_worker.c \
+                                  src\main.c \
                                   src\mainwin.c \
+                                  src\mainwin_actions.c \
                                   src\mainwin_btn_action.c \
                                   src\mainwin_btn_select_file.c \
+                                  src\mainwin_ctx.c \
                                   src\mainwin_eb_calc_result.c \
-                                  src\mainwin_lbl_result_hash.c \
-                                  src\mainwin_pb_calc_result.c \
-                                  src\mainwin_lbl_selected_file.c \
                                   src\mainwin_eb_current_selected_file.c \
+                                  src\mainwin_event_handler.c \
                                   src\mainwin_lbl_filedrop.c \
+                                  src\mainwin_lbl_result_hash.c \
+                                  src\mainwin_lbl_selected_file.c \
+                                  src\mainwin_pb_calc_result.c \
                                   src\selectfiledialog.c \
-                                  src\hash_calculation_worker.c \
-                                  src\hash_calculation_impl.c \
-                                  src\clipboard_utils.c \
-                                  src\com_lib.c \
                                   src\taskbar_icon_pb.c \
                                   src\taskbarlist_com_api.c
 
@@ -189,69 +200,76 @@ USHA1_RC_SOURCES                = src\usha1.rc
 UMD5_SOURCES                    = src\product_umd5.c
 UMD5_RC_SOURCES                 = src\umd5.rc
 
+
 #
 # Setting the header files.
 # Updating a header file will cause a full recompilation.
 #
 
-UHASHTOOLS_HEADERS_COMMON       = src\product.h \
-                                  src\product_common.h \
-                                  src\buffer_sizes.h \
-                                  src\errorutils.h \
-                                  src\gui_common.h \
-                                  src\gui_btn_common.h \
-                                  src\gui_pb_common.h \
-                                  src\gui_eb_common.h \
-                                  src\gui_lbl_common.h \
-                                  src\mainwin.h \
-                                  src\mainwin_btn_action.h \
-                                  src\mainwin_btn_select_file.h \
-                                  src\mainwin_eb_calc_result.h \
-                                  src\mainwin_lbl_result_hash.h \
-                                  src\mainwin_pb_calc_result.h \
-                                  src\mainwin_lbl_selected_file.h \
-                                  src\mainwin_eb_current_selected_file.h \
-                                  src\mainwin_lbl_filedrop.h \
-                                  src\selectfiledialog.h \
-                                  src\hash_calculation_worker.h \
-                                  src\hash_calculation_impl.h \
+UHASHTOOLS_HEADERS_COMMON       = src\buffer_sizes.h \
                                   src\clipboard_utils.h \
                                   src\com_lib.h \
+                                  src\errorutils.h \
+                                  src\gui_btn_common.h \
+                                  src\gui_common.h \
+                                  src\gui_eb_common.h \
+                                  src\gui_lbl_common.h \
+                                  src\gui_pb_common.h \
+                                  src\hash_calculation_impl.h \
+                                  src\hash_calculation_worker.h \
+                                  src\mainwin.h \
+                                  src\mainwin_actions.h \
+                                  src\mainwin_btn_action.h \
+                                  src\mainwin_btn_select_file.h \
+                                  src\mainwin_ctx.h \
+                                  src\mainwin_eb_calc_result.h \
+                                  src\mainwin_eb_current_selected_file.h \
+                                  src\mainwin_event_handler.h \
+                                  src\mainwin_lbl_filedrop.h \
+                                  src\mainwin_lbl_result_hash.h \
+                                  src\mainwin_lbl_selected_file.h \
+                                  src\mainwin_pb_calc_result.h \
+                                  src\mainwin_state.h \
+                                  src\product.h \
+                                  src\product_common.h \
+                                  src\selectfiledialog.h \
                                   src\taskbar_icon_pb.h \
                                   src\taskbar_icon_pb_ctx.h \
-                                  src\taskbarlist_com_api.h \
-                                  src\mainwin_ctx_struct.h \
-                                  src\mainwin_state_enum.h
+                                  src\taskbarlist_com_api.h
 
 USHA256_HEADERS                 = src\product_usha256.h
 USHA1_HEADERS                   = src\product_usha1.h
 UMD5_HEADERS                    = src\product_umd5.h
 
+
 #
 # Setting the out obj files.
 #
 
-UHASHTOOLS_OBJECTS_COMMON       = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\main.obj \
+UHASHTOOLS_OBJECTS_COMMON       = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\com_lib.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\errorutils.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_common.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_btn_common.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_pb_common.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_common.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_eb_common.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_lbl_common.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_pb_common.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_impl.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_worker.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\main.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_actions.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_btn_action.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_btn_select_file.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_ctx.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_calc_result.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_result_hash.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_pb_calc_result.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_selected_file.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_current_selected_file.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_event_handler.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_filedrop.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_result_hash.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_selected_file.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_pb_calc_result.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\selectfiledialog.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_worker.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_impl.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\com_lib.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbar_icon_pb.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbarlist_com_api.obj
 
@@ -264,6 +282,7 @@ USHA1_RES_OBJECTS               = $(USHA1_BUILDOUT_OBJ_DIR)\usha1.res
 UMD5_OBJECTS                    = $(UMD5_BUILDOUT_OBJ_DIR)\product_umd5.obj
 UMD5_RES_OBJECTS                = $(UMD5_BUILDOUT_OBJ_DIR)\umd5.res
 
+
 #
 # Setting the distribution files.
 #
@@ -273,6 +292,7 @@ UHASHTOOLS_DISTOUT_FILES        = $(DISTOUT_DIR)\$(USHA256_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\$(UMD5_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\README.txt \
                                   $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt \
+                                  $(DISTOUT_DOC_DIR)\CHANGELOG.txt \
                                   $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt \
                                   $(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt \
                                   $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt
@@ -298,6 +318,7 @@ clean:
     -$(RMDIR) $(DISTOUT_BASE_DIR)
     -$(RM) src\application_icon.ico
 
+
 #
 # Definition of the preparation targets.
 #
@@ -319,6 +340,7 @@ $(BUILDOUT_BIN_DIR):
 
 src\application_icon.ico: $(UHASHTOOLS_APP_ICON_COMMON)
     $(CP) $(UHASHTOOLS_APP_ICON_COMMON) src\application_icon.ico
+
 
 #
 # Definition of the compilation targets.
@@ -356,6 +378,7 @@ $(UMD5_RES_OBJECTS): $(UHASHTOOLS_RC_SOURCES_COMMON) $(UMD5_RC_SOURCES) $(UMD5_H
 {src}.rc{$(UMD5_BUILDOUT_OBJ_DIR)}.res:
     $(RC) $(RCFLAGS) /fo $@ $<
 
+
 #
 # Definition of the linking targets.
 #
@@ -380,6 +403,7 @@ $(UMD5_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE) $(UMD5_BUILDOUT_PDB_FILE): $(BUILDOUT
 $(UMD5_BUILDOUT_EXE_FILE): $(UMD5_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE)
     $(CP) $(UMD5_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE) $(UMD5_BUILDOUT_EXE_FILE)
     $(MT) -nologo -manifest $(UMD5_BUILDOUT_MANIFEST_FILE) -outputresource:$(UMD5_BUILDOUT_EXE_FILE);1
+
 
 #
 # Definition of the distribution targets
@@ -408,6 +432,9 @@ $(DISTOUT_DIR)\README.txt: $(DISTOUT_DIR) res\user_documentation\README.txt
 
 $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt: $(DISTOUT_DOC_DIR) ATTRIBUTION
     $(CP) ATTRIBUTION $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt
+
+$(DISTOUT_DOC_DIR)\CHANGELOG.txt: $(DISTOUT_DOC_DIR) CHANGELOG
+    $(CP) CHANGELOG $(DISTOUT_DOC_DIR)\CHANGELOG.txt
 
 $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt: $(DISTOUT_DOC_DIR) LICENSES\CC0-1.0.txt
     $(CP) LICENSES\CC0-1.0.txt $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt

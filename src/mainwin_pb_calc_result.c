@@ -10,7 +10,7 @@
 
 #include "gui_common.h"
 #include "gui_pb_common.h"
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 static BOOL dyn_PB_CALC_RESULT_VISIBLE(enum MainWindowState state)
 {

@@ -1,0 +1,22 @@
+SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-License-Identifier: CC0-1.0
+
+Symbols:
+# = Comments
++ = New features or other additions
+* = Bugfixes, improvements or other modifications
+- = Removed features or other removals
+
+
+µHashtools 0.2.0 (not released yet):
++ Progress indicator within the taskbar icon (optional, activated by
+  default, requires Windows 7 or newer)
++ Changelog (this file)
++ Automated packaging of release builds (optional, requires Python 3)
+* Improved accuracy of the progress bar
+* Declared licenses according to "REUSE Specification – Version 3.0"
+* Improved code comments and developer documentation
+* Refactored the mainwin code
+
+µHashtools 0.1.0 (13.03.2024):
+# First public pre-release of this application

@@ -12,7 +12,7 @@
 
 #include <Windows.h>
 
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 #include "taskbar_icon_pb_ctx.h"
 #include "taskbarlist_com_api.h"
 

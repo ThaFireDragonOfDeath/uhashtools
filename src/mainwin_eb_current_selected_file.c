@@ -14,7 +14,7 @@
 #include "errorutils.h"
 #include "gui_eb_common.h"
 #include "gui_common.h"
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 
 /* Static GUI element properties */

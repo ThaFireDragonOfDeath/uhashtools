@@ -16,7 +16,7 @@
 #include "errorutils.h"
 #include "gui_common.h"
 #include "gui_eb_common.h"
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 const DWORD EB_CALC_RESULT_STYLE = WS_CHILD | WS_VISIBLE | ES_LEFT | ES_READONLY;
 const DWORD EB_CALC_RESULT_STYLE_EX = 0;

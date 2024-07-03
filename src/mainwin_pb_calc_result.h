@@ -10,7 +10,7 @@
 
 #include <Windows.h>
 
-#include "mainwin_state_enum.h"
+#include "mainwin_state.h"
 
 extern
 HWND

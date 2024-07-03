@@ -12,15 +12,7 @@
 
 static HWND message_boxes_owner = NULL;
 
-void
-uhashtools_set_message_boxes_owner
-(
-    HWND new_message_boxes_owner
-)
-{
-    message_boxes_owner = new_message_boxes_owner;
-}
-
+static
 void
 uhashtools_show_error_msg
 (
@@ -29,6 +21,15 @@ uhashtools_show_error_msg
 )
 {
     MessageBoxW(message_boxes_owner, error_txt, error_title, MB_ICONERROR);
+}
+
+void
+uhashtools_set_message_boxes_owner
+(
+    HWND new_message_boxes_owner
+)
+{
+    message_boxes_owner = new_message_boxes_owner;
 }
 
 void
