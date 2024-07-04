@@ -8,10 +8,10 @@
 
 #include "gui_btn_common.h"
 
+#include "errorutils.h"
+
 #include <CommCtrl.h>
 #include <Windows.h>
-
-#include "errorutils.h"
 
 HWND
 uhashtools_btn_create

@@ -15,7 +15,7 @@ HWND
 uhashtools_eb_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     DWORD style,
     DWORD style_ex,
     int x,

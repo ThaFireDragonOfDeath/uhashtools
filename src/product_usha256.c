@@ -8,9 +8,9 @@
 
 #include "product.h"
 
-#include <Windows.h>
-
 #include "product_usha256.h"
+
+#include <Windows.h>
 
 const wchar_t MAINWIN_CLASSNAME[] = UHASHTOOLS_MAINWIN_CLASSNAME;
 const wchar_t MAINWIN_TITLE[] = UHASHTOOLS_MAINWIN_TITLE;

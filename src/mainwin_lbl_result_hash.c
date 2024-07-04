@@ -12,7 +12,6 @@
 #include "gui_lbl_common.h"
 #include "mainwin_state.h"
 
-
 /* Static GUI element properties */
 
 const wchar_t LBL_RESULT_HASH_TXT[] = L"Result:   ";

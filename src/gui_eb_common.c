@@ -8,17 +8,17 @@
 
 #include "gui_eb_common.h"
 
+#include "errorutils.h"
+
 #include <CommCtrl.h>
 #include <Windows.h>
 #include <windowsx.h>
-
-#include "errorutils.h"
 
 HWND
 uhashtools_eb_create
 (
     HINSTANCE app_instance,
-    HWND parant_window,
+    HWND parent_window,
     DWORD style,
     DWORD style_ex,
     int x,
@@ -39,7 +39,7 @@ uhashtools_eb_create
                           y,
                           width,
                           height,
-                          parant_window,
+                          parent_window,
                           NULL,            /* Menu handle */
                           app_instance,
                           NULL);           /* LP param */

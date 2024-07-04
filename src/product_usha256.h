@@ -10,7 +10,7 @@
 
 #include <bcrypt.h>
 
-/* Product specific ressource compiler definitions */
+/* Product specific resource compiler definitions */
 #define UHASHTOOLS_RC_INTERNALNAME_STR L"usha256\0"
 #define UHASHTOOLS_RC_ORIGINALFILENAME_STR L"usha256.exe\0"
 #define UHASHTOOLS_RC_FILEDESCRIPTION_STR L"\x00b5SHA-256\0"

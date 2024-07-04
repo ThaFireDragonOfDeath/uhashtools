@@ -10,7 +10,7 @@
 
 #include "errorutils.h"
 
-#include <memory.h>
+#include <string.h>
 
 void
 uhashtools_mainwin_ctx_init
@@ -20,5 +20,5 @@ uhashtools_mainwin_ctx_init
 {
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error (invalid argument): Argument 'mainwin_ctx' is a null pointer!");
 
-    memset((void*) mainwin_ctx, 0, sizeof *mainwin_ctx);
+    (void) memset((void*) mainwin_ctx, 0, sizeof *mainwin_ctx);
 }

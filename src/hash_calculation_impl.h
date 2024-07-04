@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <Windows.h>
-
 #include "buffer_sizes.h"
+
+#include <Windows.h>
 
 typedef BOOL CheckIsCancelRequestedCallbackFunction(void* userdata);
 typedef void OnProgressCallbackFunction(unsigned int current_calculation_progress, void* userdata);

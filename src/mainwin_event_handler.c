@@ -29,7 +29,7 @@ uhashtools_mainwin_on_cancel_button_pressed
 {
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
     
-    uhashtools_hash_calculation_worker_request_cancelation(mainwin_ctx->worker_instance_data.thread_id);
+    uhashtools_hash_calculation_worker_request_cancellation(mainwin_ctx->worker_instance_data.thread_id);
 }
 
 void
@@ -154,7 +154,7 @@ uhashtools_mainwin_on_hash_calculation_worker_event_message_received
         {
             (void) wcscpy_s(mainwin_ctx->hash_result,
                             HASH_RESULT_BUFFER_TSIZE,
-                            event_message->event_data.opperation_finished_data.calculated_hash);
+                            event_message->event_data.operation_finished_data.calculated_hash);
 
             uhashtools_mainwin_change_state(mainwin_ctx,
                                             MAINWINDOWSTATE_FINISHED_SUCCESS);
@@ -163,7 +163,7 @@ uhashtools_mainwin_on_hash_calculation_worker_event_message_received
         {
             (void) wcscpy_s(mainwin_ctx->error_txt,
                             GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
-                            event_message->event_data.opperation_failed_data.user_error_message);
+                            event_message->event_data.operation_failed_data.user_error_message);
             
             uhashtools_mainwin_change_state(mainwin_ctx,
                                             MAINWINDOWSTATE_FINISHED_ERROR);

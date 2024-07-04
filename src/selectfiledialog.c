@@ -8,9 +8,11 @@
 
 #include "selectfiledialog.h"
 
+#include "errorutils.h"
+
 #include <Windows.h>
 
-#include "errorutils.h"
+#include <string.h>
 
 const wchar_t SELECT_FILE_DIALOG_TITLE[] = L"Select file";
 const DWORD SELECT_FILE_DIALOG_FLAGS = OFN_ENABLESIZING | OFN_DONTADDTORECENT | OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_LONGNAMES | OFN_PATHMUSTEXIST;
@@ -37,7 +39,7 @@ uhashtools_select_file_dialog_open
     UHASHTOOLS_ASSERT(dialog_owner_win != INVALID_HANDLE_VALUE, L"Entered with an invalid dialog owner handle!");
     UHASHTOOLS_ASSERT(target_file_buf, L"Entered with target_file_buf == NULL!");
 
-    SecureZeroMemory(&open_file_dlg_settings, sizeof open_file_dlg_settings);
+    (void) memset((void*) &open_file_dlg_settings, 0, sizeof open_file_dlg_settings);
 
     open_file_dlg_settings.lStructSize = sizeof open_file_dlg_settings;
     open_file_dlg_settings.hwndOwner = dialog_owner_win;

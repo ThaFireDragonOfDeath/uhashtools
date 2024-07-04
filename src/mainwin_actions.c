@@ -19,7 +19,7 @@
 #include "mainwin_pb_calc_result.h"
 #include "mainwin_lbl_selected_file.h"
 #include "mainwin_eb_current_selected_file.h"
-#include "mainwin_lbl_filedrop.h"
+#include "mainwin_lbl_file_drop.h"
 #include "selectfiledialog.h"
 
 #if _WIN32_WINNT >= 0x0601
@@ -55,15 +55,15 @@ uhashtools_mainwin_init_ui_controls
     mainwin_height = uhashtools_gui_elm_get_height(own_window_handle);
 
     mainwin_ctx->btn_action = uhashtools_btn_action_create(app_instance_handle,
-                                                        own_window_handle,
-                                                        own_state);
+                                                           own_window_handle,
+                                                           own_state);
 
     new_btn_action_x = uhashtools_gui_elm_get_x(mainwin_ctx->btn_action);
     new_btn_action_y = uhashtools_gui_elm_get_y(mainwin_ctx->btn_action);
     
     mainwin_ctx->pb_calc_result = uhashtools_pb_calc_result_create(app_instance_handle,
-                                                                own_window_handle,
-                                                                new_btn_action_x);
+                                                                   own_window_handle,
+                                                                   new_btn_action_x);
 
     mainwin_ctx->eb_calc_result = uhashtools_eb_calc_result_create(app_instance_handle,
                                                                 own_window_handle,
@@ -73,36 +73,36 @@ uhashtools_mainwin_init_ui_controls
                                                                 mainwin_ctx->eb_calc_result_txt_buf);
 
     mainwin_ctx->lbl_result_hash = uhashtools_lbl_result_hash_create(app_instance_handle,
-                                                                  own_window_handle,
-                                                                  own_state);
+                                                                     own_window_handle,
+                                                                     own_state);
     
     new_lbl_result_y = uhashtools_gui_elm_get_y(mainwin_ctx->lbl_result_hash);
 
     mainwin_ctx->btn_select_file = uhashtools_btn_select_file_create(app_instance_handle,
-                                                                  own_window_handle,
-                                                                  new_btn_action_y);
+                                                                     own_window_handle,
+                                                                     new_btn_action_y);
 
     new_btn_select_file_x = uhashtools_gui_elm_get_x(mainwin_ctx->btn_select_file);
     
     mainwin_ctx->lbl_selected_file = uhashtools_lbl_selected_file_create(app_instance_handle,
-                                                                      own_window_handle,
-                                                                      new_lbl_result_y);
+                                                                         own_window_handle,
+                                                                         new_lbl_result_y);
 
     mainwin_ctx->eb_current_selected_file = uhashtools_eb_current_selected_file_create(app_instance_handle,
-                                                                                    own_window_handle,
-                                                                                    mainwin_ctx->own_state,
-                                                                                    mainwin_ctx->target_file,
-                                                                                    mainwin_ctx->eb_current_selected_file_txt_buf,
-                                                                                    new_lbl_result_y,
-                                                                                    new_btn_select_file_x);
+                                                                                       own_window_handle,
+                                                                                       mainwin_ctx->own_state,
+                                                                                       mainwin_ctx->target_file,
+                                                                                       mainwin_ctx->eb_current_selected_file_txt_buf,
+                                                                                       new_lbl_result_y,
+                                                                                       new_btn_select_file_x);
     
     new_eb_current_selected_file_y = uhashtools_gui_elm_get_y(mainwin_ctx->eb_current_selected_file);
 
-    mainwin_ctx->lbl_filedrop = uhashtools_lbl_filedrop_create(app_instance_handle,
-                                                               own_window_handle,
-                                                               own_state,
-                                                               mainwin_width,
-                                                               new_eb_current_selected_file_y);
+    mainwin_ctx->lbl_file_drop = uhashtools_lbl_file_drop_create(app_instance_handle,
+                                                                 own_window_handle,
+                                                                 own_state,
+                                                                 mainwin_width,
+                                                                 new_eb_current_selected_file_y);
 }
 
 void
@@ -121,26 +121,44 @@ uhashtools_mainwin_resize_child_elements
 
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
 
-    uhashtools_btn_action_on_parent_resize(mainwin_ctx->btn_action, mainwin_new_width, mainwin_new_height);
+    uhashtools_btn_action_on_parent_resize(mainwin_ctx->btn_action,
+                                           mainwin_new_width,
+                                           mainwin_new_height);
+
     new_btn_action_x = uhashtools_gui_elm_get_x(mainwin_ctx->btn_action);
     new_btn_action_y = uhashtools_gui_elm_get_y(mainwin_ctx->btn_action);
 
-    uhashtools_pb_calc_result_on_parent_resize(mainwin_ctx->pb_calc_result, mainwin_new_height, new_btn_action_x);
-    uhashtools_eb_calc_result_on_parent_resize(mainwin_ctx->eb_calc_result, mainwin_new_height, new_btn_action_x);
-    uhashtools_lbl_result_hash_on_parent_resize(mainwin_ctx->lbl_result_hash, mainwin_new_height);
+    uhashtools_pb_calc_result_on_parent_resize(mainwin_ctx->pb_calc_result,
+                                               mainwin_new_height,
+                                               new_btn_action_x);
+
+    uhashtools_eb_calc_result_on_parent_resize(mainwin_ctx->eb_calc_result,
+                                               mainwin_new_height,
+                                               new_btn_action_x);
+
+    uhashtools_lbl_result_hash_on_parent_resize(mainwin_ctx->lbl_result_hash,
+                                                mainwin_new_height);
 
     new_lbl_result_y = uhashtools_gui_elm_get_y(mainwin_ctx->lbl_result_hash);
 
-    uhashtools_btn_select_file_on_parent_resize(mainwin_ctx->btn_select_file, mainwin_new_width, new_btn_action_y);
+    uhashtools_btn_select_file_on_parent_resize(mainwin_ctx->btn_select_file,
+                                                mainwin_new_width,
+                                                new_btn_action_y);
 
     new_btn_select_file_x = uhashtools_gui_elm_get_x(mainwin_ctx->btn_select_file);
 
-    uhashtools_lbl_selected_file_on_parent_resize(mainwin_ctx->lbl_selected_file, new_lbl_result_y);
-    uhashtools_eb_current_selected_file_on_parent_resize(mainwin_ctx->eb_current_selected_file, new_lbl_result_y, new_btn_select_file_x);
+    uhashtools_lbl_selected_file_on_parent_resize(mainwin_ctx->lbl_selected_file,
+                                                  new_lbl_result_y);
+
+    uhashtools_eb_current_selected_file_on_parent_resize(mainwin_ctx->eb_current_selected_file,
+                                                         new_lbl_result_y,
+                                                         new_btn_select_file_x);
 
     new_eb_current_selected_file_y = uhashtools_gui_elm_get_y(mainwin_ctx->eb_current_selected_file);
 
-    uhashtools_lbl_filedrop_on_parent_resize(mainwin_ctx->lbl_filedrop, mainwin_new_width, new_eb_current_selected_file_y);
+    uhashtools_lbl_file_drop_on_parent_resize(mainwin_ctx->lbl_file_drop,
+                                              mainwin_new_width,
+                                              new_eb_current_selected_file_y);
 }
 
 void
@@ -176,8 +194,8 @@ uhashtools_mainwin_change_state
                                                          mainwin_ctx->target_file,
                                                          mainwin_ctx->eb_current_selected_file_txt_buf);
     
-    uhashtools_lbl_filedrop_on_state_changed(mainwin_ctx->lbl_filedrop,
-                                             new_mainwin_state);
+    uhashtools_lbl_file_drop_on_state_changed(mainwin_ctx->lbl_file_drop,
+                                              new_mainwin_state);
 
 #if _WIN32_WINNT >= 0x0601
     uhashtools_taskbar_icon_progress_bar_on_state_changed(&mainwin_ctx->pb_taskbar_icon_ctx,
@@ -265,7 +283,7 @@ uhashtools_mainwin_hash_selected_file
                                                                               mainwin_ctx->own_window_handle,
                                                                               mainwin_ctx->target_file);
     
-    if (!mainwin_ctx->worker_instance_data.created_sucessfully)
+    if (!mainwin_ctx->worker_instance_data.created_successfully)
     {
         (void) wprintf_s(L"[ERROR] Failed to create hash calculation worker thread!\n");
         (void) fflush(stdout);

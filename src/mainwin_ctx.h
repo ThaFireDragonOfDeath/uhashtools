@@ -52,7 +52,7 @@ struct MainWindowCtx
     wchar_t select_file_dlg_buf[FILEPATH_BUFFER_TSIZE];
 
     /* GUI elements */
-    HWND lbl_filedrop;
+    HWND lbl_file_drop;
     HWND lbl_selected_file;
     HWND eb_current_selected_file;
     wchar_t eb_current_selected_file_txt_buf[FILEPATH_BUFFER_TSIZE];

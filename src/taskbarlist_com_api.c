@@ -17,6 +17,8 @@
 #include <Shobjidl.h>
 #include <Windows.h>
 
+#include <string.h>
+
 static
 TBPFLAG
 uhashtools_taskbar_progress_flags_from_pvm
@@ -60,7 +62,7 @@ uhashtools_taskbar_list_com_api_init
         return FALSE;
     }
 
-    SecureZeroMemory(taskbar_list_com_api, sizeof *taskbar_list_com_api);
+    (void) memset((void*) taskbar_list_com_api, 0, sizeof *taskbar_list_com_api);
     taskbar_list_com_api->main_window_handle = main_window_handle;
     taskbar_list_com_api->taskbar_list_v3_instance = new_taskbar_list_v3_instance;
     

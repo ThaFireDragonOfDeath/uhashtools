@@ -180,7 +180,7 @@ UHASHTOOLS_SOURCES_COMMON       = src\clipboard_utils.c \
                                   src\mainwin_eb_calc_result.c \
                                   src\mainwin_eb_current_selected_file.c \
                                   src\mainwin_event_handler.c \
-                                  src\mainwin_lbl_filedrop.c \
+                                  src\mainwin_lbl_file_drop.c \
                                   src\mainwin_lbl_result_hash.c \
                                   src\mainwin_lbl_selected_file.c \
                                   src\mainwin_pb_calc_result.c \
@@ -225,7 +225,7 @@ UHASHTOOLS_HEADERS_COMMON       = src\buffer_sizes.h \
                                   src\mainwin_eb_calc_result.h \
                                   src\mainwin_eb_current_selected_file.h \
                                   src\mainwin_event_handler.h \
-                                  src\mainwin_lbl_filedrop.h \
+                                  src\mainwin_lbl_file_drop.h \
                                   src\mainwin_lbl_result_hash.h \
                                   src\mainwin_lbl_selected_file.h \
                                   src\mainwin_pb_calc_result.h \
@@ -265,7 +265,7 @@ UHASHTOOLS_OBJECTS_COMMON       = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboar
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_calc_result.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_current_selected_file.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_event_handler.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_filedrop.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_file_drop.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_result_hash.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_selected_file.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_pb_calc_result.obj \

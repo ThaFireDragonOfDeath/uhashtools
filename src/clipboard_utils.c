@@ -8,11 +8,11 @@
 
 #include "clipboard_utils.h"
 
-#include <stdio.h>
+#include "errorutils.h"
 
 #include <Windows.h>
 
-#include "errorutils.h"
+#include <stdio.h>
 
 void
 uhashtools_clipboard_utils_set_clipboard_text

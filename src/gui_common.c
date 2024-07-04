@@ -8,9 +8,9 @@
 
 #include "gui_common.h"
 
-#include <Windows.h>
-
 #include "errorutils.h"
+
+#include <Windows.h>
 
 static
 RECT

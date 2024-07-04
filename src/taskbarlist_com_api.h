@@ -10,10 +10,10 @@
 
 #if WINVER >= 0x0601
 
+#include "com_lib.h"
+
 #include <Shobjidl.h>
 #include <Windows.h>
-
-#include "com_lib.h"
 
 enum ProgressViewMode
 {

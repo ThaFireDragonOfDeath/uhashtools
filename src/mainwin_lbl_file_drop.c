@@ -6,11 +6,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#include "mainwin_lbl_filedrop.h"
-
-#include <wchar.h>
-
-#include <Windows.h>
+#include "mainwin_lbl_file_drop.h"
 
 #include "buffer_sizes.h"
 #include "errorutils.h"
@@ -18,24 +14,27 @@
 #include "gui_common.h"
 #include "mainwin_state.h"
 
-const wchar_t LBL_FILEDROP_TXT[] = L"File dropzone";
+#include <wchar.h>
+#include <Windows.h>
 
-const DWORD LBL_FILEDROP_STYLE = WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER | SS_CENTERIMAGE;
-const DWORD LBL_FILEDROP_STYLE_EX = WS_EX_ACCEPTFILES;
-const int LBL_FILEDROP_X = DEFAULT_DISTANCE;
-const int LBL_FILEDROP_Y = DEFAULT_DISTANCE;
+const wchar_t LBL_FILE_DROP_TXT[] = L"File drop zone";
 
-static int dyn_LBL_FILEDROP_WIDTH(int parent_width)
+const DWORD LBL_FILE_DROP_STYLE = WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER | SS_CENTERIMAGE;
+const DWORD LBL_FILE_DROP_STYLE_EX = WS_EX_ACCEPTFILES;
+const int LBL_FILE_DROP_X = DEFAULT_DISTANCE;
+const int LBL_FILE_DROP_Y = DEFAULT_DISTANCE;
+
+static int dyn_LBL_FILE_DROP_WIDTH(int parent_width)
 {
-    return parent_width - LBL_FILEDROP_X - DEFAULT_DISTANCE;
+    return parent_width - LBL_FILE_DROP_X - DEFAULT_DISTANCE;
 }
 
-static int dyn_LBL_FILEDROP_HIGHT(int bottom_anker_element_y)
+static int dyn_LBL_FILE_DROP_HIGHT(int bottom_anchor_element_y)
 {
-    return bottom_anker_element_y - LBL_FILEDROP_Y - DEFAULT_DISTANCE - LBL_EXTRA_Y_DISTANCE_TO_OTHER_EB;
+    return bottom_anchor_element_y - LBL_FILE_DROP_Y - DEFAULT_DISTANCE - LBL_EXTRA_Y_DISTANCE_TO_OTHER_EB;
 }
 
-static BOOL dyn_LBL_FILEDROP_IS_ENABLED(enum MainWindowState mainwin_state)
+static BOOL dyn_LBL_FILE_DROP_IS_ENABLED(enum MainWindowState mainwin_state)
 {
     UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED, L"Internal error: MainWindow state is invalid!");
     
@@ -58,7 +57,7 @@ static BOOL dyn_LBL_FILEDROP_IS_ENABLED(enum MainWindowState mainwin_state)
 
 static
 LRESULT
-CALLBACK uhashtools_lbl_filedrop_winproc
+CALLBACK uhashtools_lbl_file_drop_winproc
 (
     HWND hwnd,
     UINT uMsg,
@@ -81,13 +80,13 @@ CALLBACK uhashtools_lbl_filedrop_winproc
 }
 
 HWND
-uhashtools_lbl_filedrop_create
+uhashtools_lbl_file_drop_create
 (
     HINSTANCE app_instance,
     HWND parent_window,
     enum MainWindowState mainwin_state,
     int parent_width,
-    int bottom_anker_y
+    int bottom_anchor_y
 )
 {
     HWND ret = NULL;
@@ -96,20 +95,20 @@ uhashtools_lbl_filedrop_create
     LONG_PTR default_win_proc = 0;
 
     UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_SUCCESS,
-                   L"Internal error: Entered with unexpected main window state in uhashtools_lbl_filedrop_create()!");
+                   L"Internal error: Entered with unexpected main window state in uhashtools_lbl_file_drop_create()!");
 
-    current_width = dyn_LBL_FILEDROP_WIDTH(parent_width);
-    current_hight = dyn_LBL_FILEDROP_HIGHT(bottom_anker_y);
+    current_width = dyn_LBL_FILE_DROP_WIDTH(parent_width);
+    current_hight = dyn_LBL_FILE_DROP_HIGHT(bottom_anchor_y);
 
     ret = uhashtools_lbl_create(app_instance,
                              parent_window,
-                             LBL_FILEDROP_STYLE,
-                             LBL_FILEDROP_STYLE_EX,
-                             LBL_FILEDROP_X,
-                             LBL_FILEDROP_Y,
+                             LBL_FILE_DROP_STYLE,
+                             LBL_FILE_DROP_STYLE_EX,
+                             LBL_FILE_DROP_X,
+                             LBL_FILE_DROP_Y,
                              current_width,
                              current_hight,
-                             LBL_FILEDROP_TXT);
+                             LBL_FILE_DROP_TXT);
 
     default_win_proc = GetWindowLongPtr(ret, GWLP_WNDPROC);
     SetWindowLongPtr(ret, GWLP_USERDATA, default_win_proc);
@@ -120,30 +119,30 @@ uhashtools_lbl_filedrop_create
     ChangeWindowMessageFilterEx(ret, WM_COPYGLOBALDATA, MSGFLT_ALLOW, NULL);
 #endif
 
-    SetWindowLongPtr(ret, GWLP_WNDPROC, (LONG_PTR) uhashtools_lbl_filedrop_winproc);
+    SetWindowLongPtr(ret, GWLP_WNDPROC, (LONG_PTR) uhashtools_lbl_file_drop_winproc);
     
     return ret;
 }
 
 void
-uhashtools_lbl_filedrop_on_parent_resize
+uhashtools_lbl_file_drop_on_parent_resize
 (
     HWND self,
     int parent_width,
-    int bottom_anker_y
+    int bottom_anchor_y
 )
 {
     int current_width = 0;
     int current_hight = 0;
 
-    current_width = dyn_LBL_FILEDROP_WIDTH(parent_width);
-    current_hight = dyn_LBL_FILEDROP_HIGHT(bottom_anker_y);
+    current_width = dyn_LBL_FILE_DROP_WIDTH(parent_width);
+    current_hight = dyn_LBL_FILE_DROP_HIGHT(bottom_anchor_y);
 
     uhashtools_gui_elm_resize(self, current_width, current_hight);
 }
 
 void
-uhashtools_lbl_filedrop_on_state_changed
+uhashtools_lbl_file_drop_on_state_changed
 (
     HWND self,
     enum MainWindowState mainwin_state
@@ -151,7 +150,7 @@ uhashtools_lbl_filedrop_on_state_changed
 {
     BOOL current_is_enabled = FALSE;
     
-    current_is_enabled = dyn_LBL_FILEDROP_IS_ENABLED(mainwin_state);
+    current_is_enabled = dyn_LBL_FILE_DROP_IS_ENABLED(mainwin_state);
     
     uhashtools_gui_elm_set_enabled(self, current_is_enabled);
 }

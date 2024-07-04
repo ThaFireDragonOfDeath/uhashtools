@@ -8,10 +8,10 @@
 
 #include "gui_pb_common.h"
 
+#include "errorutils.h"
+
 #include <CommCtrl.h>
 #include <Windows.h>
-
-#include "errorutils.h"
 
 HWND
 uhashtools_pb_create

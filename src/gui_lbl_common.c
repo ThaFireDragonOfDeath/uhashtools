@@ -8,9 +8,9 @@
 
 #include "gui_lbl_common.h"
 
-#include <Windows.h>
-
 #include "errorutils.h"
+
+#include <Windows.h>
 
 HWND
 uhashtools_lbl_create

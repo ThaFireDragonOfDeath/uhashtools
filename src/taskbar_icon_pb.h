@@ -10,11 +10,11 @@
 
 #if WINVER >= 0x0601
 
-#include <Windows.h>
-
 #include "mainwin_state.h"
 #include "taskbar_icon_pb_ctx.h"
 #include "taskbarlist_com_api.h"
+
+#include <Windows.h>
 
 /**
  * Event reactor function to react on a change of the general

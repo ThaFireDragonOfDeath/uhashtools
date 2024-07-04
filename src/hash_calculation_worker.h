@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <Windows.h>
-
 #include "buffer_sizes.h"
+
+#include <Windows.h>
 
 enum HashCalculationWorkerEventType
 {
@@ -42,8 +42,8 @@ struct HashCalculationWorkerEventMessage
     union HashCalculationWorkerEventData
     {
         struct HashCalculationWorkerProgressChangedEventData progress_changed_data;
-        struct HashCalculationWorkerCompletedEventData opperation_finished_data;
-        struct HashCalculationWorkerFailedEventData opperation_failed_data;
+        struct HashCalculationWorkerCompletedEventData operation_finished_data;
+        struct HashCalculationWorkerFailedEventData operation_failed_data;
     } event_data;
     
 };
@@ -58,7 +58,7 @@ struct HashCalculationWorkerParam
 
 struct HashCalculationWorkerInstanceData
 {
-    BOOL created_sucessfully;
+    BOOL created_successfully;
     HANDLE thread_handle;
     DWORD thread_id;
 };
@@ -76,7 +76,7 @@ uhashtools_hash_calculation_worker_start
 
 extern
 BOOL
-uhashtools_hash_calculation_worker_request_cancelation
+uhashtools_hash_calculation_worker_request_cancellation
 (
     DWORD worker_thread_id
 );

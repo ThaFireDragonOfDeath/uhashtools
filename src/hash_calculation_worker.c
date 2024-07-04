@@ -8,13 +8,14 @@
 
 #include "hash_calculation_worker.h"
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "errorutils.h"
+#include "hash_calculation_impl.h"
 
 #include <process.h>
 
-#include "errorutils.h"
-#include "hash_calculation_impl.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 #define FILE_READ_BUF_SIZE 1024 * 512
 #define STATUS_SUCCESS ((NTSTATUS)0x00000000L)
@@ -68,7 +69,7 @@ uhashtools_send_worker_initialized_message
 {
     struct HashCalculationWorkerEventMessage event_message;
 
-    SecureZeroMemory(&event_message, sizeof event_message);
+    (void) memset((void*) &event_message, 0, sizeof event_message);
 
     (void) wprintf_s(L"[DEBUG] Sending worker initialized message.\n");
     (void) fflush(stdout);
@@ -92,7 +93,7 @@ uhashtools_send_worker_canceled_message
 {
     struct HashCalculationWorkerEventMessage event_message;
 
-    SecureZeroMemory(&event_message, sizeof event_message);
+    (void) memset((void*) &event_message, 0, sizeof event_message);
 
     (void) wprintf_s(L"[DEBUG] Sending calculation canceled message.\n");
     (void) fflush(stdout);
@@ -117,13 +118,13 @@ uhashtools_send_calculation_complete_message
 {
     struct HashCalculationWorkerEventMessage event_message;
 
-    SecureZeroMemory(&event_message, sizeof event_message);
+    (void) memset((void*) &event_message, 0, sizeof event_message);
 
     (void) wprintf_s(L"[DEBUG] Sending calculated complete message with content \"%s\".\n", calculated_hash);
     (void) fflush(stdout);
 
     event_message.event_type = HCWET_CALCULATION_COMPLETE;
-    (void) wcscpy_s(event_message.event_data.opperation_finished_data.calculated_hash,
+    (void) wcscpy_s(event_message.event_data.operation_finished_data.calculated_hash,
                     HASH_RESULT_BUFFER_TSIZE,
                     calculated_hash);
 
@@ -145,13 +146,13 @@ uhashtools_send_calculation_failed_message
 {
     struct HashCalculationWorkerEventMessage event_message;
 
-    SecureZeroMemory(&event_message, sizeof event_message);
+    (void) memset((void*) &event_message, 0, sizeof event_message);
 
     (void) wprintf_s(L"[DEBUG] Sending calculated failed message with content \"%s\".\n", user_error_message);
     (void) fflush(stdout);
 
     event_message.event_type = HCWET_CALCULATION_FAILED;
-    (void) wcscpy_s(event_message.event_data.opperation_failed_data.user_error_message,
+    (void) wcscpy_s(event_message.event_data.operation_failed_data.user_error_message,
                     GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
                     user_error_message);
 
@@ -173,7 +174,7 @@ uhashtools_send_calculation_progress_message
 {
     struct HashCalculationWorkerEventMessage event_message;
 
-    SecureZeroMemory(&event_message, sizeof event_message);
+    (void) memset((void*) &event_message, 0, sizeof event_message);
 
     (void) wprintf_s(L"[DEBUG] Sending calculated progress message with content \"%u\".\n", current_calculation_progress);
     (void) fflush(stdout);
@@ -265,7 +266,7 @@ uhashtools_thread_message_queue_init
 
     /*
      * The first call of PeekMessageW() initialises the thread message queue.
-     * For a detailed explenation please refer the following documentation:
+     * For a detailed explanation please refer the following documentation:
      * https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-postthreadmessagew#remarks
      */
     PeekMessageW(&peeked_msg, (HWND) -1, WM_USER, WM_USER, PM_NOREMOVE);
@@ -289,9 +290,9 @@ uhashtools_hash_calculation_worker_thread_function
     UHASHTOOLS_ASSERT(thread_param, L"Internal error: Entered with thread_param == NULL!");
 
     hash_calc_worker_param = (struct HashCalculationWorkerParam*) thread_param;
-    SecureZeroMemory(&received_thread_messages, sizeof received_thread_messages);
-    SecureZeroMemory(&event_message_target, sizeof event_message_target);
-    SecureZeroMemory(calculation_result_string, sizeof calculation_result_string);
+    (void) memset((void*) &received_thread_messages, 0, sizeof received_thread_messages);
+    (void) memset((void*) &event_message_target, 0, sizeof event_message_target);
+    (void) memset((void*) calculation_result_string, 0, sizeof calculation_result_string);
 
     received_thread_messages.cancel_requested = FALSE;
     event_message_target.event_message_receiver = hash_calc_worker_param->event_message_receiver;
@@ -353,11 +354,11 @@ uhashtools_hash_calculation_worker_start
 )
 {
     struct HashCalculationWorkerInstanceData return_value;
-    BOOL created_sucessfully = FALSE;
+    BOOL created_successfully = FALSE;
     uintptr_t thread_handle = 0;
     unsigned int thread_id = 0;
 
-    return_value.created_sucessfully = created_sucessfully;
+    return_value.created_successfully = created_successfully;
     return_value.thread_handle = (HANDLE) thread_handle;
     return_value.thread_id = (DWORD) thread_id;
 
@@ -378,9 +379,9 @@ uhashtools_hash_calculation_worker_start
         return return_value;
     }
 
-    created_sucessfully = TRUE;
+    created_successfully = TRUE;
 
-    return_value.created_sucessfully = created_sucessfully;
+    return_value.created_successfully = created_successfully;
     return_value.thread_handle = (HANDLE) thread_handle;
     return_value.thread_id = (DWORD) thread_id;
 
@@ -388,7 +389,7 @@ uhashtools_hash_calculation_worker_start
 }
 
 BOOL
-uhashtools_hash_calculation_worker_request_cancelation
+uhashtools_hash_calculation_worker_request_cancellation
 (
     DWORD worker_thread_id
 )

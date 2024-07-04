@@ -11,10 +11,12 @@
 
 #if WINVER >= 0x0601
 
+#include "errorutils.h"
+
 #include <Objbase.h>
 #include <Windows.h>
 
-#include "errorutils.h"
+#include <string.h>
 
 BOOL
 uhashtools_com_lib_init
@@ -33,7 +35,7 @@ uhashtools_com_lib_init
         return FALSE;
     }
 
-    SecureZeroMemory(com_lib_state, sizeof *com_lib_state);
+    (void) memset((void*) com_lib_state, 0, sizeof *com_lib_state);
     com_lib_state->com_lib_is_initialized = TRUE;
     com_lib_state->initialized_for_thread_id = GetCurrentThreadId();
 

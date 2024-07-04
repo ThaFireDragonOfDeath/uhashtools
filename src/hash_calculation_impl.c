@@ -8,14 +8,15 @@
 
 #include "hash_calculation_impl.h"
 
-#include <limits.h>
-#include <stdio.h>
+#include "errorutils.h"
+#include "product.h"
 
 #include <bcrypt.h>
 #include <io.h>
 
-#include "errorutils.h"
-#include "product.h"
+#include <limits.h>
+#include <stdio.h>
+#include <string.h>
 
 #define FILE_READ_BUF_SIZE 1024 * 512
 
@@ -42,7 +43,7 @@ struct PreparedWinCngHasherImpl
 
 static
 void
-vscha256_encode_single_byte_to_hex
+uhashtools_encode_single_byte_to_hex
 (
     const unsigned char target_byte,
     wchar_t* upper_hex_char,
@@ -83,7 +84,7 @@ uhashtools_encode_bytes_to_hex
         wchar_t current_upper_hex_char = 0;
         wchar_t current_lower_hex_char = 0;
 
-        vscha256_encode_single_byte_to_hex(current_hash_byte, &current_upper_hex_char, &current_lower_hex_char);
+        uhashtools_encode_single_byte_to_hex(current_hash_byte, &current_upper_hex_char, &current_lower_hex_char);
 
         out_buf[current_out_buf_pos] = current_upper_hex_char;
         ++current_out_buf_pos;
@@ -144,7 +145,7 @@ uhashtools_target_file_open
     UHASHTOOLS_ASSERT(error_message_buf, L"Internal error: error_message_buf is NULL!");
     UHASHTOOLS_ASSERT(target_file, L"Internal error: target_file is NULL!");
 
-    (void) SecureZeroMemory(&ret, sizeof ret);
+    (void) memset((void*) &ret, 0, sizeof ret);
     ret.is_ok = FALSE;
 
     target_file_open_error = _wfopen_s(&target_file_handle,
@@ -205,7 +206,7 @@ uhashtools_target_file_close
 
     (void) fclose(opened_target_file->target_file_handle);
 
-    (void) SecureZeroMemory(opened_target_file, sizeof *opened_target_file);
+    (void) memset((void*) opened_target_file, 0, sizeof *opened_target_file);
     opened_target_file->is_ok = FALSE;
 }
 
@@ -232,7 +233,7 @@ uhashtools_win_cng_hash_impl_prepare
 
     UHASHTOOLS_ASSERT(error_message_buf, L"Internal error: error_message_buf is NULL!");
 
-    (void) SecureZeroMemory(&ret, sizeof ret);
+    (void) memset((void*) &ret, 0, sizeof ret);
     ret.is_ok = FALSE;
 
     open_algorithm_provider_rc = BCryptOpenAlgorithmProvider(&cng_algorithm_provider_handle,
@@ -356,7 +357,7 @@ uhashtools_win_cng_hash_impl_destroy
     free((void*) prepared_hasher_impl->cng_algorithm_object_memory);
     (void) BCryptCloseAlgorithmProvider(prepared_hasher_impl->cng_algorithm_provider_handle, 0);
 
-    (void) SecureZeroMemory(prepared_hasher_impl, sizeof *prepared_hasher_impl);
+    (void) memset((void*) prepared_hasher_impl, 0, sizeof *prepared_hasher_impl);
     prepared_hasher_impl->is_ok = FALSE;
 }
 
@@ -417,9 +418,9 @@ uhashtools_hash_calculator_impl_hash_file
     UHASHTOOLS_ASSERT(result_string_buf_tsize >= 256, L"Internal error: result_string_buf_tsize is to small. The buffer must fit at minimum 256 elements!");
     UHASHTOOLS_ASSERT(target_file, L"Internal error: target_file is NULL");
 
-    (void) SecureZeroMemory(result_string_buf, result_string_buf_tsize * (sizeof *result_string_buf));
-    (void) SecureZeroMemory(&opened_target_file, sizeof opened_target_file);
-    (void) SecureZeroMemory(&prepared_hasher_impl, sizeof prepared_hasher_impl);
+    (void) memset((void*) result_string_buf, 0, result_string_buf_tsize * (sizeof *result_string_buf));
+    (void) memset((void*) &opened_target_file, 0, sizeof opened_target_file);
+    (void) memset((void*) &prepared_hasher_impl, 0, sizeof prepared_hasher_impl);
 
     opened_target_file = uhashtools_target_file_open(result_string_buf, result_string_buf_tsize, target_file);
 
@@ -436,7 +437,7 @@ uhashtools_hash_calculator_impl_hash_file
     }
 
     cancel_requested = uhashtools_check_is_cancelled(check_is_cancel_requested_callback,
-                                                  check_is_cancel_requested_callback_userdata);
+                                                     check_is_cancel_requested_callback_userdata);
 
     while (!hash_calculation_finished && !hash_calculation_failed && !cancel_requested)
     {
