@@ -1,3 +1,11 @@
+/*
+ * This file is part of µHashtools.
+ * µHashtools is a small graphical file hashing tool for Microsoft Windows.
+ * 
+ * SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 #include "mainwin_message_handler.h"
 
 #include "errorutils.h"
