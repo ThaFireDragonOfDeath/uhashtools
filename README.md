@@ -14,7 +14,7 @@ SPDX-License-Identifier: CC0-1.0
 It focuses on small executable file size, low memory footprint and easy usage.
 
 # Features
-* Supports currently the algorithms MD4, SHA-1 and SHA-256.
+* Supports currently the algorithms MD5, SHA-1 and SHA-256.
 * Selecting the target file by the file selection dialog or by drag and drop.
 * Simplicity. For each supported algorithm exists one separate application. Instead of one application that does everything, this tool set has multiple applications that do one thing and do it well.
 * Portability. Each application of this tool set is a single, self contained .exe file without dependencies on external libraries.
@@ -38,7 +38,5 @@ Please refer the file "[COPYING](COPYING)" for the effective copyright and permi
 4. Collect the artifacts from `build_out\bin`.
 
 # Known issues / ToDo
-* The visible value of the progress bar is a little behind the actual calculation progress.
-* The code needs some refactoring to improve the readability.
 * The developer documentation is nearly non existent.
 * The code documentation (Doxygen code comments) is missing.

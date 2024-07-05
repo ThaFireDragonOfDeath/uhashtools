@@ -18,7 +18,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-(see "documentation/LICENSE.GPL-2.0-or-later.txt" and along with this
+(see "documentation/LICENSE.GPL-2.0-or-later.txt") along with this
 µHashtools distribution.
 If not can get the license text of the GNU General Public License
 version 2 and newer versions at "https://www.gnu.org/licenses/".
@@ -53,7 +53,7 @@ https://github.com/ThaFireDragonOfDeath/uhashtools
 1.  Double click on the .exe file for the target hash algorithm
     ("usha256.exe" for SHA-256, "usha1.exe" for SHA-1 and "umd5.exe"
     for MD5).
-2.  Drag and drop your target file into the "File dropzone".
+2.  Drag and drop your target file into the "File drop zone".
 3.  Wait until the calculation is finished.
 4.  You can find the calculated hash right next to the "Result:"
     label.
