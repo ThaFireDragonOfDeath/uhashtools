@@ -9,6 +9,7 @@
 #include "mainwin.h"
 
 #include "errorutils.h"
+#include "mainwin_actions.h"
 #include "mainwin_ctx.h"
 #include "mainwin_message_handler.h"
 #include "product.h"
@@ -39,21 +40,6 @@ const int MAINWIN_HIGHT_MIN = 200;
 
 /* Helper functions */
 
-
-static
-LRESULT
-uhashtools_eb_lbl_handle_WM_CTLCOLOR_msg
-(
-    WPARAM wParam
-)
-{
-    HDC hdc = (HDC) wParam;
-    SetTextColor(hdc, GetSysColor(COLOR_WINDOWTEXT));
-    SetBkColor(hdc, GetSysColor(COLOR_WINDOW));
-
-    return (LRESULT) (COLOR_WINDOW + 1);
-}
-
 static
 LRESULT
 CALLBACK uhashtools_main_win_proc
@@ -70,28 +56,6 @@ CALLBACK uhashtools_main_win_proc
                                              lParam,
                                              MAINWIN_WIDTH_MIN,
                                              MAINWIN_HIGHT_MIN);
-}
-
-static
-ATOM
-uhashtools_register_main_window_class
-(
-    HINSTANCE hInstance
-)
-{
-    WNDCLASSEXW wc;
-
-    (void) memset((void*) &wc, 0, sizeof wc);
-
-    wc.cbSize = sizeof(WNDCLASSEXW);
-    wc.lpfnWndProc = uhashtools_main_win_proc;
-    wc.hInstance = hInstance;
-    wc.lpszClassName = uhashtools_product_get_mainwin_classname();
-    wc.hIcon = LoadIconW(hInstance, L"UHASHTOOLS_APPLICATION_ICON");
-    wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
-    wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-
-    return RegisterClassExW(&wc);
 }
 
 static 
@@ -190,9 +154,10 @@ uhashtools_start_main_window
     BOOL isErr = FALSE;
     ATOM mainWinClassAtom = 0;
 
-    mainWinClassAtom = uhashtools_register_main_window_class(hInstance);
-    UHASHTOOLS_ASSERT(mainWinClassAtom,
-                      L"Failed to register the main window class!");
+    mainWinClassAtom = uhashtools_mainwin_register_mainwin_class(hInstance,
+                                                                 uhashtools_main_win_proc);
+
+    UHASHTOOLS_ASSERT(mainWinClassAtom, L"Failed to register the main window class!");
 
     mainwin_ctx->event_message_buf_is_writeable_event = CreateEventExW(NULL,
                                                                        NULL,

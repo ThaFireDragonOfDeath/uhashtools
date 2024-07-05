@@ -20,6 +20,7 @@
 #include "mainwin_lbl_selected_file.h"
 #include "mainwin_eb_current_selected_file.h"
 #include "mainwin_lbl_file_drop.h"
+#include "product.h"
 #include "selectfiledialog.h"
 
 #if _WIN32_WINNT >= 0x0601
@@ -27,6 +28,66 @@
 #endif
 
 #include <stdio.h>
+
+ATOM
+uhashtools_mainwin_register_mainwin_class
+(
+    HINSTANCE hInstance,
+    WNDPROC window_message_procedure
+)
+{
+    WNDCLASSEXW wc;
+
+    (void) memset((void*) &wc, 0, sizeof wc);
+
+    wc.cbSize = sizeof(WNDCLASSEXW);
+    wc.lpfnWndProc = window_message_procedure;
+    wc.hInstance = hInstance;
+    wc.lpszClassName = uhashtools_product_get_mainwin_classname();
+    wc.hIcon = LoadIconW(hInstance, L"UHASHTOOLS_APPLICATION_ICON");
+    wc.hCursor = LoadCursorW(NULL, IDC_ARROW);
+    wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
+
+    return RegisterClassExW(&wc);
+}
+
+#if _WIN32_WINNT >= 0x0601
+BOOL
+uhashtools_register_message_type_taskbar_button_created
+(
+    HWND mainwin_handle,
+    struct MainWindowCtx* mainwin_ctx
+)
+{
+    UINT register_window_message_result = 0;
+    BOOL change_message_window_filter_result = FALSE;
+
+    UHASHTOOLS_ASSERT(mainwin_ctx,
+                      L"Internal error: Entered with mainwin_ctx == NULL in uhashtools_register_taskbar_button_created_wm()!");
+
+    register_window_message_result = RegisterWindowMessageW(L"TaskbarButtonCreated");
+
+    if (register_window_message_result == 0)
+    {
+        return FALSE;
+    }
+
+    change_message_window_filter_result = ChangeWindowMessageFilterEx(mainwin_handle,
+                                                                      register_window_message_result,
+                                                                      MSGFLT_ALLOW,
+                                                                      NULL);
+
+    if (!change_message_window_filter_result)
+    {
+        wprintf_s(L"[WARNING]: Failed to allow 'TaskbarButtonCreated' window message flow! Taskbar icon may not work!");
+        fflush(stdout);
+    }
+
+    mainwin_ctx->wm_taskbar_button_created = register_window_message_result;
+
+    return TRUE;
+}
+#endif
 
 void
 uhashtools_mainwin_init_ui_controls

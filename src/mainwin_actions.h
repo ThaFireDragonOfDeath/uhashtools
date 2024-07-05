@@ -15,6 +15,49 @@
 struct MainWindowCtx;
 
 /**
+ * Registers the main window class.
+ * This function must be called before the main window can
+ * be created.
+ * 
+ * @param hInstance Handle of the application.
+ * @param window_message_procedure Function that handles incoming window messages.
+ * 
+ * @return Zero on failure and a value other than zero on success.
+ *         This return value will be needed when calling the
+ *         function 'CreateWindowExW()'.
+ */
+extern
+ATOM
+uhashtools_mainwin_register_mainwin_class
+(
+    HINSTANCE hInstance,
+    WNDPROC window_message_procedure
+);
+
+#if _WIN32_WINNT >= 0x0601
+/**
+ * By default there is no message type to signalize that the icon button
+ * in the taskbar has been created.
+ * This function adds this message type to the list of receivable message
+ * types.
+ * This function should be called during the handling of the 'WM_CREATE'
+ * window message.
+ * 
+ * @param mainwin_handle Handle of the main window.
+ * @param mainwin_handle Context data of the main window.
+ * 
+ * @return TRUE on success and FALSE on error.
+ */
+extern
+BOOL
+uhashtools_register_message_type_taskbar_button_created
+(
+    HWND mainwin_handle,
+    struct MainWindowCtx* mainwin_ctx
+);
+#endif
+
+/**
  * Initializes the ui elements of the main window.
  * 
  * @param mainwin_ctx Context data of the target mainwin instance.
