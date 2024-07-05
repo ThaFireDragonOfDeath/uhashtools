@@ -77,9 +77,9 @@ uhashtools_send_worker_initialized_message
     event_message.event_type = HCWET_MESSAGE_RECEIVER_INITIALIZED;
 
     uhashtools_send_event_message(event_message_receiver,
-                               &event_message,
-                               event_message_buf,
-                               event_message_buf_is_writeable_event);
+                                  &event_message,
+                                  event_message_buf,
+                                  event_message_buf_is_writeable_event);
 }
 
 static
@@ -101,9 +101,9 @@ uhashtools_send_worker_canceled_message
     event_message.event_type = HCWET_CALCULATION_CANCELED;
 
     uhashtools_send_event_message(event_message_receiver,
-                               &event_message,
-                               event_message_buf,
-                               event_message_buf_is_writeable_event);
+                                  &event_message,
+                                  event_message_buf,
+                                  event_message_buf_is_writeable_event);
 }
 
 static
@@ -129,9 +129,9 @@ uhashtools_send_calculation_complete_message
                     calculated_hash);
 
     uhashtools_send_event_message(event_message_receiver,
-                               &event_message,
-                               event_message_buf,
-                               event_message_buf_is_writeable_event);
+                                  &event_message,
+                                  event_message_buf,
+                                  event_message_buf_is_writeable_event);
 }
 
 static
@@ -157,9 +157,9 @@ uhashtools_send_calculation_failed_message
                     user_error_message);
 
     uhashtools_send_event_message(event_message_receiver,
-                               &event_message,
-                               event_message_buf,
-                               event_message_buf_is_writeable_event);
+                                  &event_message,
+                                  event_message_buf,
+                                  event_message_buf_is_writeable_event);
 }
 
 static
@@ -183,9 +183,9 @@ uhashtools_send_calculation_progress_message
     event_message.event_data.progress_changed_data.current_progress_in_percent = current_calculation_progress;
 
     uhashtools_send_event_message(event_message_receiver,
-                               &event_message,
-                               event_message_buf,
-                               event_message_buf_is_writeable_event);
+                                  &event_message,
+                                  event_message_buf,
+                                  event_message_buf_is_writeable_event);
 }
 
 static
@@ -250,9 +250,9 @@ uhashtools_on_progress_callback
     event_message_target = (struct OutgoingEventMessageTarget*) userdata;
 
     uhashtools_send_calculation_progress_message(event_message_target->event_message_receiver,
-                                              event_message_target->event_message_buf,
-                                              event_message_target->event_message_buf_is_writeable_event,
-                                              current_calculation_progress);
+                                                 event_message_target->event_message_buf,
+                                                 event_message_target->event_message_buf_is_writeable_event,
+                                                 current_calculation_progress);
 }
 
 static

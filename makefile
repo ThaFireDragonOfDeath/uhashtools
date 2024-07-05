@@ -183,6 +183,7 @@ UHASHTOOLS_SOURCES_COMMON       = src\clipboard_utils.c \
                                   src\mainwin_lbl_file_drop.c \
                                   src\mainwin_lbl_result_hash.c \
                                   src\mainwin_lbl_selected_file.c \
+                                  src\mainwin_message_handler.c \
                                   src\mainwin_pb_calc_result.c \
                                   src\selectfiledialog.c \
                                   src\taskbar_icon_pb.c \
@@ -228,6 +229,7 @@ UHASHTOOLS_HEADERS_COMMON       = src\buffer_sizes.h \
                                   src\mainwin_lbl_file_drop.h \
                                   src\mainwin_lbl_result_hash.h \
                                   src\mainwin_lbl_selected_file.h \
+                                  src\mainwin_message_handler.h \
                                   src\mainwin_pb_calc_result.h \
                                   src\mainwin_state.h \
                                   src\product.h \
@@ -268,6 +270,7 @@ UHASHTOOLS_OBJECTS_COMMON       = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboar
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_file_drop.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_result_hash.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_selected_file.obj \
+                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_message_handler.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_pb_calc_result.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\selectfiledialog.obj \
                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbar_icon_pb.obj \
