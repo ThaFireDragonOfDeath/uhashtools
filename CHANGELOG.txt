@@ -14,7 +14,7 @@ Symbols:
 + Changelog (this file)
 + Automated packaging of release builds (optional, requires Python 3)
 * Improved accuracy of the progress bar
-* Declared licenses according to "REUSE Specification – Version 3.0"
+* Declared licenses according to "REUSE Specification - Version 3.2"
 * Improved code comments and developer documentation
 * Refactored the mainwin code
 
