@@ -179,6 +179,8 @@ static
 LRESULT
 uhashtools_mainwin_handle_message_WM_COMMAND
 (
+    HWND hwnd,
+    UINT uMsg,
     WPARAM wParam,
     LPARAM lParam,
     struct MainWindowCtx* mainwin_ctx
@@ -220,6 +222,10 @@ uhashtools_mainwin_handle_message_WM_COMMAND
             
             return 0;
         }
+    }
+    else
+    {
+        return DefWindowProcW(hwnd, uMsg, wParam, lParam);
     }
 }
 
@@ -300,7 +306,7 @@ uhashtools_mainwin_handle_message
     }
     else if(mainwin_ctx && uMsg == WM_COMMAND)
     {
-        return uhashtools_mainwin_handle_message_WM_COMMAND(wParam, lParam, mainwin_ctx);
+        return uhashtools_mainwin_handle_message_WM_COMMAND(hwnd, uMsg, wParam, lParam, mainwin_ctx);
     }
     else if(mainwin_ctx && uMsg == WM_USER)
     {
