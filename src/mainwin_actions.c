@@ -79,8 +79,8 @@ uhashtools_register_message_type_taskbar_button_created
 
     if (!change_message_window_filter_result)
     {
-        wprintf_s(L"[WARNING]: Failed to allow 'TaskbarButtonCreated' window message flow! Taskbar icon may not work!");
-        fflush(stdout);
+        (void) wprintf_s(L"[WARNING]: Failed to allow 'TaskbarButtonCreated' window message flow! Taskbar icon may not work!\n");
+        (void) fflush(stdout);
     }
 
     mainwin_ctx->wm_taskbar_button_created = register_window_message_result;
@@ -349,12 +349,15 @@ uhashtools_mainwin_hash_selected_file
         (void) wprintf_s(L"[ERROR] Failed to create hash calculation worker thread!\n");
         (void) fflush(stdout);
 
-        (void) wcscpy_s(mainwin_ctx->error_txt, GENERIC_TXT_MESSAGES_BUFFER_TSIZE, L"Internal error: Failed to create hash calculation worker thread!");
+        (void) wcscpy_s(mainwin_ctx->error_txt,
+                        GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
+                        L"Internal error: Failed to create hash calculation worker thread!");
         uhashtools_mainwin_change_state(mainwin_ctx, MAINWINDOWSTATE_FINISHED_ERROR);
         
         return;
     }
     
-    (void) wprintf_s(L"[DEBUG] Successfully created hash calculation worker thread with the thread id \"%lu\"\n", mainwin_ctx->worker_instance_data.thread_id);
+    (void) wprintf_s(L"[DEBUG] Successfully created hash calculation worker thread with the thread id \"%lu\"\n",
+                     mainwin_ctx->worker_instance_data.thread_id);
     (void) fflush(stdout);
 }

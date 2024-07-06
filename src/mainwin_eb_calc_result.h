@@ -18,7 +18,7 @@ uhashtools_eb_calc_result_create
 (
     HINSTANCE app_instance,
     HWND parent_window,
-    int right_anker_win_x,
+    int right_anchor_win_x,
     enum MainWindowState mainwin_state,
     const wchar_t* current_hash_result,
     wchar_t* eb_calc_result_txt_buf
@@ -30,7 +30,7 @@ uhashtools_eb_calc_result_on_parent_resize
 (
     HWND self,
     UINT mainwin_new_width,
-    int right_anker_win_x
+    int right_anchor_win_x
 );
 
 extern

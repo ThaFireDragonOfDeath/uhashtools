@@ -66,7 +66,7 @@ nmake BUILD_MODE=Release dist
 
 # Copy the source archive into the correct folder with the binary distribution
 # to finish the release in the dist_out folder.
-"Copying source archive into ${distout_src_pkg_dir_path}"
+"Copying source archive into '${distout_src_pkg_dir_path}'"
 Copy-Item -Path $project_src_zip_path -Destination $distout_src_pkg_dir_path
 
 # Now copy the whole distout file tree into the cache within the directory

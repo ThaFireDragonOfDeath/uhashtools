@@ -39,9 +39,9 @@ static BOOL dyn_EB_CALC_RESULT_IS_VISIBLE(enum MainWindowState mainwin_state)
     }
 }
 
-static int dyn_EB_CALC_RESULT_WIDTH(int right_anker_element_x)
+static int dyn_EB_CALC_RESULT_WIDTH(int right_anchor_element_x)
 {
-    return right_anker_element_x - DEFAULT_DISTANCE - EB_CALC_RESULT_X;
+    return right_anchor_element_x - DEFAULT_DISTANCE - EB_CALC_RESULT_X;
 }
 
 static int dyn_EB_CALC_RESULT_Y(int main_win_hight)
@@ -51,19 +51,31 @@ static int dyn_EB_CALC_RESULT_Y(int main_win_hight)
 
 static wchar_t* dyn_EB_CALC_RESULT_TEXT(enum MainWindowState mainwin_state, const wchar_t* current_hash_result, wchar_t* eb_calc_result_txt_buf)
 {
+    errno_t strcpy_rc = 0;
+
     UHASHTOOLS_ASSERT(eb_calc_result_txt_buf, L"Internal parameter error: Entered with eb_calc_result_txt_buf == NULL!");
 
     switch(mainwin_state)
     {
         case MAINWINDOWSTATE_FINISHED_SUCCESS:
-            UHASHTOOLS_ASSERT(current_hash_result, L"Internal parameter error: Entered with current_hash_result == NULL on 'MAINWINDOWSTATE_FINISHED_SUCCESS' state!");
+        {
+            UHASHTOOLS_ASSERT(current_hash_result,
+                              L"Internal parameter error: Entered with current_hash_result == NULL on 'MAINWINDOWSTATE_FINISHED_SUCCESS' state!");
 
-            _snwprintf_s(eb_calc_result_txt_buf, HASH_RESULT_BUFFER_TSIZE, _TRUNCATE, current_hash_result);
+            strcpy_rc = wcscpy_s(eb_calc_result_txt_buf, HASH_RESULT_BUFFER_TSIZE, current_hash_result);
+            UHASHTOOLS_ASSERT(strcpy_rc == 0,
+                              L"Internal error: Failed to copy the current hash result into the internal buffer!");
+            
             return eb_calc_result_txt_buf;
-        
+        }
         default:
-            _snwprintf_s(eb_calc_result_txt_buf, HASH_RESULT_BUFFER_TSIZE, _TRUNCATE, L"Hash not calculated yet.");
+        {
+            strcpy_rc = wcscpy_s(eb_calc_result_txt_buf, HASH_RESULT_BUFFER_TSIZE, L"Hash not calculated yet.");
+            UHASHTOOLS_ASSERT(strcpy_rc == 0,
+                              L"Internal error: Failed to copy the current hash result into the internal buffer!");
+            
             return eb_calc_result_txt_buf;
+        }
     }
 }
 
@@ -72,7 +84,7 @@ uhashtools_eb_calc_result_create
 (
     HINSTANCE app_instance,
     HWND parent_window,
-    int right_anker_win_x,
+    int right_anchor_win_x,
     enum MainWindowState mainwin_state,
     const wchar_t* current_hash_result,
     wchar_t* eb_calc_result_txt_buf
@@ -84,7 +96,7 @@ uhashtools_eb_calc_result_create
     wchar_t* current_txt = NULL;
     
     current_y = dyn_EB_CALC_RESULT_Y(uhashtools_gui_elm_get_height(parent_window));
-    current_width = dyn_EB_CALC_RESULT_WIDTH(right_anker_win_x);
+    current_width = dyn_EB_CALC_RESULT_WIDTH(right_anchor_win_x);
     current_txt = dyn_EB_CALC_RESULT_TEXT(mainwin_state, current_hash_result, eb_calc_result_txt_buf);
 
     ret = uhashtools_eb_create(app_instance,
@@ -105,13 +117,13 @@ uhashtools_eb_calc_result_on_parent_resize
 (
     HWND self,
     UINT mainwin_new_width,
-    int right_anker_win_x
+    int right_anchor_win_x
 )
 {
     int current_width = 0;
     int current_y = 0;
 
-    current_width = dyn_EB_CALC_RESULT_WIDTH(right_anker_win_x);
+    current_width = dyn_EB_CALC_RESULT_WIDTH(right_anchor_win_x);
     current_y = dyn_EB_CALC_RESULT_Y(mainwin_new_width);
 
     uhashtools_gui_elm_resize(self, current_width, EB_CALC_RESULT_HIGHT);
