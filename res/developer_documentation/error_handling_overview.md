@@ -32,7 +32,7 @@ the application terminates.
 To print warning messages we're including the standard C header file
 "stdio.h" and using the following code:
 ```C
-(void) wprintf_s(L"[WARNING]: Warning message");
+(void) wprintf_s(L"[WARNING]: Warning message\n");
 (void) fflush(stdout);
 ```
 
@@ -40,6 +40,6 @@ To print warning messages we're including the standard C header file
 To print debug messages we're including the standard C header file
 "stdio.h" and using the following code:
 ```C
-(void) wprintf_s(L"[DEBUG]: Debug message");
+(void) wprintf_s(L"[DEBUG]: Debug message\n");
 (void) fflush(stdout);
 ```
