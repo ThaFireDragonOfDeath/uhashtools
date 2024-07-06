@@ -25,7 +25,7 @@ MT      = mt
 #
 
 PRODUCT_NAME            = µHashtools
-PRODUCT_FILE_NAME_BASE  = uhashtools
+PRODUCT_ASCII_NAME      = uhashtools
 PRODUCT_VERSION         = 0.2.0
 
 
@@ -100,10 +100,13 @@ UMD5_BUILDOUT_PDB_FILE                      = $(BUILDOUT_BIN_DIR)\$(UMD5_NAME_BA
 
 # Setting the distribution output options.
 DISTOUT_BASE_DIR                            = dist_out
-DIST_TARGET_NAME                            = $(PRODUCT_FILE_NAME_BASE)_v$(PRODUCT_VERSION)
+DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)
 DISTOUT_DIR                                 = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME)
 DISTOUT_DOC_DIR                             = $(DISTOUT_DIR)\documentation
 DISTOUT_SRC_PKG_DIR                         = $(DISTOUT_DIR)\source_code
+
+# Setting the output directory of the make_release script
+MAKE_RELEASE_BASE_DIR                       = make_release_out
 
 # Setting the source distribution output options.
 SRC_DIST_TARGET_NAME                        = $(DIST_TARGET_NAME)_src
@@ -319,6 +322,7 @@ dist: $(UHASHTOOLS_DISTOUT_FILES) $(DISTOUT_SRC_PKG_DIR)
 clean:
     -$(RMDIR) $(BUILDOUT_DIR)
     -$(RMDIR) $(DISTOUT_BASE_DIR)
+    -$(RMDIR) $(MAKE_RELEASE_BASE_DIR)
     -$(RM) src\application_icon.ico
 
 
@@ -436,8 +440,8 @@ $(DISTOUT_DIR)\README.txt: $(DISTOUT_DIR) res\user_documentation\README.txt
 $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt: $(DISTOUT_DOC_DIR) ATTRIBUTION
     $(CP) ATTRIBUTION $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt
 
-$(DISTOUT_DOC_DIR)\CHANGELOG.txt: $(DISTOUT_DOC_DIR) CHANGELOG
-    $(CP) CHANGELOG $(DISTOUT_DOC_DIR)\CHANGELOG.txt
+$(DISTOUT_DOC_DIR)\CHANGELOG.txt: $(DISTOUT_DOC_DIR) CHANGELOG.txt
+    $(CP) CHANGELOG.txt $(DISTOUT_DOC_DIR)\CHANGELOG.txt
 
 $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt: $(DISTOUT_DOC_DIR) LICENSES\CC0-1.0.txt
     $(CP) LICENSES\CC0-1.0.txt $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt

@@ -12,7 +12,8 @@ Symbols:
 + Progress indicator within the taskbar icon (optional, activated by
   default, requires Windows 7 or newer)
 + Changelog (this file)
-+ Automated packaging of release builds (optional, requires Python 3)
++ Automated packaging of release builds (optional, requires Windows
+  PowerShell)
 * Improved accuracy of the progress bar
 * Declared licenses according to "REUSE Specification - Version 3.2"
 * Improved code comments and developer documentation

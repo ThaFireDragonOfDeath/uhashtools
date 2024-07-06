@@ -30,6 +30,12 @@
             "problemMatcher": []
         },
         {
+            "label": "Make release archive (Windows PowerShell)",
+            "type": "shell",
+            "command": "powershell.exe -ExecutionPolicy Bypass -File .\\make_release.ps1",
+            "problemMatcher": []
+        },
+        {
             "label": "NMake clean",
             "type": "shell",
             "command": "nmake clean",
