@@ -18,7 +18,7 @@ uhashtools_btn_select_file_create
 (
     HINSTANCE app_instance,
     HWND parent_window,
-    int bottom_anker_y
+    int bottom_anchor_y
 );
 
 extern
@@ -27,7 +27,7 @@ uhashtools_btn_select_file_on_parent_resize
 (
     HWND self,
     int parent_width,
-    int bottom_anker_y
+    int bottom_anchor_y
 );
 
 extern

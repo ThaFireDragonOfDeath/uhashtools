@@ -18,8 +18,8 @@
 #define PB_EB_DEFAULT_HIGHT 26
 
 /* 
- * In the main window nearly all labels are aranged in
- * one column. Those lables shares the same width.
+ * In the main window nearly all labels are arranged in
+ * one column. Those labels shares the same width.
  */
 #define MW_FC_LBL_WIDTH 60
 

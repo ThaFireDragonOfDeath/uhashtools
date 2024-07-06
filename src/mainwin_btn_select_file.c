@@ -60,10 +60,10 @@ static
 int
 dyn_BTN_SELECT_FILE_Y
 (
-    int bottom_anker_y
+    int bottom_anchor_y
 )
 {
-    return bottom_anker_y - DEFAULT_DISTANCE - BTN_SELECT_FILE_HIGHT;
+    return bottom_anchor_y - DEFAULT_DISTANCE - BTN_SELECT_FILE_HIGHT;
 }
 
 static
@@ -85,7 +85,7 @@ uhashtools_btn_select_file_create
 (
     HINSTANCE app_instance,
     HWND parent_window,
-    int bottom_anker_y
+    int bottom_anchor_y
 )
 {
     HWND ret = NULL;
@@ -94,7 +94,7 @@ uhashtools_btn_select_file_create
     HICON current_icon = NULL;
 
     current_x = dyn_BTN_SELECT_FILE_X(uhashtools_gui_elm_get_width(parent_window));
-    current_y = dyn_BTN_SELECT_FILE_Y(bottom_anker_y);
+    current_y = dyn_BTN_SELECT_FILE_Y(bottom_anchor_y);
     current_icon = dyn_BTN_SELECT_FILE_ICON();
 
     ret = uhashtools_btn_create(app_instance,
@@ -115,14 +115,14 @@ uhashtools_btn_select_file_on_parent_resize
 (
     HWND self,
     int parent_width,
-    int bottom_anker_y
+    int bottom_anchor_y
 )
 {
     int current_x = 0;
     int current_y = 0;
 
     current_x = dyn_BTN_SELECT_FILE_X(parent_width);
-    current_y = dyn_BTN_SELECT_FILE_Y(bottom_anker_y);
+    current_y = dyn_BTN_SELECT_FILE_Y(bottom_anchor_y);
 
     uhashtools_gui_elm_move(self, current_x, current_y);
 }

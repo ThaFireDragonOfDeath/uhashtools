@@ -106,7 +106,7 @@ uhashtools_mainwin_on_file_dropped
     if (dropped_files_count >= 1)
     {
         wchar_t* ctx_target_file = mainwin_ctx->target_file;
-        UINT get_drag_file_succeded = 0;
+        UINT get_drag_file_succeeded = 0;
 
         if (dropped_files_count > 1)
         {
@@ -114,9 +114,9 @@ uhashtools_mainwin_on_file_dropped
             (void) fflush(stdout);
         }
 
-        get_drag_file_succeded = DragQueryFileW(dropped_files_event_handle, 0, ctx_target_file, FILEPATH_BUFFER_TSIZE);
+        get_drag_file_succeeded = DragQueryFileW(dropped_files_event_handle, 0, ctx_target_file, FILEPATH_BUFFER_TSIZE);
 
-        if(get_drag_file_succeded)
+        if(get_drag_file_succeeded)
         {
             uhashtools_mainwin_hash_selected_file(mainwin_ctx);
         }
