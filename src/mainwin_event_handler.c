@@ -74,6 +74,7 @@ uhashtools_mainwin_on_select_file_button_pressed
     }
 }
 
+#if _WIN32_WINNT >= 0x0601
 void
 uhashtools_mainwin_on_taskbar_button_created
 (
@@ -91,6 +92,7 @@ uhashtools_mainwin_on_taskbar_button_created
     mainwin_ctx->pb_taskbar_icon_ctx.current_progress_in_percent = 0;
     mainwin_ctx->pb_taskbar_icon_ctx.current_progress_view_mode = PROGRESS_VIEW_MODE_NONE;
 }
+#endif
 
 void
 uhashtools_mainwin_on_file_dropped

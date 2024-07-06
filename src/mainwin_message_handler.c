@@ -290,12 +290,14 @@ uhashtools_mainwin_handle_message
 
         return uhashtools_mainwin_handle_message_WM_CLOSE(hwnd, mainwin_ctx);
     }
+#if _WIN32_WINNT >= 0x0601
     else if(mainwin_ctx && uMsg == mainwin_ctx->wm_taskbar_button_created)
     {
         uhashtools_mainwin_on_taskbar_button_created(mainwin_ctx);
 
         return 0;
     }
+#endif
     else if(mainwin_ctx && uMsg == WM_SIZE)
     {
         return uhashtools_mainwin_handle_message_WM_SIZE(lParam, mainwin_ctx);

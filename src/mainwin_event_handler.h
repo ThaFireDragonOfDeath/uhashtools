@@ -41,12 +41,14 @@ uhashtools_mainwin_on_select_file_button_pressed
     struct MainWindowCtx* mainwin_ctx
 );
 
+#if _WIN32_WINNT >= 0x0601
 extern
 void
 uhashtools_mainwin_on_taskbar_button_created
 (
     struct MainWindowCtx* mainwin_ctx
 );
+#endif
 
 extern
 void
