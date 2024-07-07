@@ -21,6 +21,10 @@ The documentation files, Visual Studio Code files and Git configuration files ar
 
 Please refer the file "[COPYING](COPYING)" for the effective copyright and permission notice.
 
+# Known issues / ToDo
+* The developer documentation is there but can be improved.
+* The majority of the functions are undocumented.
+
 # Building
 ## Build dependencies
 * Visual Studio (supported are the versions 2008 up to 2022)
@@ -31,6 +35,7 @@ Please refer the file "[COPYING](COPYING)" for the effective copyright and permi
 3. Run `nmake all` to build this software in debug mode or run `nmake BUILDMODE=Release all` to build in release mode.
 4. Collect the artifacts from `build_out\bin`.
 
-# Known issues / ToDo
-* The developer documentation is nearly non existent.
-* The code documentation (Doxygen code comments) is missing.
+# Further information for developers
+* [How release archives are build](res/developer_documentation/release_procedure.md)
+* [Overview of the source files and what they do](res/developer_documentation/source_files_overview.md)
+* [Error handling strategies](res/developer_documentation/error_handling_overview.md)
