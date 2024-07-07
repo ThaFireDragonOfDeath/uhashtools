@@ -8,15 +8,14 @@
 
 #include "mainwin_eb_calc_result.h"
 
-#include <wchar.h>
-
-#include <Windows.h>
-
 #include "buffer_sizes.h"
 #include "errorutils.h"
 #include "gui_common.h"
 #include "gui_eb_common.h"
 #include "mainwin_state.h"
+
+#include <wchar.h>
+#include <Windows.h>
 
 const DWORD EB_CALC_RESULT_STYLE = WS_CHILD | WS_VISIBLE | ES_LEFT | ES_READONLY;
 const DWORD EB_CALC_RESULT_STYLE_EX = 0;
@@ -53,7 +52,8 @@ static wchar_t* dyn_EB_CALC_RESULT_TEXT(enum MainWindowState mainwin_state, cons
 {
     errno_t strcpy_rc = 0;
 
-    UHASHTOOLS_ASSERT(eb_calc_result_txt_buf, L"Internal parameter error: Entered with eb_calc_result_txt_buf == NULL!");
+    UHASHTOOLS_ASSERT(eb_calc_result_txt_buf,
+                      L"Internal parameter error: Entered with eb_calc_result_txt_buf == NULL!");
 
     switch(mainwin_state)
     {
@@ -62,7 +62,10 @@ static wchar_t* dyn_EB_CALC_RESULT_TEXT(enum MainWindowState mainwin_state, cons
             UHASHTOOLS_ASSERT(current_hash_result,
                               L"Internal parameter error: Entered with current_hash_result == NULL on 'MAINWINDOWSTATE_FINISHED_SUCCESS' state!");
 
-            strcpy_rc = wcscpy_s(eb_calc_result_txt_buf, HASH_RESULT_BUFFER_TSIZE, current_hash_result);
+            strcpy_rc = wcscpy_s(eb_calc_result_txt_buf,
+                                 HASH_RESULT_BUFFER_TSIZE,
+                                 current_hash_result);
+            
             UHASHTOOLS_ASSERT(strcpy_rc == 0,
                               L"Internal error: Failed to copy the current hash result into the internal buffer!");
             
@@ -70,7 +73,10 @@ static wchar_t* dyn_EB_CALC_RESULT_TEXT(enum MainWindowState mainwin_state, cons
         }
         default:
         {
-            strcpy_rc = wcscpy_s(eb_calc_result_txt_buf, HASH_RESULT_BUFFER_TSIZE, L"Hash not calculated yet.");
+            strcpy_rc = wcscpy_s(eb_calc_result_txt_buf,
+                                 HASH_RESULT_BUFFER_TSIZE,
+                                 L"Hash not calculated yet.");
+
             UHASHTOOLS_ASSERT(strcpy_rc == 0,
                               L"Internal error: Failed to copy the current hash result into the internal buffer!");
             

@@ -18,7 +18,6 @@
 #include <Windows.h>
 
 const wchar_t LBL_FILE_DROP_TXT[] = L"File drop zone";
-
 const DWORD LBL_FILE_DROP_STYLE = WS_CHILD | WS_VISIBLE | WS_BORDER | SS_CENTER | SS_CENTERIMAGE;
 const DWORD LBL_FILE_DROP_STYLE_EX = WS_EX_ACCEPTFILES;
 const int LBL_FILE_DROP_X = DEFAULT_DISTANCE;
@@ -36,7 +35,8 @@ static int dyn_LBL_FILE_DROP_HIGHT(int bottom_anchor_element_y)
 
 static BOOL dyn_LBL_FILE_DROP_IS_ENABLED(enum MainWindowState mainwin_state)
 {
-    UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED, L"Internal error: MainWindow state is invalid!");
+    UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED,
+                      L"Internal error: MainWindow state is invalid!");
     
     switch(mainwin_state)
     {
@@ -95,20 +95,20 @@ uhashtools_lbl_file_drop_create
     LONG_PTR default_win_proc = 0;
 
     UHASHTOOLS_ASSERT(mainwin_state >= MAINWINDOWSTATE_INIT && mainwin_state <= MAINWINDOWSTATE_FINISHED_SUCCESS,
-                   L"Internal error: Entered with unexpected main window state in uhashtools_lbl_file_drop_create()!");
+                      L"Internal error: Entered with unexpected main window state in uhashtools_lbl_file_drop_create()!");
 
     current_width = dyn_LBL_FILE_DROP_WIDTH(parent_width);
     current_hight = dyn_LBL_FILE_DROP_HIGHT(bottom_anchor_y);
 
     ret = uhashtools_lbl_create(app_instance,
-                             parent_window,
-                             LBL_FILE_DROP_STYLE,
-                             LBL_FILE_DROP_STYLE_EX,
-                             LBL_FILE_DROP_X,
-                             LBL_FILE_DROP_Y,
-                             current_width,
-                             current_hight,
-                             LBL_FILE_DROP_TXT);
+                                parent_window,
+                                LBL_FILE_DROP_STYLE,
+                                LBL_FILE_DROP_STYLE_EX,
+                                LBL_FILE_DROP_X,
+                                LBL_FILE_DROP_Y,
+                                current_width,
+                                current_hight,
+                                LBL_FILE_DROP_TXT);
 
     default_win_proc = GetWindowLongPtr(ret, GWLP_WNDPROC);
     SetWindowLongPtr(ret, GWLP_USERDATA, default_win_proc);

@@ -27,10 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Internal enumerations */
-
-/* Internal structure definitions */
-
 /* Graphical element values */
 
 const DWORD MAINWIN_STYLE = WS_OVERLAPPEDWINDOW;
@@ -135,7 +131,8 @@ uhashtools_enter_main_message_loop
             DWORD lastError = GetLastError();
             contLoop = FALSE;
 
-            (void) wprintf_s(L"[ERROR] Internal error: GetMessage() failed with errno '%lu'...\n", lastError);
+            (void) wprintf_s(L"[ERROR] Internal error: GetMessage() failed with errno '%lu'...\n",
+                             lastError);
             (void) fflush(stdout);
         }
     }

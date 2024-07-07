@@ -36,7 +36,8 @@ uhashtools_select_file_dialog_open
      */
     DWORD nMaxFile = (DWORD) target_file_buf_tsize;
 
-    UHASHTOOLS_ASSERT(dialog_owner_win != INVALID_HANDLE_VALUE, L"Entered with an invalid dialog owner handle!");
+    UHASHTOOLS_ASSERT(dialog_owner_win != INVALID_HANDLE_VALUE,
+                      L"Entered with an invalid dialog owner handle!");
     UHASHTOOLS_ASSERT(target_file_buf, L"Entered with target_file_buf == NULL!");
 
     (void) memset((void*) &open_file_dlg_settings, 0, sizeof open_file_dlg_settings);

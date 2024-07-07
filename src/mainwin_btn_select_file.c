@@ -8,13 +8,12 @@
 
 #include "mainwin_btn_select_file.h"
 
-#include <Windows.h>
-
 #include "errorutils.h"
 #include "gui_btn_common.h"
 #include "gui_common.h"
 #include "mainwin_state.h"
 
+#include <Windows.h>
 
 /* Static GUI element properties */
 

@@ -34,16 +34,16 @@ uhashtools_gui_elm_get_win_rect_relative_to_parent
     HWND elm_handle
 )
 {
-    HWND parant_win = NULL;
+    HWND parent_win = NULL;
     RECT abs_win_rect;
     RECT rel_win_rect;
     int mapping_return_code = 0;
 
-    parant_win = GetParent(elm_handle);
+    parent_win = GetParent(elm_handle);
     abs_win_rect = uhashtools_gui_elm_get_win_rect(elm_handle);
     rel_win_rect = abs_win_rect;
 
-    mapping_return_code = MapWindowPoints(HWND_DESKTOP, parant_win, (LPPOINT) &rel_win_rect, 2);
+    mapping_return_code = MapWindowPoints(HWND_DESKTOP, parent_win, (LPPOINT) &rel_win_rect, 2);
 
     UHASHTOOLS_ASSERT(mapping_return_code != 0, L"Internal error: MapWindowPoints() failed!");
 

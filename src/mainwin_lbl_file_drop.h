@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <Windows.h>
-
 #include "mainwin_state.h"
+
+#include <Windows.h>
 
 extern
 HWND

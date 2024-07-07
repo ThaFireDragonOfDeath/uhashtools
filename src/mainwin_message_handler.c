@@ -210,8 +210,8 @@ uhashtools_mainwin_handle_message_WM_COMMAND
                 uhashtools_mainwin_on_cancel_button_pressed(mainwin_ctx);
             }
             else if (mainwin_ctx->own_state == MAINWINDOWSTATE_CANCELED ||
-                        mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_ERROR ||
-                        mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED)
+                     mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_ERROR ||
+                     mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED)
             {
                 uhashtools_mainwin_on_retry_button_pressed(mainwin_ctx);
             }
@@ -244,9 +244,11 @@ uhashtools_mainwin_handle_message_WM_USER
     event_message_buf_clone = mainwin_ctx->event_message_buf;
     
     signal_event_success = SetEvent(mainwin_ctx->event_message_buf_is_writeable_event);
-    UHASHTOOLS_ASSERT(signal_event_success, L"Failed reset the event synchronization object back into the signaled state!");
+    UHASHTOOLS_ASSERT(signal_event_success,
+                      L"Failed reset the event synchronization object back into the signaled state!");
 
-    uhashtools_mainwin_on_hash_calculation_worker_event_message_received(mainwin_ctx, &event_message_buf_clone);
+    uhashtools_mainwin_on_hash_calculation_worker_event_message_received(mainwin_ctx,
+                                                                         &event_message_buf_clone);
     
     return 0;
 }
@@ -286,7 +288,8 @@ uhashtools_mainwin_handle_message
     }
     else if(uMsg == WM_CLOSE)
     {
-        UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: No mainwin_ctx while handling the WM_CLOSE message!");
+        UHASHTOOLS_ASSERT(mainwin_ctx,
+                          L"Internal error: No mainwin_ctx while handling the WM_CLOSE message!");
 
         return uhashtools_mainwin_handle_message_WM_CLOSE(hwnd, mainwin_ctx);
     }

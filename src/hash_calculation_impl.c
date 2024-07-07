@@ -103,7 +103,8 @@ uhashtools_calculate_current_progress
     unsigned __int64 processed_bytes
 )
 {
-    UHASHTOOLS_ASSERT(file_size <= _UI64_MAX / 100, L"Limit reached: The size of the given file is to big. It would cause an integer overflow.");
+    UHASHTOOLS_ASSERT(file_size <= _UI64_MAX / 100,
+                      L"Limit reached: The size of the given file is to big. It would cause an integer overflow.");
 
     if (file_size == 0)
     {
@@ -122,7 +123,7 @@ uhashtools_calculate_current_progress
         return 100u;
     }
 
-    /* Basic formula G / 100% = W/p -> W * 100 / G */
+    /* Basic formula: G / 100% = W / p -> W * 100 / G */
     return (unsigned int) ((processed_bytes * 100u) / file_size);
 }
 
@@ -174,7 +175,7 @@ uhashtools_target_file_open
 
     target_file_size = (unsigned __int64) filelengthi64_rc;
 
-    (void) wprintf_s(L"[DEBUG] The opened file has a size of \"%I64u\" bytes.\n", target_file_size);
+    (void) wprintf_s(L"[INFO] The opened file has a size of \"%I64u\" bytes.\n", target_file_size);
     (void) fflush(stdout);
 
     (void) clearerr_s(target_file_handle);
@@ -243,7 +244,9 @@ uhashtools_win_cng_hash_impl_prepare
 
     if (open_algorithm_provider_rc != STATUS_SUCCESS)
     {
-        (void) wcscpy_s(error_message_buf, error_message_buf_tsize, L"Failed to open the Windows BCrypt hashing algorithm provider!\nThis is either a bug in this software or your Windows doesn't have the required CNG algorithm provider.");
+        (void) wcscpy_s(error_message_buf,
+                        error_message_buf_tsize,
+                        L"Failed to open the Windows BCrypt hashing algorithm provider!\nThis is either a bug in this software or your Windows doesn't have the required CNG algorithm provider.");
 
         goto cleanup_and_out;
     }
@@ -257,7 +260,9 @@ uhashtools_win_cng_hash_impl_prepare
 
     if (get_required_alg_obj_memory_rc != STATUS_SUCCESS || algorithm_object_required_memory < 1)
     {
-        (void) wcscpy_s(error_message_buf, error_message_buf_tsize, L"Internal error: Failed to get the required memory size for the Win32 CNG object!");
+        (void) wcscpy_s(error_message_buf,
+                        error_message_buf_tsize,
+                        L"Internal error: Failed to get the required memory size for the Win32 CNG object!");
 
         goto cleanup_and_out;
     }
@@ -271,7 +276,9 @@ uhashtools_win_cng_hash_impl_prepare
 
     if (get_out_buf_required_size_rc != STATUS_SUCCESS || hash_out_buf_required_size < 1)
     {
-        (void)wcscpy_s(error_message_buf, error_message_buf_tsize, L"Internal error: Failed to get the required memory size for the result hash buffer!");
+        (void) wcscpy_s(error_message_buf,
+                        error_message_buf_tsize,
+                        L"Internal error: Failed to get the required memory size for the result hash buffer!");
 
         goto cleanup_and_out;
     }
@@ -280,16 +287,20 @@ uhashtools_win_cng_hash_impl_prepare
 
     if (!cng_algorithm_object_memory)
     {
-        (void) wcscpy_s(error_message_buf, error_message_buf_tsize, L"Failed to allocate the required memory. Please download more RAM!");
+        (void) wcscpy_s(error_message_buf,
+                        error_message_buf_tsize,
+                        L"Failed to allocate the required memory. Please download more RAM!");
 
         goto cleanup_and_out;
     }
 
-    hash_out_buf = (PUCHAR)malloc((size_t) hash_out_buf_required_size);
+    hash_out_buf = (PUCHAR) malloc((size_t) hash_out_buf_required_size);
 
     if (!hash_out_buf)
     {
-        (void) wcscpy_s(error_message_buf, error_message_buf_tsize, L"Failed to allocate the required memory for the hash result. Please download more RAM!");
+        (void) wcscpy_s(error_message_buf,
+                        error_message_buf_tsize,
+                        L"Failed to allocate the required memory for the hash result. Please download more RAM!");
 
         goto cleanup_and_out;
     }
@@ -304,7 +315,9 @@ uhashtools_win_cng_hash_impl_prepare
 
     if (create_hash_object_rc != STATUS_SUCCESS)
     {
-        (void) wcscpy_s(error_message_buf, error_message_buf_tsize, L"Internal error: Failed to create the Win32 CNG hash object!");
+        (void) wcscpy_s(error_message_buf,
+                        error_message_buf_tsize,
+                        L"Internal error: Failed to create the Win32 CNG hash object!");
 
         goto cleanup_and_out;
     }
@@ -415,7 +428,8 @@ uhashtools_hash_calculator_impl_hash_file
     unsigned int last_reported_calculation_progress = 0;
 
     UHASHTOOLS_ASSERT(result_string_buf, L"Internal error: result_string_buf is NULL");
-    UHASHTOOLS_ASSERT(result_string_buf_tsize >= 256, L"Internal error: result_string_buf_tsize is to small. The buffer must fit at minimum 256 elements!");
+    UHASHTOOLS_ASSERT(result_string_buf_tsize >= 256,
+                      L"Internal error: result_string_buf_tsize is to small. The buffer must fit at minimum 256 elements!");
     UHASHTOOLS_ASSERT(target_file, L"Internal error: target_file is NULL");
 
     (void) memset((void*) result_string_buf, 0, result_string_buf_tsize * (sizeof *result_string_buf));
@@ -479,9 +493,11 @@ uhashtools_hash_calculator_impl_hash_file
         {
             if (ferror(opened_target_file.target_file_handle))
             {
-                (void) wcscpy_s(result_string_buf, result_string_buf_tsize, L"Failed to read the selected file!");
+                (void) wcscpy_s(result_string_buf,
+                                result_string_buf_tsize,
+                                L"Failed to read the selected file!");
+                
                 hash_calculation_failed = TRUE;
-
                 break;
             }
             else if (feof(opened_target_file.target_file_handle))
@@ -497,18 +513,23 @@ uhashtools_hash_calculator_impl_hash_file
 
         if (hash_data_rc != STATUS_SUCCESS)
         {
-            (void) wcscpy_s(result_string_buf, result_string_buf_tsize, L"Internal error: Failed to hash the selected file. BCryptHashData() failed!");
+            (void) wcscpy_s(result_string_buf,
+                            result_string_buf_tsize,
+                            L"Internal error: Failed to hash the selected file. BCryptHashData() failed!");
+            
             hash_calculation_failed = TRUE;
-
             break;
         }
 
         processed_bytes += read_characters;
-        current_calculation_progress = uhashtools_calculate_current_progress(opened_target_file.target_file_size, processed_bytes);
+        current_calculation_progress = uhashtools_calculate_current_progress(opened_target_file.target_file_size,
+                                                                             processed_bytes);
 
         if (current_calculation_progress > last_reported_calculation_progress)
         {
-            uhashtools_report_current_calculation_progress(current_calculation_progress, progress_callback, progress_callback_userdata);
+            uhashtools_report_current_calculation_progress(current_calculation_progress,
+                                                           progress_callback,
+                                                           progress_callback_userdata);
 
             last_reported_calculation_progress = current_calculation_progress;
         }
@@ -525,22 +546,26 @@ uhashtools_hash_calculator_impl_hash_file
 
             if (finish_hash_rc != STATUS_SUCCESS)
             {
-                (void) wcscpy_s(result_string_buf, result_string_buf_tsize, L"Internal error: Failed to hash the selected file. BCryptFinishHash() failed!");
+                (void) wcscpy_s(result_string_buf,
+                                result_string_buf_tsize,
+                                L"Internal error: Failed to hash the selected file. BCryptFinishHash() failed!");
+                
                 hash_calculation_failed = TRUE;
-
                 break;
             }
 
             encode_hash_to_hex_rc = uhashtools_encode_bytes_to_hex(prepared_hasher_impl.hash_out_buf,
-                                                                prepared_hasher_impl.hash_out_buf_size,
-                                                                result_string_buf,
-                                                                result_string_buf_tsize);
+                                                                   prepared_hasher_impl.hash_out_buf_size,
+                                                                   result_string_buf,
+                                                                   result_string_buf_tsize);
 
             if (!encode_hash_to_hex_rc)
             {
-                (void) wcscpy_s(result_string_buf, result_string_buf_tsize, L"Internal error: Failed to hash the selected file. Encoding the hash result to hex failed!");
+                (void) wcscpy_s(result_string_buf,
+                                result_string_buf_tsize,
+                                L"Internal error: Failed to hash the selected file. Encoding the hash result to hex failed!");
+                
                 hash_calculation_failed = TRUE;
-
                 break;
             }
 
@@ -549,10 +574,11 @@ uhashtools_hash_calculator_impl_hash_file
         }
 
         cancel_requested = uhashtools_check_is_cancelled(check_is_cancel_requested_callback,
-                                                      check_is_cancel_requested_callback_userdata);
+                                                         check_is_cancel_requested_callback_userdata);
     }
 
-    UHASHTOOLS_ASSERT(hash_calculation_finished || hash_calculation_failed || cancel_requested, L"Internal error: Exited hashing loop with unexpected state!");
+    UHASHTOOLS_ASSERT(hash_calculation_finished || hash_calculation_failed || cancel_requested,
+                      L"Internal error: Exited hashing loop with unexpected state!");
 
     if (hash_calculation_finished)
     {

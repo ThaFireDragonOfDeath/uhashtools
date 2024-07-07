@@ -116,7 +116,10 @@ uhashtools_mainwin_on_file_dropped
             (void) fflush(stdout);
         }
 
-        get_drag_file_succeeded = DragQueryFileW(dropped_files_event_handle, 0, ctx_target_file, FILEPATH_BUFFER_TSIZE);
+        get_drag_file_succeeded = DragQueryFileW(dropped_files_event_handle,
+                                                 0,
+                                                 ctx_target_file,
+                                                 FILEPATH_BUFFER_TSIZE);
 
         if(get_drag_file_succeeded)
         {

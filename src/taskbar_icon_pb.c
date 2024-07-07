@@ -79,7 +79,8 @@ uhashtools_taskbar_icon_progress_bar_on_work_progress
 {
     UHASHTOOLS_ASSERT(own_state, L"Internal error: Entered with own_state == NULL!");
     UHASHTOOLS_ASSERT(taskbar_list_com_api, L"Internal error: Entered with taskbar_list_com_api == NULL!");
-    UHASHTOOLS_ASSERT(progress_in_percent <= 100, L"Internal error: Entered with invalid value for progress_in_percent!");
+    UHASHTOOLS_ASSERT(progress_in_percent <= 100,
+                      L"Internal error: Entered with invalid value for progress_in_percent!");
 
     if (own_state->current_progress_in_percent == progress_in_percent)
     {

@@ -63,4 +63,3 @@ uhashtools_eb_set_text
 
     Edit_SetText(eb_handle, txt);
 }
-

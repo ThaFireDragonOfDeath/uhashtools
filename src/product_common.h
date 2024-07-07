@@ -18,3 +18,8 @@
 #define UHASHTOOLS_RC_PRODUCTVERSION_STR   L"0.2.0\0"
 #define UHASHTOOLS_RC_COMPANY_STR          L"techdragonblog.de\0"
 #define UHASHTOOLS_RC_LEGALCOPYRIGHT_STR   L"\x00a9 2024 Marcel Gosmann\0"
+
+/*
+ * Because this file is included by a resource file, this file must
+ * always end with an empty line!
+ */

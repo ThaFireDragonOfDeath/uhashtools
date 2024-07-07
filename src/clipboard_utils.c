@@ -39,6 +39,11 @@ uhashtools_clipboard_utils_set_clipboard_text
         return;
     }
     
+    /*
+     * Error handling beyond this point:
+     * Jump out of this function with "goto cleanup_and_out;".
+     */
+
     clipboard_text_copy_glba_handle = GlobalAlloc(GMEM_ZEROINIT | GMEM_MOVEABLE, clipboard_text_copy_required_mem_bsize);
     
     if (!clipboard_text_copy_glba_handle)
@@ -60,7 +65,6 @@ uhashtools_clipboard_utils_set_clipboard_text
     }
     
     (void) wcscpy_s(clipboard_text_copy, clipboard_text_copy_required_mem_tsize, clipboard_text);
-    
     (void) SetClipboardData(CF_UNICODETEXT, (HANDLE) clipboard_text_copy_glba_handle);
     
     (void) GlobalUnlock(clipboard_text_copy_glba_handle);

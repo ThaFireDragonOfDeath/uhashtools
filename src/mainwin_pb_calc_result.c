@@ -12,6 +12,11 @@
 #include "gui_pb_common.h"
 #include "mainwin_state.h"
 
+const DWORD PB_CALC_RESULT_STYLE = WS_CHILD;
+const DWORD PB_CALC_RESULT_STYLE_EX = 0;
+const int PB_CALC_RESULT_HIGHT = PB_EB_DEFAULT_HIGHT;
+const int PB_CALC_RESULT_X = MW_FC_LBL_WIDTH + DEFAULT_DISTANCE * 2;
+
 static BOOL dyn_PB_CALC_RESULT_VISIBLE(enum MainWindowState state)
 {
     switch(state)
@@ -21,10 +26,7 @@ static BOOL dyn_PB_CALC_RESULT_VISIBLE(enum MainWindowState state)
         default: return FALSE;
     }
 }
-const DWORD PB_CALC_RESULT_STYLE = WS_CHILD;
-const DWORD PB_CALC_RESULT_STYLE_EX = 0;
-const int PB_CALC_RESULT_HIGHT = PB_EB_DEFAULT_HIGHT;
-const int PB_CALC_RESULT_X = MW_FC_LBL_WIDTH + DEFAULT_DISTANCE * 2;
+
 static int dyn_PB_CALC_RESULT_WIDTH(int right_anchor_element_x)
 {
     return right_anchor_element_x - DEFAULT_DISTANCE - PB_CALC_RESULT_X;

@@ -49,10 +49,16 @@ uhashtools_send_event_message
     BOOL event_msg_send_success = FALSE;
     
     wait_for_write_result = WaitForSingleObject(event_message_buf_is_writeable_event, INFINITE);
-    UHASHTOOLS_ASSERT(wait_for_write_result == WAIT_OBJECT_0, L"WaitForSingleObject() on event_message_buf_is_writeable_event failed!");
+    UHASHTOOLS_ASSERT(wait_for_write_result == WAIT_OBJECT_0,
+                      L"WaitForSingleObject() on event_message_buf_is_writeable_event failed!");
 
-    event_msg_copy_error = memcpy_s(event_message_buf, sizeof *event_message_buf, event_message_to_send, sizeof *event_message_to_send);
-    UHASHTOOLS_ASSERT(!event_msg_copy_error, L"Failed to copy the generated event message into the shared buffer!");
+    event_msg_copy_error = memcpy_s(event_message_buf,
+                                    sizeof *event_message_buf,
+                                    event_message_to_send,
+                                    sizeof *event_message_to_send);
+
+    UHASHTOOLS_ASSERT(!event_msg_copy_error,
+                      L"Failed to copy the generated event message into the shared buffer!");
 
     event_msg_send_success = PostMessageW(event_message_receiver, WM_USER, (WPARAM) event_message_buf, 0);
     UHASHTOOLS_ASSERT(event_msg_send_success, L"Failed to send the event message with PostMessageW()!");
@@ -120,7 +126,8 @@ uhashtools_send_calculation_complete_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculated complete message with content \"%s\".\n", calculated_hash);
+    (void) wprintf_s(L"[DEBUG] Sending calculated complete message with content \"%s\".\n",
+                     calculated_hash);
     (void) fflush(stdout);
 
     event_message.event_type = HCWET_CALCULATION_COMPLETE;
@@ -148,7 +155,8 @@ uhashtools_send_calculation_failed_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculated failed message with content \"%s\".\n", user_error_message);
+    (void) wprintf_s(L"[DEBUG] Sending calculated failed message with content \"%s\".\n",
+                     user_error_message);
     (void) fflush(stdout);
 
     event_message.event_type = HCWET_CALCULATION_FAILED;
@@ -176,7 +184,8 @@ uhashtools_send_calculation_progress_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculated progress message with content \"%u\".\n", current_calculation_progress);
+    (void) wprintf_s(L"[DEBUG] Sending calculated progress message with content \"%u\".\n",
+                     current_calculation_progress);
     (void) fflush(stdout);
 
     event_message.event_type = HCWET_CALCULATION_PROGRESS_CHANGED;
@@ -197,7 +206,8 @@ uhashtools_process_thread_messages
 {
     MSG peeked_msg;
 
-    UHASHTOOLS_ASSERT(received_thread_messages, L"Internal error: Entered with received_thread_messages == NULL!");
+    UHASHTOOLS_ASSERT(received_thread_messages,
+                      L"Internal error: Entered with received_thread_messages == NULL!");
 
     while (PeekMessageW(&peeked_msg, (HWND) -1, WM_USER, WM_USER, PM_REMOVE))
     {
@@ -224,7 +234,6 @@ uhashtools_check_is_cancel_requests_callback
     }
 
     received_thread_messages = (struct ReceivedThreadMessages*) userdata;
-
     uhashtools_process_thread_messages(received_thread_messages);
 
     ret = received_thread_messages->cancel_requested;

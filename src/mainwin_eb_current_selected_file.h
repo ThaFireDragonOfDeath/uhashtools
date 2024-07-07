@@ -21,8 +21,8 @@ uhashtools_eb_current_selected_file_create
     const enum MainWindowState mainwin_state,
     wchar_t* current_target_file,
     wchar_t* current_selected_file_txt_buf,
-    int bottom_anker_y,
-    int right_anker_x
+    int bottom_anchor_y,
+    int right_anchor_x
 );
 
 extern
@@ -30,8 +30,8 @@ void
 uhashtools_eb_current_selected_file_on_parent_resize
 (
     HWND self,
-    int bottom_anker_y,
-    int right_anker_x
+    int bottom_anchor_y,
+    int right_anchor_x
 );
 
 extern

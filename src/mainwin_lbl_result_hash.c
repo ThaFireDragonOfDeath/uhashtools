@@ -14,7 +14,16 @@
 
 /* Static GUI element properties */
 
+/*
+ * Hack!
+ * We added some extra spaces here because the label rendering glitches
+ * a bit if we change the text of the label and the new text is shorter
+ * then the old text. So we're adding some spaces that the length of
+ * the shorter text is effectively the length of the longer text plus
+ * one.
+ */
 const wchar_t LBL_RESULT_HASH_TXT[] = L"Result:   ";
+
 const wchar_t LBL_RESULT_HASH_TXT_ON_WORKING[] = L"Progress:";
 const DWORD LBL_RESULT_HASH_STYLE = WS_CHILD | WS_VISIBLE | SS_SIMPLE;
 const DWORD LBL_RESULT_HASH_STYLE_EX = 0;
@@ -59,14 +68,14 @@ uhashtools_lbl_result_hash_create
     current_txt = dyn_LBL_RESULT_HASH_TXT(mainwin_state);
 
     ret = uhashtools_lbl_create(app_instance,
-                             parent_window,
-                             LBL_RESULT_HASH_STYLE,
-                             LBL_RESULT_HASH_STYLE_EX,
-                             LBL_RESULT_HASH_X,
-                             current_y,
-                             LBL_RESULT_HASH_WIDTH,
-                             LBL_RESULT_HASH_HIGHT,
-                             current_txt);
+                                parent_window,
+                                LBL_RESULT_HASH_STYLE,
+                                LBL_RESULT_HASH_STYLE_EX,
+                                LBL_RESULT_HASH_X,
+                                current_y,
+                                LBL_RESULT_HASH_WIDTH,
+                                LBL_RESULT_HASH_HIGHT,
+                                current_txt);
     
     return ret;
 }

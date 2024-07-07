@@ -15,11 +15,11 @@
 #include "mainwin_btn_select_file.h"
 #include "mainwin_ctx.h"
 #include "mainwin_eb_calc_result.h"
-#include "mainwin_lbl_result_hash.h"
-#include "mainwin_pb_calc_result.h"
-#include "mainwin_lbl_selected_file.h"
 #include "mainwin_eb_current_selected_file.h"
 #include "mainwin_lbl_file_drop.h"
+#include "mainwin_lbl_result_hash.h"
+#include "mainwin_lbl_selected_file.h"
+#include "mainwin_pb_calc_result.h"
 #include "product.h"
 #include "selectfiledialog.h"
 
@@ -127,11 +127,11 @@ uhashtools_mainwin_init_ui_controls
                                                                    new_btn_action_x);
 
     mainwin_ctx->eb_calc_result = uhashtools_eb_calc_result_create(app_instance_handle,
-                                                                own_window_handle,
-                                                                new_btn_action_x,
-                                                                own_state,
-                                                                mainwin_ctx->hash_result,
-                                                                mainwin_ctx->eb_calc_result_txt_buf);
+                                                                   own_window_handle,
+                                                                   new_btn_action_x,
+                                                                   own_state,
+                                                                   mainwin_ctx->hash_result,
+                                                                   mainwin_ctx->eb_calc_result_txt_buf);
 
     mainwin_ctx->lbl_result_hash = uhashtools_lbl_result_hash_create(app_instance_handle,
                                                                      own_window_handle,
@@ -268,11 +268,12 @@ uhashtools_mainwin_change_state
     {
         if (mainwin_ctx->error_txt[0] == '\0')
         {
-            (void) wcscpy_s(mainwin_ctx->error_txt, GENERIC_TXT_MESSAGES_BUFFER_TSIZE, L"I just don't know what went wrong (◑‿◐)!");
+            (void) wcscpy_s(mainwin_ctx->error_txt,
+                            GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
+                            L"I just don't know what went wrong (◑‿◐)!");
         }
 
         (void) MessageBeep(MB_OK);
-
         (void) MessageBoxW(mainwin_ctx->own_window_handle,
                            mainwin_ctx->error_txt,
                            L"Calculation failed",
@@ -339,10 +340,10 @@ uhashtools_mainwin_hash_selected_file
 
     uhashtools_mainwin_change_state(mainwin_ctx, MAINWINDOWSTATE_WORKING);
     mainwin_ctx->worker_instance_data = uhashtools_hash_calculation_worker_start(&mainwin_ctx->worker_thread_param_buf,
-                                                                              &mainwin_ctx->event_message_buf,
-                                                                              mainwin_ctx->event_message_buf_is_writeable_event,
-                                                                              mainwin_ctx->own_window_handle,
-                                                                              mainwin_ctx->target_file);
+                                                                                 &mainwin_ctx->event_message_buf,
+                                                                                 mainwin_ctx->event_message_buf_is_writeable_event,
+                                                                                 mainwin_ctx->own_window_handle,
+                                                                                 mainwin_ctx->target_file);
     
     if (!mainwin_ctx->worker_instance_data.created_successfully)
     {
@@ -352,6 +353,7 @@ uhashtools_mainwin_hash_selected_file
         (void) wcscpy_s(mainwin_ctx->error_txt,
                         GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
                         L"Internal error: Failed to create hash calculation worker thread!");
+
         uhashtools_mainwin_change_state(mainwin_ctx, MAINWINDOWSTATE_FINISHED_ERROR);
         
         return;

@@ -8,14 +8,13 @@
 
 #include "mainwin_eb_current_selected_file.h"
 
-#include <Windows.h>
-
 #include "buffer_sizes.h"
 #include "errorutils.h"
 #include "gui_eb_common.h"
 #include "gui_common.h"
 #include "mainwin_state.h"
 
+#include <Windows.h>
 
 /* Static GUI element properties */
 
@@ -26,17 +25,24 @@ const int EB_CURRENT_SELECTED_FILE_HIGHT = LBL_DEFAULT_HIGHT;
 
 /* Dynamic GUI element properties */
 
-static int dyn_EB_CURRENT_SELECTED_FILE_WIDTH(int right_anker_element_x)
+static int dyn_EB_CURRENT_SELECTED_FILE_WIDTH(int right_anchor_element_x)
 {
-    return right_anker_element_x - DEFAULT_DISTANCE - EB_CURRENT_SELECTED_FILE_X;
+    return right_anchor_element_x - DEFAULT_DISTANCE - EB_CURRENT_SELECTED_FILE_X;
 }
 
-static int dyn_CURRENT_SELECTED_FILE_Y(int bottom_anker_y)
+static int dyn_CURRENT_SELECTED_FILE_Y(int bottom_anchor_y)
 {
-    return bottom_anker_y - DEFAULT_DISTANCE - EB_CURRENT_SELECTED_FILE_HIGHT - EB_EXTRA_Y_DISTANCE_TO_OTHER_EB;
+    return bottom_anchor_y - DEFAULT_DISTANCE - EB_CURRENT_SELECTED_FILE_HIGHT - EB_EXTRA_Y_DISTANCE_TO_OTHER_EB;
 }
 
-static wchar_t* dyn_EB_CURRENT_SELECTED_FILE_TXT(const enum MainWindowState mainwin_state, const wchar_t* current_target_file, wchar_t* txt_buf)
+static
+wchar_t*
+dyn_EB_CURRENT_SELECTED_FILE_TXT
+(
+    const enum MainWindowState mainwin_state,
+    const wchar_t* current_target_file,
+    wchar_t* txt_buf
+)
 {
     UHASHTOOLS_ASSERT(txt_buf, L"Entered with txt_buf == NULL!");
     
@@ -72,8 +78,8 @@ uhashtools_eb_current_selected_file_create
     const enum MainWindowState mainwin_state,
     wchar_t* current_target_file,
     wchar_t* current_selected_file_txt_buf,
-    int bottom_anker_y,
-    int right_anker_x
+    int bottom_anchor_y,
+    int right_anchor_x
 )
 {
     HWND ret = NULL;
@@ -81,9 +87,11 @@ uhashtools_eb_current_selected_file_create
     int current_width = 0;
     wchar_t* current_txt = NULL;
 
-    current_y = dyn_CURRENT_SELECTED_FILE_Y(bottom_anker_y);
-    current_width = dyn_EB_CURRENT_SELECTED_FILE_WIDTH(right_anker_x);
-    current_txt = dyn_EB_CURRENT_SELECTED_FILE_TXT(mainwin_state, current_target_file, current_selected_file_txt_buf);
+    current_y = dyn_CURRENT_SELECTED_FILE_Y(bottom_anchor_y);
+    current_width = dyn_EB_CURRENT_SELECTED_FILE_WIDTH(right_anchor_x);
+    current_txt = dyn_EB_CURRENT_SELECTED_FILE_TXT(mainwin_state,
+                                                   current_target_file,
+                                                   current_selected_file_txt_buf);
 
     ret = uhashtools_eb_create(app_instance,
                             parent_window,
@@ -102,15 +110,15 @@ void
 uhashtools_eb_current_selected_file_on_parent_resize
 (
     HWND self,
-    int bottom_anker_y,
-    int right_anker_x
+    int bottom_anchor_y,
+    int right_anchor_x
 )
 {
     int current_y = 0;
     int current_width = 0;
 
-    current_y = dyn_CURRENT_SELECTED_FILE_Y(bottom_anker_y);
-    current_width = dyn_EB_CURRENT_SELECTED_FILE_WIDTH(right_anker_x);
+    current_y = dyn_CURRENT_SELECTED_FILE_Y(bottom_anchor_y);
+    current_width = dyn_EB_CURRENT_SELECTED_FILE_WIDTH(right_anchor_x);
 
     uhashtools_gui_elm_resize(self, current_width, EB_CURRENT_SELECTED_FILE_HIGHT);
     uhashtools_gui_elm_move(self, EB_CURRENT_SELECTED_FILE_X, current_y);
@@ -128,10 +136,14 @@ uhashtools_eb_current_selected_file_on_state_changed
     wchar_t* current_txt = NULL;
 
     UHASHTOOLS_ASSERT(self != NULL, L"Invalid param: Entered with self == NULL!");
-    UHASHTOOLS_ASSERT(self != INVALID_HANDLE_VALUE, L"Invalid param: Entered with self == INVALID_HANDLE_VALUE!");
-    UHASHTOOLS_ASSERT(current_target_file, L"Invalid param: Entered with current_target_file == NULL!");
+    UHASHTOOLS_ASSERT(self != INVALID_HANDLE_VALUE,
+                      L"Invalid param: Entered with self == INVALID_HANDLE_VALUE!");
+    UHASHTOOLS_ASSERT(current_target_file,
+                      L"Invalid param: Entered with current_target_file == NULL!");
 
-    current_txt = dyn_EB_CURRENT_SELECTED_FILE_TXT(new_mainwin_state, current_target_file, current_selected_file_txt_buf);
+    current_txt = dyn_EB_CURRENT_SELECTED_FILE_TXT(new_mainwin_state,
+                                                   current_target_file,
+                                                   current_selected_file_txt_buf);
 
     uhashtools_eb_set_text(self, current_txt);
 }

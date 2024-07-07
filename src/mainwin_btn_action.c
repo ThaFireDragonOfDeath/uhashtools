@@ -8,12 +8,12 @@
 
 #include "mainwin_btn_action.h"
 
-#include <Windows.h>
-
 #include "errorutils.h"
 #include "gui_btn_common.h"
 #include "gui_common.h"
 #include "mainwin_state.h"
+
+#include <Windows.h>
 
 const DWORD BTN_ACTION_STYLE = WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON | BS_ICON;
 const DWORD BTN_ACTION_STYLE_EX = 0;
@@ -41,7 +41,7 @@ static HICON dyn_BTN_ACTION_ICON(enum MainWindowState state)
             break;
     }
 
-    UHASHTOOLS_ASSERT(ret, L"Extracted Shel32 icon is NULL!");
+    UHASHTOOLS_ASSERT(ret, L"Extracted Shell32 icon is NULL!");
 
     return ret;
 }

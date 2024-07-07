@@ -21,3 +21,8 @@
 #define UHASHTOOLS_MAINWIN_TITLE L"\x00b5SHA-256"
 #define UHASHTOOLS_MAINWIN_RECOMMENDED_WIDTH 550
 #define UHASHTOOLS_BCRYPT_HASH_ALGORITHM_NAME BCRYPT_SHA256_ALGORITHM
+
+/*
+ * Because this file is included by a resource file, this file must
+ * always end with an empty line!
+ */
