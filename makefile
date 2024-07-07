@@ -164,45 +164,51 @@ LFLAGS_UMD5                 = $(LFLAGS) /MANIFESTFILE:$(UMD5_BUILDOUT_MANIFEST_F
 # Updating a source file will cause an incremental compilation.
 #
 
-UHASHTOOLS_SOURCES_COMMON       = src\clipboard_utils.c \
-                                  src\com_lib.c \
-                                  src\errorutils.c \
-                                  src\gui_btn_common.c \
-                                  src\gui_common.c \
-                                  src\gui_eb_common.c \
-                                  src\gui_lbl_common.c \
-                                  src\gui_pb_common.c \
-                                  src\hash_calculation_impl.c \
-                                  src\hash_calculation_worker.c \
-                                  src\main.c \
-                                  src\mainwin.c \
-                                  src\mainwin_actions.c \
-                                  src\mainwin_btn_action.c \
-                                  src\mainwin_btn_select_file.c \
-                                  src\mainwin_ctx.c \
-                                  src\mainwin_eb_calc_result.c \
-                                  src\mainwin_eb_current_selected_file.c \
-                                  src\mainwin_event_handler.c \
-                                  src\mainwin_lbl_file_drop.c \
-                                  src\mainwin_lbl_result_hash.c \
-                                  src\mainwin_lbl_selected_file.c \
-                                  src\mainwin_message_handler.c \
-                                  src\mainwin_pb_calc_result.c \
-                                  src\selectfiledialog.c \
-                                  src\taskbar_icon_pb.c \
-                                  src\taskbarlist_com_api.c
+UHASHTOOLS_SOURCES_COMMON        = src\clipboard_utils.c \
+                                   src\errorutils.c \
+                                   src\gui_btn_common.c \
+                                   src\gui_common.c \
+                                   src\gui_eb_common.c \
+                                   src\gui_lbl_common.c \
+                                   src\gui_pb_common.c \
+                                   src\hash_calculation_impl.c \
+                                   src\hash_calculation_worker.c \
+                                   src\main.c \
+                                   src\mainwin.c \
+                                   src\mainwin_actions.c \
+                                   src\mainwin_btn_action.c \
+                                   src\mainwin_btn_select_file.c \
+                                   src\mainwin_ctx.c \
+                                   src\mainwin_eb_calc_result.c \
+                                   src\mainwin_eb_current_selected_file.c \
+                                   src\mainwin_event_handler.c \
+                                   src\mainwin_lbl_file_drop.c \
+                                   src\mainwin_lbl_result_hash.c \
+                                   src\mainwin_lbl_selected_file.c \
+                                   src\mainwin_message_handler.c \
+                                   src\mainwin_pb_calc_result.c \
+                                   src\selectfiledialog.c
 
-UHASHTOOLS_APP_ICON_COMMON      = res\application_icon\application_icon_64.ico
-UHASHTOOLS_RC_SOURCES_COMMON    = src\uhashtools_common.rc
+!IF $(MINIMUM_WIN32_API_VERSION) >= 0x0601
+UHASHTOOLS_SOURCES_COMMON_0x0601 = src\com_lib.c \
+                                   src\taskbar_icon_pb.c \
+                                   src\taskbarlist_com_api.c
 
-USHA256_SOURCES                 = src\product_usha256.c
-USHA256_RC_SOURCES              = src\usha256.rc
+UHASHTOOLS_SOURCES_COMMON        = $(UHASHTOOLS_SOURCES_COMMON) \
+                                   $(UHASHTOOLS_SOURCES_COMMON_0x0601)
+!Endif
 
-USHA1_SOURCES                   = src\product_usha1.c
-USHA1_RC_SOURCES                = src\usha1.rc
+UHASHTOOLS_APP_ICON_COMMON       = res\application_icon\application_icon_64.ico
+UHASHTOOLS_RC_SOURCES_COMMON     = src\uhashtools_common.rc
 
-UMD5_SOURCES                    = src\product_umd5.c
-UMD5_RC_SOURCES                 = src\umd5.rc
+USHA256_SOURCES                  = src\product_usha256.c
+USHA256_RC_SOURCES               = src\usha256.rc
+
+USHA1_SOURCES                    = src\product_usha1.c
+USHA1_RC_SOURCES                 = src\usha1.rc
+
+UMD5_SOURCES                     = src\product_umd5.c
+UMD5_RC_SOURCES                  = src\umd5.rc
 
 
 #
@@ -210,83 +216,95 @@ UMD5_RC_SOURCES                 = src\umd5.rc
 # Updating a header file will cause a full recompilation.
 #
 
-UHASHTOOLS_HEADERS_COMMON       = src\buffer_sizes.h \
-                                  src\clipboard_utils.h \
-                                  src\com_lib.h \
-                                  src\errorutils.h \
-                                  src\gui_btn_common.h \
-                                  src\gui_common.h \
-                                  src\gui_eb_common.h \
-                                  src\gui_lbl_common.h \
-                                  src\gui_pb_common.h \
-                                  src\hash_calculation_impl.h \
-                                  src\hash_calculation_worker.h \
-                                  src\mainwin.h \
-                                  src\mainwin_actions.h \
-                                  src\mainwin_btn_action.h \
-                                  src\mainwin_btn_select_file.h \
-                                  src\mainwin_ctx.h \
-                                  src\mainwin_eb_calc_result.h \
-                                  src\mainwin_eb_current_selected_file.h \
-                                  src\mainwin_event_handler.h \
-                                  src\mainwin_lbl_file_drop.h \
-                                  src\mainwin_lbl_result_hash.h \
-                                  src\mainwin_lbl_selected_file.h \
-                                  src\mainwin_message_handler.h \
-                                  src\mainwin_pb_calc_result.h \
-                                  src\mainwin_state.h \
-                                  src\product.h \
-                                  src\product_common.h \
-                                  src\selectfiledialog.h \
-                                  src\taskbar_icon_pb.h \
-                                  src\taskbar_icon_pb_ctx.h \
-                                  src\taskbarlist_com_api.h
+UHASHTOOLS_HEADERS_COMMON        = src\buffer_sizes.h \
+                                   src\clipboard_utils.h \
+                                   src\errorutils.h \
+                                   src\gui_btn_common.h \
+                                   src\gui_common.h \
+                                   src\gui_eb_common.h \
+                                   src\gui_lbl_common.h \
+                                   src\gui_pb_common.h \
+                                   src\hash_calculation_impl.h \
+                                   src\hash_calculation_worker.h \
+                                   src\mainwin.h \
+                                   src\mainwin_actions.h \
+                                   src\mainwin_btn_action.h \
+                                   src\mainwin_btn_select_file.h \
+                                   src\mainwin_ctx.h \
+                                   src\mainwin_eb_calc_result.h \
+                                   src\mainwin_eb_current_selected_file.h \
+                                   src\mainwin_event_handler.h \
+                                   src\mainwin_lbl_file_drop.h \
+                                   src\mainwin_lbl_result_hash.h \
+                                   src\mainwin_lbl_selected_file.h \
+                                   src\mainwin_message_handler.h \
+                                   src\mainwin_pb_calc_result.h \
+                                   src\mainwin_state.h \
+                                   src\product.h \
+                                   src\product_common.h \
+                                   src\selectfiledialog.h \
+                                   src\taskbar_icon_pb_ctx.h
 
-USHA256_HEADERS                 = src\product_usha256.h
-USHA1_HEADERS                   = src\product_usha1.h
-UMD5_HEADERS                    = src\product_umd5.h
+!IF $(MINIMUM_WIN32_API_VERSION) >= 0x0601
+UHASHTOOLS_HEADERS_COMMON_0x0601 = src\com_lib.h \
+                                   src\taskbar_icon_pb.h \
+                                   src\taskbarlist_com_api.h
+
+UHASHTOOLS_HEADERS_COMMON        = $(UHASHTOOLS_HEADERS_COMMON) \
+                                   $(UHASHTOOLS_HEADERS_COMMON_0x0601)
+!Endif
+
+USHA256_HEADERS                  = src\product_usha256.h
+USHA1_HEADERS                    = src\product_usha1.h
+UMD5_HEADERS                     = src\product_umd5.h
 
 
 #
 # Setting the out obj files.
 #
 
-UHASHTOOLS_OBJECTS_COMMON       = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\com_lib.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\errorutils.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_btn_common.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_common.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_eb_common.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_lbl_common.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_pb_common.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_impl.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_worker.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\main.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_actions.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_btn_action.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_btn_select_file.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_ctx.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_calc_result.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_current_selected_file.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_event_handler.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_file_drop.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_result_hash.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_selected_file.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_message_handler.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_pb_calc_result.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\selectfiledialog.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbar_icon_pb.obj \
-                                  $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbarlist_com_api.obj
+UHASHTOOLS_OBJECTS_COMMON        = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\errorutils.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_btn_common.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_common.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_eb_common.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_lbl_common.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_pb_common.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_impl.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_worker.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\main.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_actions.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_btn_action.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_btn_select_file.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_ctx.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_calc_result.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_eb_current_selected_file.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_event_handler.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_file_drop.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_result_hash.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_lbl_selected_file.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_message_handler.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin_pb_calc_result.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\selectfiledialog.obj
 
-USHA256_OBJECTS                 = $(USHA256_BUILDOUT_OBJ_DIR)\product_usha256.obj
-USHA256_RES_OBJECTS             = $(USHA256_BUILDOUT_OBJ_DIR)\usha256.res
+!IF $(MINIMUM_WIN32_API_VERSION) >= 0x0601
+UHASHTOOLS_OBJECTS_COMMON_0x0601 = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\com_lib.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbar_icon_pb.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\taskbarlist_com_api.obj
 
-USHA1_OBJECTS                   = $(USHA1_BUILDOUT_OBJ_DIR)\product_usha1.obj
-USHA1_RES_OBJECTS               = $(USHA1_BUILDOUT_OBJ_DIR)\usha1.res
+UHASHTOOLS_OBJECTS_COMMON        = $(UHASHTOOLS_OBJECTS_COMMON) \
+                                   $(UHASHTOOLS_OBJECTS_COMMON_0x0601)
+!Endif
 
-UMD5_OBJECTS                    = $(UMD5_BUILDOUT_OBJ_DIR)\product_umd5.obj
-UMD5_RES_OBJECTS                = $(UMD5_BUILDOUT_OBJ_DIR)\umd5.res
+USHA256_OBJECTS                  = $(USHA256_BUILDOUT_OBJ_DIR)\product_usha256.obj
+USHA256_RES_OBJECTS              = $(USHA256_BUILDOUT_OBJ_DIR)\usha256.res
+
+USHA1_OBJECTS                    = $(USHA1_BUILDOUT_OBJ_DIR)\product_usha1.obj
+USHA1_RES_OBJECTS                = $(USHA1_BUILDOUT_OBJ_DIR)\usha1.res
+
+UMD5_OBJECTS                     = $(UMD5_BUILDOUT_OBJ_DIR)\product_umd5.obj
+UMD5_RES_OBJECTS                 = $(UMD5_BUILDOUT_OBJ_DIR)\umd5.res
 
 
 #

@@ -190,7 +190,7 @@ uhashtools_mainwin_handle_message_WM_COMMAND
 
     if((HWND) lParam == mainwin_ctx->btn_select_file)
     {
-        WORD control_notification = HIWORD(wParam);
+        const WORD control_notification = HIWORD(wParam);
 
         if(control_notification == BN_CLICKED)
         {
@@ -201,32 +201,34 @@ uhashtools_mainwin_handle_message_WM_COMMAND
     }
     else if ((HWND) lParam == mainwin_ctx->btn_action)
     {
-        WORD control_notification = HIWORD(wParam);
+        const WORD control_notification = HIWORD(wParam);
 
         if(control_notification == BN_CLICKED)
         {
             if (mainwin_ctx->own_state == MAINWINDOWSTATE_WORKING_CANCELABLE)
             {
                 uhashtools_mainwin_on_cancel_button_pressed(mainwin_ctx);
+                
+                return 0;
             }
             else if (mainwin_ctx->own_state == MAINWINDOWSTATE_CANCELED ||
                      mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_ERROR ||
                      mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_ERROR_MSGBOX_CONFIRMED)
             {
                 uhashtools_mainwin_on_retry_button_pressed(mainwin_ctx);
+
+                return 0;
             }
             else if (mainwin_ctx->own_state == MAINWINDOWSTATE_FINISHED_SUCCESS)
             {
                 uhashtools_mainwin_on_copy_to_clipboard_button_pressed(mainwin_ctx);
+
+                return 0;
             }
-            
-            return 0;
         }
     }
-    else
-    {
-        return DefWindowProcW(hwnd, uMsg, wParam, lParam);
-    }
+    
+    return DefWindowProcW(hwnd, uMsg, wParam, lParam);
 }
 
 static
