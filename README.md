@@ -43,9 +43,9 @@ That means building this software with the default toolchain from
 Visual Studio 2008 will result in build errors.
 To build this software with the MSVC tools from Visual Studio 2008
 you have to either setup the MSVC Developer Command Prompt with the
-Windows SDK v7.0 or newer (see ["vcvarsall options"](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170#vcvarsall-syntax)
+Windows SDK v7.0 or newer (see [vcvarsall.bat options](https://learn.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=msvc-170#vcvarsall-syntax)
 for more information) or change the value of the variable
-"MINIMUM_WIN32_API_VERSION" in the file ["makefile"](makefile) from
+`MINIMUM_WIN32_API_VERSION` in the file "[makefile](makefile)" from
 `0x0601` to `0x0600`.
 If you want that this software can run on Windows Vista you will have
 to use the second option.
