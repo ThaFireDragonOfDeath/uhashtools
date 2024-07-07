@@ -28,11 +28,39 @@ information like filename and line number will be shown within an
 error message box. After the error message box is closed by the user
 the application terminates.
 
+# Non critical errors in the hash background worker thread
+Errors during the hash calculation are handled gracefully by sending
+an hash calculation failed user event window message to the main
+window. The event handler will then show the error message within a
+message box. In practice the blocking hash calculation function
+"uhashtools_hash_calculator_impl_hash_file()" gets the wide string
+buffer "result_string_buf" in which the implementation can write
+either the calculated hash of the selected file or an error message.
+What information is stored in this buffer is determined by the
+return value of this function. If the function returns the success
+indicator then the buffer will contain the hash result. But if the
+function returns the failed indicator the buffer will contain an
+error message. In other words if we encounter a non critical error
+within the blocking hash calculation function we simply write the
+error message for the user into the result buffer and returning
+the failed indicator. The thread function of the hash background
+worker thread within the source file "hash_calculation_worker.c"
+will check the return code of the blocking hash calculation function
+and will send a calculation failed message to the main window.
+
 # Printing warning messages
 To print warning messages we're including the standard C header file
 "stdio.h" and using the following code:
 ```C
 (void) wprintf_s(L"[WARNING]: Warning message\n");
+(void) fflush(stdout);
+```
+
+# Printing information messages
+To print information messages we're including the standard C header
+file "stdio.h" and using the following code:
+```C
+(void) wprintf_s(L"[INFO]: Information message\n");
 (void) fflush(stdout);
 ```
 

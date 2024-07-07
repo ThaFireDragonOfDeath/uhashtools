@@ -422,10 +422,21 @@ uhashtools_hash_calculator_impl_hash_file
     (void) memset((void*) &opened_target_file, 0, sizeof opened_target_file);
     (void) memset((void*) &prepared_hasher_impl, 0, sizeof prepared_hasher_impl);
 
+    /*
+     * Error handling beyond this point:
+     * Write the error message for the user into the "result_string_buf" buffer
+     * and jump out of this function with "goto cleanup_and_out;".
+     */
+
     opened_target_file = uhashtools_target_file_open(result_string_buf, result_string_buf_tsize, target_file);
 
     if (!opened_target_file.is_ok)
     {
+        /*
+         * The function "uhashtools_target_file_open()" already writes the user
+         * error message into the "result_string_buf" buffer.
+         */
+
         goto cleanup_and_out;
     }
 
@@ -433,6 +444,11 @@ uhashtools_hash_calculator_impl_hash_file
 
     if (!prepared_hasher_impl.is_ok)
     {
+        /*
+         * The function "uhashtools_win_cng_hash_impl_prepare()" already writes the user
+         * error message into the "result_string_buf" buffer.
+         */
+
         goto cleanup_and_out;
     }
 
@@ -445,6 +461,13 @@ uhashtools_hash_calculator_impl_hash_file
         size_t read_characters = 0;
         NTSTATUS hash_data_rc = 0;
         unsigned int current_calculation_progress = 0;
+
+        /*
+         * Error handling within this while loop:
+         * Write the error message for the user into the "result_string_buf"
+         * buffer, set the variable "hash_calculation_failed" to 'TRUE' and
+         * jump out this loop using "break;".
+         */
 
         read_characters = fread_s((void*) file_read_buf,
                                   FILE_READ_BUF_SIZE,
