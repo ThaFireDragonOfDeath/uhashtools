@@ -12,7 +12,7 @@ $ErrorActionPreference = "Stop"
 
 # Constants from makefile
 $product_ascii_name = "uhashtools"
-$product_version = "0.2.0"
+$product_version = "0.3.0"
 $distout_dir_name = "dist_out"
 
 # Directory names from makefile

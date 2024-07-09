@@ -8,6 +8,9 @@ Symbols:
 - = Removed features or other removals
 
 
+µHashtools 0.3.0 (not released yet):
+# No changes implemented yet
+
 µHashtools 0.2.0 (07.07.2024):
 + Progress indicator within the taskbar icon (optional, activated by
   default, requires Windows 7 or newer)
