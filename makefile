@@ -102,6 +102,7 @@ UMD5_BUILDOUT_PDB_FILE                      = $(BUILDOUT_BIN_DIR)\$(UMD5_NAME_BA
 DISTOUT_BASE_DIR                            = dist_out
 DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)
 DISTOUT_DIR                                 = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME)
+DISTOUT_DEBUG_SYMBOLS_DIR                   = $(DISTOUT_DIR)\debug_symbols
 DISTOUT_DOC_DIR                             = $(DISTOUT_DIR)\documentation
 DISTOUT_SRC_PKG_DIR                         = $(DISTOUT_DIR)\source_code
 
@@ -315,6 +316,9 @@ UHASHTOOLS_DISTOUT_FILES        = $(DISTOUT_DIR)\$(USHA256_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\$(USHA1_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\$(UMD5_NAME_BASE).exe \
                                   $(DISTOUT_DIR)\README.txt \
+                                  $(DISTOUT_DEBUG_SYMBOLS_DIR)\$(USHA256_NAME_BASE).pdb \
+                                  $(DISTOUT_DEBUG_SYMBOLS_DIR)\$(USHA1_NAME_BASE).pdb \
+                                  $(DISTOUT_DEBUG_SYMBOLS_DIR)\$(UMD5_NAME_BASE).pdb \
                                   $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt \
                                   $(DISTOUT_DOC_DIR)\CHANGELOG.txt \
                                   $(DISTOUT_DOC_DIR)\LICENSE.CC0-1.0.txt \
@@ -437,6 +441,9 @@ $(UMD5_BUILDOUT_EXE_FILE): $(UMD5_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE)
 $(DISTOUT_DIR):
     $(MKDIR) $(DISTOUT_DIR)
 
+$(DISTOUT_DEBUG_SYMBOLS_DIR):
+    $(MKDIR) $(DISTOUT_DEBUG_SYMBOLS_DIR)
+
 $(DISTOUT_DOC_DIR):
     $(MKDIR) $(DISTOUT_DOC_DIR)
 
@@ -454,6 +461,15 @@ $(DISTOUT_DIR)\$(UMD5_NAME_BASE).exe: $(DISTOUT_DIR) $(UMD5_BUILDOUT_EXE_FILE)
 
 $(DISTOUT_DIR)\README.txt: $(DISTOUT_DIR) res\user_documentation\README.txt
     $(CP) res\user_documentation\README.txt $(DISTOUT_DIR)\README.txt
+
+$(DISTOUT_DEBUG_SYMBOLS_DIR)\$(USHA256_NAME_BASE).pdb: $(DISTOUT_DEBUG_SYMBOLS_DIR) $(USHA256_BUILDOUT_PDB_FILE)
+    $(CP) $(USHA256_BUILDOUT_PDB_FILE) $(DISTOUT_DEBUG_SYMBOLS_DIR)\$(USHA256_NAME_BASE).pdb
+
+$(DISTOUT_DEBUG_SYMBOLS_DIR)\$(USHA1_NAME_BASE).pdb: $(DISTOUT_DEBUG_SYMBOLS_DIR) $(USHA1_BUILDOUT_PDB_FILE)
+    $(CP) $(USHA1_BUILDOUT_PDB_FILE) $(DISTOUT_DEBUG_SYMBOLS_DIR)\$(USHA1_NAME_BASE).pdb
+
+$(DISTOUT_DEBUG_SYMBOLS_DIR)\$(UMD5_NAME_BASE).pdb: $(DISTOUT_DEBUG_SYMBOLS_DIR) $(UMD5_BUILDOUT_PDB_FILE)
+    $(CP) $(UMD5_BUILDOUT_PDB_FILE) $(DISTOUT_DEBUG_SYMBOLS_DIR)\$(UMD5_NAME_BASE).pdb
 
 $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt: $(DISTOUT_DOC_DIR) ATTRIBUTION
     $(CP) ATTRIBUTION $(DISTOUT_DOC_DIR)\ATTRIBUTION.txt
