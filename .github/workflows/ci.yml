@@ -1,0 +1,18 @@
+name: "Github CI"
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-in-release-mode:
+    runs-on: windows-2022
+    
+    steps:
+      - name: Checkout the source code
+        uses: actions/checkout@v4
+      - name: Run NMake rebuild (release) in VS environment
+        shell: cmd
+        run: |
+          \"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat\" -arch=amd64 -host_arch=amd64 &&^
+          nmake BUILD_MODE=Release rebuild
