@@ -148,7 +148,7 @@ uhashtools_gui_elm_set_visible
     BOOL visible
 )
 {
-    if(visible == TRUE)
+    if (visible == TRUE)
     {
         (void) ShowWindow(elm_handle, SW_SHOW);
     }

@@ -121,7 +121,7 @@ uhashtools_mainwin_on_file_dropped
                                                  ctx_target_file,
                                                  FILEPATH_BUFFER_TSIZE);
 
-        if(get_drag_file_succeeded)
+        if (get_drag_file_succeeded)
         {
             uhashtools_mainwin_hash_selected_file(mainwin_ctx);
         }
@@ -144,42 +144,42 @@ uhashtools_mainwin_on_hash_calculation_worker_event_message_received
     UHASHTOOLS_ASSERT(event_message, L"Internal error: Entered with event_message == NULL!");
 
     if (event_message->event_type == HCWET_MESSAGE_RECEIVER_INITIALIZED)
-        {
-            uhashtools_mainwin_change_state(mainwin_ctx,
-                                            MAINWINDOWSTATE_WORKING_CANCELABLE);
-        }
-        else if (event_message->event_type == HCWET_CALCULATION_PROGRESS_CHANGED)
-        {
-            const unsigned int current_progress = event_message->event_data.progress_changed_data.current_progress_in_percent;
-            
-            uhashtools_mainwin_change_displayed_calculation_progress(mainwin_ctx,
-                                                                     current_progress);
-        }
-        else if (event_message->event_type == HCWET_CALCULATION_COMPLETE)
-        {
-            (void) wcscpy_s(mainwin_ctx->hash_result,
-                            HASH_RESULT_BUFFER_TSIZE,
-                            event_message->event_data.operation_finished_data.calculated_hash);
+    {
+        uhashtools_mainwin_change_state(mainwin_ctx,
+                                        MAINWINDOWSTATE_WORKING_CANCELABLE);
+    }
+    else if (event_message->event_type == HCWET_CALCULATION_PROGRESS_CHANGED)
+    {
+        const unsigned int current_progress = event_message->event_data.progress_changed_data.current_progress_in_percent;
+        
+        uhashtools_mainwin_change_displayed_calculation_progress(mainwin_ctx,
+                                                                 current_progress);
+    }
+    else if (event_message->event_type == HCWET_CALCULATION_COMPLETE)
+    {
+        (void) wcscpy_s(mainwin_ctx->hash_result,
+                        HASH_RESULT_BUFFER_TSIZE,
+                        event_message->event_data.operation_finished_data.calculated_hash);
 
-            uhashtools_mainwin_change_state(mainwin_ctx,
-                                            MAINWINDOWSTATE_FINISHED_SUCCESS);
-        }
-        else if (event_message->event_type == HCWET_CALCULATION_FAILED)
-        {
-            (void) wcscpy_s(mainwin_ctx->error_txt,
-                            GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
-                            event_message->event_data.operation_failed_data.user_error_message);
-            
-            uhashtools_mainwin_change_state(mainwin_ctx,
-                                            MAINWINDOWSTATE_FINISHED_ERROR);
-        }
-        else if (event_message->event_type == HCWET_CALCULATION_CANCELED)
-        {
-            uhashtools_mainwin_change_state(mainwin_ctx,
-                                            MAINWINDOWSTATE_CANCELED);
-        }
-        else
-        {
-            UHASHTOOLS_FATAL_ERROR(L"Received event message with unexpected type!");
-        }
+        uhashtools_mainwin_change_state(mainwin_ctx,
+                                        MAINWINDOWSTATE_FINISHED_SUCCESS);
+    }
+    else if (event_message->event_type == HCWET_CALCULATION_FAILED)
+    {
+        (void) wcscpy_s(mainwin_ctx->error_txt,
+                        GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
+                        event_message->event_data.operation_failed_data.user_error_message);
+        
+        uhashtools_mainwin_change_state(mainwin_ctx,
+                                        MAINWINDOWSTATE_FINISHED_ERROR);
+    }
+    else if (event_message->event_type == HCWET_CALCULATION_CANCELED)
+    {
+        uhashtools_mainwin_change_state(mainwin_ctx,
+                                        MAINWINDOWSTATE_CANCELED);
+    }
+    else
+    {
+        UHASHTOOLS_FATAL_ERROR(L"Received event message with unexpected type!");
+    }
 }

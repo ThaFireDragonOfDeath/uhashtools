@@ -34,7 +34,7 @@ uhashtools_mainwin_handle_message_WM_CREATE
 
     uhashtools_set_message_boxes_owner(hwnd);
 
-    if(create_params == NULL || create_params->lpCreateParams == NULL)
+    if (create_params == NULL || create_params->lpCreateParams == NULL)
     {
         (void) wprintf_s(L"[ERROR] Main window: WM_CREATE failed! 'create_params' or 'create_params->lpCreateParams' were NULL!\n");
         (void) fflush(stdout);
@@ -48,7 +48,7 @@ uhashtools_mainwin_handle_message_WM_CREATE
     SetLastError(0);
     set_window_long_ptr_rc = SetWindowLongPtrW(hwnd, GWLP_USERDATA, (LONG_PTR) mainwin_ctx);
 
-    if(!set_window_long_ptr_rc && GetLastError() != 0)
+    if (!set_window_long_ptr_rc && GetLastError() != 0)
     {
         (void) wprintf_s(L"[ERROR] Main window: WM_CREATE failed! Function 'SetWindowLongPtrW()' failed!\n");
         (void) fflush(stdout);
@@ -188,11 +188,11 @@ uhashtools_mainwin_handle_message_WM_COMMAND
 {
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
 
-    if((HWND) lParam == mainwin_ctx->btn_select_file)
+    if ((HWND) lParam == mainwin_ctx->btn_select_file)
     {
         const WORD control_notification = HIWORD(wParam);
 
-        if(control_notification == BN_CLICKED)
+        if (control_notification == BN_CLICKED)
         {
             uhashtools_mainwin_on_select_file_button_pressed(mainwin_ctx);
 
@@ -203,7 +203,7 @@ uhashtools_mainwin_handle_message_WM_COMMAND
     {
         const WORD control_notification = HIWORD(wParam);
 
-        if(control_notification == BN_CLICKED)
+        if (control_notification == BN_CLICKED)
         {
             if (mainwin_ctx->own_state == MAINWINDOWSTATE_WORKING_CANCELABLE)
             {
@@ -270,25 +270,25 @@ uhashtools_mainwin_handle_message
     
     mainwin_ctx = (struct MainWindowCtx*) GetWindowLongPtrW(hwnd, GWLP_USERDATA);
 
-    if(uMsg == WM_CREATE)
+    if (uMsg == WM_CREATE)
     {
         return uhashtools_mainwin_handle_message_WM_CREATE(hwnd, lParam);
     }
-    else if(uMsg == WM_DESTROY)
+    else if (uMsg == WM_DESTROY)
     {
         return uhashtools_mainwin_handle_message_WM_DESTROY();
     }
-    else if(uMsg == WM_GETMINMAXINFO)
+    else if (uMsg == WM_GETMINMAXINFO)
     {
         return uhashtools_mainwin_handle_message_WM_GETMINMAXINFO(lParam,
                                                                   mainwin_min_width,
                                                                   mainwin_min_height);
     }
-    else if(uMsg == WM_CTLCOLORSTATIC || uMsg == WM_CTLCOLOREDIT)
+    else if (uMsg == WM_CTLCOLORSTATIC || uMsg == WM_CTLCOLOREDIT)
     {
         return uhashtools_mainwin_handle_message_WM_CTLCOLOR(wParam);
     }
-    else if(uMsg == WM_CLOSE)
+    else if (uMsg == WM_CLOSE)
     {
         UHASHTOOLS_ASSERT(mainwin_ctx,
                           L"Internal error: No mainwin_ctx while handling the WM_CLOSE message!");
@@ -296,26 +296,26 @@ uhashtools_mainwin_handle_message
         return uhashtools_mainwin_handle_message_WM_CLOSE(hwnd, mainwin_ctx);
     }
 #if _WIN32_WINNT >= 0x0601
-    else if(mainwin_ctx && uMsg == mainwin_ctx->wm_taskbar_button_created)
+    else if (mainwin_ctx && uMsg == mainwin_ctx->wm_taskbar_button_created)
     {
         uhashtools_mainwin_on_taskbar_button_created(mainwin_ctx);
 
         return 0;
     }
 #endif
-    else if(mainwin_ctx && uMsg == WM_SIZE)
+    else if (mainwin_ctx && uMsg == WM_SIZE)
     {
         return uhashtools_mainwin_handle_message_WM_SIZE(lParam, mainwin_ctx);
     }
-    else if(mainwin_ctx && uMsg == WM_DROPFILES)
+    else if (mainwin_ctx && uMsg == WM_DROPFILES)
     {
         return uhashtools_mainwin_handle_message_WM_DROPFILES(wParam, mainwin_ctx);
     }
-    else if(mainwin_ctx && uMsg == WM_COMMAND)
+    else if (mainwin_ctx && uMsg == WM_COMMAND)
     {
         return uhashtools_mainwin_handle_message_WM_COMMAND(hwnd, uMsg, wParam, lParam, mainwin_ctx);
     }
-    else if(mainwin_ctx && uMsg == WM_USER)
+    else if (mainwin_ctx && uMsg == WM_USER)
     {
         return uhashtools_mainwin_handle_message_WM_USER(mainwin_ctx);
     }

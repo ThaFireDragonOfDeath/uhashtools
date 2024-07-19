@@ -65,7 +65,7 @@ CALLBACK uhashtools_lbl_file_drop_winproc
     LPARAM lParam
 )
 {
-    if(uMsg == WM_DROPFILES)
+    if (uMsg == WM_DROPFILES)
     {
         HWND main_win_handle = GetParent(hwnd);
 

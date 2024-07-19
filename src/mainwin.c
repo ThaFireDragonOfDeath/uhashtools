@@ -109,16 +109,16 @@ uhashtools_enter_main_message_loop
 
     (void) memset((void*) &msg, 0, sizeof msg);
 
-    while(contLoop == TRUE)
+    while (contLoop == TRUE)
     {
         getMsgResult = GetMessageW(&msg, NULL, 0, 0);
 
-        if(getMsgResult > 0)
+        if (getMsgResult > 0)
         {
             TranslateMessage(&msg);
             DispatchMessageW(&msg);
         }
-        else if(getMsgResult == 0)
+        else if (getMsgResult == 0)
         {
             int gui_rc = (int) msg.wParam;
             contLoop = FALSE;
@@ -170,14 +170,14 @@ uhashtools_start_main_window
                                 nCmdShow);
     uhashtools_enter_main_message_loop();
 
-    if(mainwin_ctx->own_window_handle != NULL)
+    if (mainwin_ctx->own_window_handle != NULL)
     {
         DestroyWindow(mainwin_ctx->own_window_handle);
         
         mainwin_ctx->own_window_handle = NULL;
     }
 
-    if(mainWinClassAtom != 0)
+    if (mainWinClassAtom != 0)
     {
         UnregisterClassW(uhashtools_product_get_mainwin_classname(),
                          hInstance);
