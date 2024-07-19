@@ -14,5 +14,5 @@ jobs:
       - name: Run NMake rebuild (release) in VS environment
         shell: cmd
         run: |
-          \"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat\" -arch=amd64 -host_arch=amd64 &&^
+          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 &&^
           nmake BUILD_MODE=Release rebuild
