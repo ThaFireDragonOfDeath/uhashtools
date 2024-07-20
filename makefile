@@ -11,13 +11,15 @@
 
 # CC and RC are predefined.
 
-AR      = lib
-CP      = copy
-RM      = del /F
-RMDIR   = rmdir /s /q
-LD      = link
-MKDIR   = MD
-MT      = mt
+AR         = lib
+CP         = copy
+POWERSHELL = powershell.exe
+RM         = del /F
+RMDIR      = rmdir /s /q
+ROBOCOPY   = robocopy
+LD         = link
+MKDIR      = MD
+MT         = mt
 
 
 #
@@ -56,6 +58,12 @@ MINIMUM_WIN32_API_VERSION = 0x0601
 
 !IF "$(BUILD_MODE)" != "Release"
 BUILD_MODE = Debug
+!Endif
+
+!IF "$(BUILD_MODE)" == "Debug"
+BUILD_MODE_LOWERCASE = debug
+!ELSE
+BUILD_MODE_LOWERCASE = release
 !Endif
 
 
@@ -100,11 +108,13 @@ UMD5_BUILDOUT_PDB_FILE                      = $(BUILDOUT_BIN_DIR)\$(UMD5_NAME_BA
 
 # Setting the distribution output options.
 DISTOUT_BASE_DIR                            = dist_out
-DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)
+DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)_$(BUILD_MODE_LOWERCASE)
 DISTOUT_DIR                                 = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME)
 DISTOUT_DEBUG_SYMBOLS_DIR                   = $(DISTOUT_DIR)\debug_symbols
 DISTOUT_DOC_DIR                             = $(DISTOUT_DIR)\documentation
-DISTOUT_SRC_PKG_DIR                         = $(DISTOUT_DIR)\source_code
+DISTOUT_SRC_DIR                             = $(DISTOUT_DIR)\source_code
+
+DIST_ARCHIVE_FILE                           = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME).zip
 
 # Setting the output directory of the make_release script
 MAKE_RELEASE_BASE_DIR                       = make_release_out
@@ -337,14 +347,13 @@ rebuild: clean all
 run: $(USHA256_BUILDOUT_EXE_FILE)
     $(USHA256_BUILDOUT_EXE_FILE)
 
-dist: $(UHASHTOOLS_DISTOUT_FILES) $(DISTOUT_SRC_PKG_DIR)
+dist: clean $(DIST_ARCHIVE_FILE)
     @-echo.
-    @-echo Distribution created at "$(DISTOUT_DIR)". Finally you have to copy the source archive into $(DISTOUT_SRC_PKG_DIR) and your distribution is ready to go. The source archive should have the name "$(SRC_DIST_TARGET_NAME).zip" and should be placed at "$(DISTOUT_SRC_PKG_DIR)".
+    @-echo Distribution archive file "$(DIST_ARCHIVE_FILE)" has been created.
 
 clean:
     -$(RMDIR) $(BUILDOUT_DIR)
     -$(RMDIR) $(DISTOUT_BASE_DIR)
-    -$(RMDIR) $(MAKE_RELEASE_BASE_DIR)
     -$(RM) src\application_icon.ico
 
 
@@ -438,6 +447,9 @@ $(UMD5_BUILDOUT_EXE_FILE): $(UMD5_BUILDOUT_EXE_WITHOUT_MANIFEST_FILE)
 # Definition of the distribution targets
 #
 
+$(DIST_ARCHIVE_FILE): $(UHASHTOOLS_DISTOUT_FILES) copy-sources
+    $(POWERSHELL) -Command "& {Compress-Archive -Path '$(DISTOUT_DIR)' -DestinationPath '$(DIST_ARCHIVE_FILE)'}"
+
 $(DISTOUT_DIR):
     $(MKDIR) $(DISTOUT_DIR)
 
@@ -447,8 +459,8 @@ $(DISTOUT_DEBUG_SYMBOLS_DIR):
 $(DISTOUT_DOC_DIR):
     $(MKDIR) $(DISTOUT_DOC_DIR)
 
-$(DISTOUT_SRC_PKG_DIR):
-    $(MKDIR) $(DISTOUT_SRC_PKG_DIR)
+$(DISTOUT_SRC_DIR):
+    $(MKDIR) $(DISTOUT_SRC_DIR)
 
 $(DISTOUT_DIR)\$(USHA256_NAME_BASE).exe: $(DISTOUT_DIR) $(USHA256_BUILDOUT_EXE_FILE)
     $(CP) $(USHA256_BUILDOUT_EXE_FILE) $(DISTOUT_DIR)\$(USHA256_NAME_BASE).exe
@@ -485,3 +497,6 @@ $(DISTOUT_DOC_DIR)\LICENSE.CC-BY-4.0.txt: $(DISTOUT_DOC_DIR) LICENSES\CC-BY-4.0.
 
 $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt: $(DISTOUT_DOC_DIR) LICENSES\GPL-2.0-or-later.txt
     $(CP) LICENSES\GPL-2.0-or-later.txt $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt
+
+copy-sources: $(DISTOUT_SRC_DIR)
+    $(POWERSHELL) -Command "& {Copy-Item -Path '.\*' -Destination '$(DISTOUT_SRC_DIR)' -Recurse -Exclude @('.git', '$(BUILDOUT_DIR)', '$(DISTOUT_BASE_DIR)')}"

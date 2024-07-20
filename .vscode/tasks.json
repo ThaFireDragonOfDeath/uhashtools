@@ -30,9 +30,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Make release archive (Windows PowerShell)",
+            "label": "Make release archive",
             "type": "shell",
-            "command": "powershell.exe -ExecutionPolicy Bypass -File .\\make_release.ps1",
+            "command": "nmake BUILD_MODE=Release dist",
             "problemMatcher": []
         },
         {

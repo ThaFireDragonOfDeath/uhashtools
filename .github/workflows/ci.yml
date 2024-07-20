@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-release-archive:
-    name: Build release archive with "make_release.ps1"
+    name: Build release archive
     runs-on: windows-2022
 
     steps:
@@ -16,4 +16,4 @@ jobs:
         shell: cmd
         run: |
           "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64 &&^
-          powershell.exe -ExecutionPolicy Bypass -File .\make_release.ps1
+          nmake BUILD_MODE=Release dist

@@ -10,6 +10,5 @@ build_out
 # Generated files during build
 src/application_icon.ico
 
-# nmake dist and make_release.ps1 output directories
+# Makefile "dist" target output directory
 dist_out
-make_release_out
