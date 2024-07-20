@@ -116,12 +116,6 @@ DISTOUT_SRC_DIR                             = $(DISTOUT_DIR)\source_code
 
 DIST_ARCHIVE_FILE                           = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME).zip
 
-# Setting the output directory of the make_release script
-MAKE_RELEASE_BASE_DIR                       = make_release_out
-
-# Setting the source distribution output options.
-SRC_DIST_TARGET_NAME                        = $(DIST_TARGET_NAME)_src
-
 
 #
 # Setting compile options.
