@@ -28,7 +28,7 @@ MT         = mt
 
 PRODUCT_NAME            = µHashtools
 PRODUCT_ASCII_NAME      = uhashtools
-PRODUCT_VERSION         = 0.3.0
+PRODUCT_VERSION         = 0.3.0-SNAPSHOT
 
 
 #
