@@ -60,12 +60,6 @@ MINIMUM_WIN32_API_VERSION = 0x0601
 BUILD_MODE = Debug
 !Endif
 
-!IF "$(BUILD_MODE)" == "Debug"
-BUILD_MODE_LOWERCASE = debug
-!ELSE
-BUILD_MODE_LOWERCASE = release
-!Endif
-
 
 #
 # Setting artifacts output options.
@@ -108,7 +102,13 @@ UMD5_BUILDOUT_PDB_FILE                      = $(BUILDOUT_BIN_DIR)\$(UMD5_NAME_BA
 
 # Setting the distribution output options.
 DISTOUT_BASE_DIR                            = dist_out
-DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)_$(BUILD_MODE_LOWERCASE)
+
+!IF "$(BUILD_MODE)" == "Debug"
+DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)_debug
+!ELSE
+DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)
+!Endif
+
 DISTOUT_DIR                                 = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME)
 DISTOUT_DEBUG_SYMBOLS_DIR                   = $(DISTOUT_DIR)\debug_symbols
 DISTOUT_DOC_DIR                             = $(DISTOUT_DIR)\documentation
