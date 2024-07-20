@@ -9,7 +9,7 @@
 #include "mainwin_eb_calc_result.h"
 
 #include "buffer_sizes.h"
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "gui_common.h"
 #include "gui_eb_common.h"
 #include "mainwin_state.h"

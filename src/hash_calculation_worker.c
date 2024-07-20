@@ -8,7 +8,7 @@
 
 #include "hash_calculation_worker.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "hash_calculation_impl.h"
 
 #include <process.h>

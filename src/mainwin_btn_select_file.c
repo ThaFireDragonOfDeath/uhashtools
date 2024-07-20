@@ -8,7 +8,7 @@
 
 #include "mainwin_btn_select_file.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "gui_btn_common.h"
 #include "gui_common.h"
 #include "mainwin_state.h"

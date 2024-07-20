@@ -10,7 +10,7 @@
 
 #include "taskbarlist_com_api.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <combaseapi.h>
 #include <Objbase.h>

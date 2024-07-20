@@ -9,7 +9,7 @@
 #include "mainwin_actions.h"
 
 #include "clipboard_utils.h"
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "gui_common.h"
 #include "mainwin_btn_action.h"
 #include "mainwin_btn_select_file.h"

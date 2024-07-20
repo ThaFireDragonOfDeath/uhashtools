@@ -8,7 +8,7 @@
 
 #include "hash_calculation_impl.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "product.h"
 
 #include <bcrypt.h>

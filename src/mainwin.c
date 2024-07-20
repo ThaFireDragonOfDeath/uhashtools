@@ -8,7 +8,7 @@
 
 #include "mainwin.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "mainwin_actions.h"
 #include "mainwin_ctx.h"
 #include "mainwin_message_handler.h"

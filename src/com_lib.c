@@ -11,7 +11,7 @@
 
 #if WINVER >= 0x0601
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <Objbase.h>
 #include <Windows.h>

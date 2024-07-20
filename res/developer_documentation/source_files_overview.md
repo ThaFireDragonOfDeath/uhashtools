@@ -16,7 +16,7 @@ to a provided string.
 Helper utilities for initializing and uninitializing the COM
 (Component Object Model) library.
 
-# errorutils\\.[ch]
+# error_utilities\\.[ch]
 Contains utilities for verifying expected conditions and signaling
 critical errors.
 

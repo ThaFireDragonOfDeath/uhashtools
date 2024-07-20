@@ -8,7 +8,7 @@
 
 #include "gui_eb_common.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <CommCtrl.h>
 #include <Windows.h>

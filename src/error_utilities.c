@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <Windows.h>
 

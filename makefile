@@ -166,7 +166,7 @@ LFLAGS_UMD5                 = $(LFLAGS) /MANIFESTFILE:$(UMD5_BUILDOUT_MANIFEST_F
 #
 
 UHASHTOOLS_SOURCES_COMMON        = src\clipboard_utils.c \
-                                   src\errorutils.c \
+                                   src\error_utilities.c \
                                    src\gui_btn_common.c \
                                    src\gui_common.c \
                                    src\gui_eb_common.c \
@@ -219,7 +219,7 @@ UMD5_RC_SOURCES                  = src\umd5.rc
 
 UHASHTOOLS_HEADERS_COMMON        = src\buffer_sizes.h \
                                    src\clipboard_utils.h \
-                                   src\errorutils.h \
+                                   src\error_utilities.h \
                                    src\gui_btn_common.h \
                                    src\gui_common.h \
                                    src\gui_eb_common.h \
@@ -265,7 +265,7 @@ UMD5_HEADERS                     = src\product_umd5.h
 #
 
 UHASHTOOLS_OBJECTS_COMMON        = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
-                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\errorutils.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\error_utilities.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_btn_common.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_common.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_eb_common.obj \

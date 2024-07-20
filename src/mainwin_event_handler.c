@@ -9,7 +9,7 @@
 #include "mainwin_event_handler.h"
 
 #include "buffer_sizes.h"
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "hash_calculation_worker.h"
 #include "mainwin_actions.h"
 #include "mainwin_ctx.h"

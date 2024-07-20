@@ -10,7 +10,7 @@
 
 #include "taskbar_icon_pb.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "mainwin_state.h"
 
 #include <Shobjidl.h>

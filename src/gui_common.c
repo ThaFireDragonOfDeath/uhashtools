@@ -8,7 +8,7 @@
 
 #include "gui_common.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <Windows.h>
 

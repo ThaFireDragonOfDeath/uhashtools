@@ -8,7 +8,7 @@
 
 #include "selectfiledialog.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <Windows.h>
 

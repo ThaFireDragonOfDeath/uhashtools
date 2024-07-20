@@ -16,7 +16,7 @@
     #error This application must be compiled with the compiler option "/DUNICODE" and "/D_UNICODE"!
 #endif 
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "mainwin.h"
 #include "mainwin_ctx.h"
 

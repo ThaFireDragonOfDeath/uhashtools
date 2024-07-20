@@ -8,7 +8,7 @@
 
 #include "mainwin_ctx.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 
 #include <string.h>
 

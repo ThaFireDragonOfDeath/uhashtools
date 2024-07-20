@@ -8,7 +8,7 @@
 
 #include "mainwin_lbl_selected_file.h"
 
-#include "errorutils.h"
+#include "error_utilities.h"
 #include "gui_lbl_common.h"
 #include "gui_common.h"
 
