@@ -346,7 +346,7 @@ dist: clean $(DIST_ARCHIVE_FILE)
 clean:
     -$(RMDIR) $(BUILDOUT_DIR)
     -$(RMDIR) $(DISTOUT_BASE_DIR)
-    -$(RM) src\application_icon.ico
+    -$(RM) src\rc_application_icon.ico
 
 
 #
@@ -368,8 +368,8 @@ $(UMD5_BUILDOUT_OBJ_DIR):
 $(BUILDOUT_BIN_DIR):
     $(MKDIR) $(BUILDOUT_BIN_DIR)
 
-src\application_icon.ico: $(UHASHTOOLS_APP_ICON_COMMON)
-    $(CP) $(UHASHTOOLS_APP_ICON_COMMON) src\application_icon.ico
+src\rc_application_icon.ico: $(UHASHTOOLS_APP_ICON_COMMON)
+    $(CP) $(UHASHTOOLS_APP_ICON_COMMON) src\rc_application_icon.ico
 
 
 #
@@ -379,7 +379,7 @@ src\application_icon.ico: $(UHASHTOOLS_APP_ICON_COMMON)
 $(UHASHTOOLS_OBJECTS_COMMON): $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR) $(UHASHTOOLS_HEADERS_COMMON)
 
 $(USHA256_OBJECTS): $(USHA256_BUILDOUT_OBJ_DIR) $(USHA256_HEADERS)
-$(USHA256_RES_OBJECTS): $(UHASHTOOLS_RC_SOURCES_COMMON) $(USHA256_RC_SOURCES) $(USHA256_HEADERS) src\product_common.h src\application_icon.ico
+$(USHA256_RES_OBJECTS): $(UHASHTOOLS_RC_SOURCES_COMMON) $(USHA256_RC_SOURCES) $(USHA256_HEADERS) src\product_common.h src\rc_application_icon.ico
 
 $(USHA1_OBJECTS): $(USHA1_BUILDOUT_OBJ_DIR) $(USHA1_HEADERS)
 $(USHA1_RES_OBJECTS): $(UHASHTOOLS_RC_SOURCES_COMMON) $(USHA1_RC_SOURCES) $(USHA1_HEADERS) src\product_common.h
@@ -491,4 +491,4 @@ $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt: $(DISTOUT_DOC_DIR) LICENSES\GPL
     $(CP) LICENSES\GPL-2.0-or-later.txt $(DISTOUT_DOC_DIR)\LICENSE.GPL-2.0-or-later.txt
 
 copy-sources: $(DISTOUT_SRC_DIR)
-    $(POWERSHELL) -Command "& {Copy-Item -Path '.\*' -Destination '$(DISTOUT_SRC_DIR)' -Recurse -Exclude @('.git', '$(BUILDOUT_DIR)', '$(DISTOUT_BASE_DIR)')}"
+    $(POWERSHELL) -Command "& {Copy-Item -Path '.\*' -Destination '$(DISTOUT_SRC_DIR)' -Recurse -Exclude @('rc_application_icon.ico', '.git', '$(BUILDOUT_DIR)', '$(DISTOUT_BASE_DIR)')}"

@@ -8,7 +8,7 @@
 build_out
 
 # Generated files during build
-src/application_icon.ico
+src/rc_application_icon.ico
 
 # Makefile "dist" target output directory
 dist_out

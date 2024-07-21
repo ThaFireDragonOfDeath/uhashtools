@@ -27,7 +27,7 @@
 
 #define VER_PRODUCTNAME_STR         UHASHTOOLS_RC_PRODUCTNAME_STR
 
-UHASHTOOLS_APPLICATION_ICON ICON "application_icon.ico"
+UHASHTOOLS_APPLICATION_ICON ICON "rc_application_icon.ico"
 
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION     VER_FILEVERSION
@@ -64,6 +64,5 @@ BEGIN
         /* supports English language (0x409) in the Windows ANSI code page (1252). */
 
         VALUE "Translation", 0x409, 1252
-
     END
 END
