@@ -11,12 +11,10 @@
 
 # CC and RC are predefined.
 
-AR         = lib
 CP         = copy
 POWERSHELL = powershell.exe
 RM         = del /F
 RMDIR      = rd /s /q
-ROBOCOPY   = robocopy
 LD         = link
 MKDIR      = MD
 MT         = mt
