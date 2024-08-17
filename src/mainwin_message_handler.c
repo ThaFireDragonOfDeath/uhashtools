@@ -66,7 +66,7 @@ uhashtools_mainwin_handle_message_WM_CREATE
     (void) uhashtools_register_message_type_taskbar_button_created(hwnd, mainwin_ctx);
 #endif
 
-    uhashtools_mainwin_init_ui_controls(mainwin_ctx);
+    uhashtools_mainwin_on_window_created(mainwin_ctx);
 
     return 0;
 }

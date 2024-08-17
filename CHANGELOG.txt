@@ -9,6 +9,8 @@ Symbols:
 
 
 µHashtools 0.3.0 (not released yet):
++ Selecting the target file by passing the filepath as command line
+  argument.
 + Included the debugging symbols (.pdb files) in generated
   distribution archives.
 + Automatic CI builds of release archives on pushing into the master

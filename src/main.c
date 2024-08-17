@@ -16,11 +16,14 @@
     #error This application must be compiled with the compiler option "/DUNICODE" and "/D_UNICODE"!
 #endif 
 
+#include "cli_arguments.h"
 #include "error_utilities.h"
 #include "mainwin.h"
 #include "mainwin_ctx.h"
 
 #include <Windows.h>
+
+#include <stdlib.h>
 
 static struct MainWindowCtx global_main_window_state;
 
@@ -39,6 +42,7 @@ wWinMain
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     uhashtools_mainwin_ctx_init(&global_main_window_state);
+    uhashtools_cli_arguments_fill_from_argc_argv(&global_main_window_state.cli_arguments, __argc, __wargv);
     uhashtools_start_main_window(hInstance, nShowCmd, &global_main_window_state);
 
     return 0;

@@ -130,7 +130,23 @@ uhashtools_mainwin_copy_hash_result_to_clipboard
 );
 
 /**
+ * Start the hash calculation of the currently provided file.
+ * 
+ * @param mainwin_ctx Context data of the target mainwin instance.
+ * @param target_file Filepath of the target file.
+ */
+extern
+void
+uhashtools_mainwin_hash_file
+(
+    struct MainWindowCtx* mainwin_ctx,
+    const wchar_t* target_file
+);
+
+/**
  * Start the hash calculation of the currently selected file.
+ * The selected file is the file stored in the "mainwin_ctx->target_file"
+ * filepath variable.
  * 
  * @param mainwin_ctx Context data of the target mainwin instance.
  */

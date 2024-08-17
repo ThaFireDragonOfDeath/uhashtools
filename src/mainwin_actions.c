@@ -328,6 +328,27 @@ uhashtools_mainwin_copy_hash_result_to_clipboard
 }
 
 void
+uhashtools_mainwin_hash_file
+(
+    struct MainWindowCtx* mainwin_ctx,
+    const wchar_t* target_file
+)
+{
+    UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
+    UHASHTOOLS_ASSERT(target_file, L"Internal error: Entered with target_file == NULL!");
+    UHASHTOOLS_ASSERT(target_file[0], L"Internal error: Entered with target_file == empty string!");
+
+    if (target_file != mainwin_ctx->target_file)
+    {
+        (void) wcscpy_s(mainwin_ctx->target_file,
+                        FILEPATH_BUFFER_TSIZE,
+                        target_file);
+    }
+
+    uhashtools_mainwin_hash_selected_file(mainwin_ctx);
+}
+
+void
 uhashtools_mainwin_hash_selected_file
 (
     struct MainWindowCtx* mainwin_ctx

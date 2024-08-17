@@ -167,7 +167,8 @@ LFLAGS_UMD5                 = $(LFLAGS) /MANIFESTFILE:$(UMD5_BUILDOUT_MANIFEST_F
 # Updating a source file will cause an incremental compilation.
 #
 
-UHASHTOOLS_SOURCES_COMMON        = src\clipboard_utils.c \
+UHASHTOOLS_SOURCES_COMMON        = src\cli_arguments.c \
+                                   src\clipboard_utils.c \
                                    src\error_utilities.c \
                                    src\gui_btn_common.c \
                                    src\gui_common.c \
@@ -220,6 +221,7 @@ UMD5_RC_SOURCES                  = src\umd5.rc
 #
 
 UHASHTOOLS_HEADERS_COMMON        = src\buffer_sizes.h \
+                                   src\cli_arguments.h \
                                    src\clipboard_utils.h \
                                    src\error_utilities.h \
                                    src\gui_btn_common.h \
@@ -266,7 +268,8 @@ UMD5_HEADERS                     = src\product_umd5.h
 # Setting the out obj files.
 #
 
-UHASHTOOLS_OBJECTS_COMMON        = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
+UHASHTOOLS_OBJECTS_COMMON        = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\cli_arguments.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\clipboard_utils.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\error_utilities.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_btn_common.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_common.obj \

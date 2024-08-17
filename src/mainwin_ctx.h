@@ -9,6 +9,7 @@
 #pragma once
 
 #include "buffer_sizes.h"
+#include "cli_arguments.h"
 #include "hash_calculation_worker.h"
 #include "mainwin_state.h"
 
@@ -22,7 +23,16 @@
 
 struct MainWindowCtx
 {
+    /* Application options */
+
+    /**
+     * Options set by the command line interface arguments.
+     */
+    struct CliArguments cli_arguments;
+
+
     /* General handles */
+
     HINSTANCE app_instance_handle;
     HWND own_window_handle;
 
@@ -36,22 +46,30 @@ struct MainWindowCtx
         UINT wm_taskbar_button_created;
     #endif
 
+
     /* Window state data */
+
     enum MainWindowState own_state;
     wchar_t target_file[FILEPATH_BUFFER_TSIZE];
     wchar_t hash_result[HASH_RESULT_BUFFER_TSIZE];
     wchar_t error_txt[GENERIC_TXT_MESSAGES_BUFFER_TSIZE];
 
+
     /* Hash calculation worker state */
+
     struct HashCalculationWorkerEventMessage event_message_buf;
     HANDLE event_message_buf_is_writeable_event;
     struct HashCalculationWorkerParam worker_thread_param_buf;
     struct HashCalculationWorkerInstanceData worker_instance_data;
 
+
     /* GUI memory buffers */
+
     wchar_t select_file_dlg_buf[FILEPATH_BUFFER_TSIZE];
 
+
     /* GUI elements */
+
     HWND lbl_file_drop;
     HWND lbl_selected_file;
     HWND eb_current_selected_file;

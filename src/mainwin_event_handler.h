@@ -15,6 +15,13 @@ struct MainWindowCtx;
 
 extern
 void
+uhashtools_mainwin_on_window_created
+(
+    struct MainWindowCtx* mainwin_ctx
+);
+
+extern
+void
 uhashtools_mainwin_on_cancel_button_pressed
 (
     struct MainWindowCtx* mainwin_ctx

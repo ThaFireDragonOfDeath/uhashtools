@@ -9,6 +9,7 @@
 #include "mainwin_event_handler.h"
 
 #include "buffer_sizes.h"
+#include "cli_arguments.h"
 #include "error_utilities.h"
 #include "hash_calculation_worker.h"
 #include "mainwin_actions.h"
@@ -20,6 +21,22 @@
 #endif
 
 #include <stdio.h>
+
+void
+uhashtools_mainwin_on_window_created
+(
+    struct MainWindowCtx* mainwin_ctx
+)
+{
+    UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
+
+    uhashtools_mainwin_init_ui_controls(mainwin_ctx);
+
+    if (uhashtools_cli_arguments_has_target_file(&mainwin_ctx->cli_arguments))
+    {
+        uhashtools_mainwin_hash_file(mainwin_ctx, mainwin_ctx->cli_arguments.target_file);
+    }
+}
 
 void
 uhashtools_mainwin_on_cancel_button_pressed
@@ -66,11 +83,7 @@ uhashtools_mainwin_on_select_file_button_pressed
     
     if (user_selected_a_file)
     {
-        (void) wcscpy_s(mainwin_ctx->target_file,
-                        FILEPATH_BUFFER_TSIZE,
-                        mainwin_ctx->select_file_dlg_buf);
-        
-        uhashtools_mainwin_hash_selected_file(mainwin_ctx);
+        uhashtools_mainwin_hash_file(mainwin_ctx, mainwin_ctx->select_file_dlg_buf);
     }
 }
 

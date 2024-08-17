@@ -23,6 +23,17 @@
             "console": "internalConsole"
         },
         {
+            "name": "Launch usha256 (with file argument)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_out/bin/usha256.exe",
+            "args": ["${workspaceFolder}/makefile"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "internalConsole"
+        },
+        {
             "name": "Launch usha1",
             "type": "cppvsdbg",
             "request": "launch",
