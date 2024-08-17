@@ -69,7 +69,7 @@ uhashtools_taskbar_list_com_api_init
     return TRUE;
 }
 
-void
+BOOL
 uhashtools_taskbar_list_com_api_set_progress_value
 (
     struct TaskbarListComApi* initialized_taskbar_list_com_api,
@@ -81,7 +81,7 @@ uhashtools_taskbar_list_com_api_set_progress_value
 
     if (!initialized_taskbar_list_com_api)
     {
-        return;
+        return FALSE;
     }
 
     taskbar_list_v3 = initialized_taskbar_list_com_api->taskbar_list_v3_instance;
@@ -89,7 +89,7 @@ uhashtools_taskbar_list_com_api_set_progress_value
 
     if (!taskbar_list_v3 || !main_window_handle || main_window_handle == INVALID_HANDLE_VALUE)
     {
-        return;
+        return FALSE;
     }
 
     if (progress_in_percent > 100)
@@ -101,9 +101,11 @@ uhashtools_taskbar_list_com_api_set_progress_value
                                                      main_window_handle,
                                                      progress_in_percent,
                                                      100);
+    
+    return TRUE;
 }
 
-void
+BOOL
 uhashtools_taskbar_list_com_api_set_progress_view_mode
 (
     struct TaskbarListComApi* initialized_taskbar_list_com_api,
@@ -116,7 +118,7 @@ uhashtools_taskbar_list_com_api_set_progress_view_mode
 
     if (!initialized_taskbar_list_com_api)
     {
-        return;
+        return FALSE;
     }
 
     taskbar_list_v3 = initialized_taskbar_list_com_api->taskbar_list_v3_instance;
@@ -124,7 +126,7 @@ uhashtools_taskbar_list_com_api_set_progress_view_mode
 
     if (!taskbar_list_v3 || !main_window_handle || main_window_handle == INVALID_HANDLE_VALUE)
     {
-        return;
+        return FALSE;
     }
 
     taskbar_progress_flags = uhashtools_taskbar_progress_flags_from_pvm(progress_view_mode);
@@ -132,6 +134,8 @@ uhashtools_taskbar_list_com_api_set_progress_view_mode
     (void) taskbar_list_v3->lpVtbl->SetProgressState(taskbar_list_v3,
                                                      main_window_handle,
                                                      taskbar_progress_flags);
+    
+    return TRUE;
 }
 
 #endif

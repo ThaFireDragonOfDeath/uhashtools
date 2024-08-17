@@ -38,7 +38,7 @@ uhashtools_taskbar_list_com_api_init
 );
 
 extern
-void
+BOOL
 uhashtools_taskbar_list_com_api_set_progress_value
 (
     struct TaskbarListComApi* initialized_taskbar_list_com_api,
@@ -46,7 +46,7 @@ uhashtools_taskbar_list_com_api_set_progress_value
 );
 
 extern
-void
+BOOL
 uhashtools_taskbar_list_com_api_set_progress_view_mode
 (
     struct TaskbarListComApi* initialized_taskbar_list_com_api,

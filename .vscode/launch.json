@@ -23,11 +23,22 @@
             "console": "internalConsole"
         },
         {
-            "name": "Launch usha256 (with file argument)",
+            "name": "Launch usha256 (with valid file argument)",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build_out/bin/usha256.exe",
             "args": ["${workspaceFolder}/makefile"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch usha256 (with invalid file argument)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build_out/bin/usha256.exe",
+            "args": ["${workspaceFolder}/non_existing_file"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

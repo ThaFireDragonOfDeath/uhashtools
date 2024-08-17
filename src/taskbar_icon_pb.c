@@ -46,26 +46,38 @@ uhashtools_taskbar_icon_progress_bar_on_state_changed
 )
 {
     enum ProgressViewMode new_progress_view_mode = PROGRESS_VIEW_MODE_NONE;
+    BOOL set_progress_view_success = FALSE;
 
     UHASHTOOLS_ASSERT(own_state, L"Internal error: Entered with own_state == NULL!");
     UHASHTOOLS_ASSERT(taskbar_list_com_api, L"Internal error: Entered with taskbar_list_com_api == NULL!");
 
     new_progress_view_mode = dyn_PB_TASKBAR_ICON_STATE(mainwin_state);
 
-    if (own_state->current_progress_view_mode == new_progress_view_mode)
+    if (new_progress_view_mode != PROGRESS_VIEW_MODE_NONE &&
+        own_state->current_progress_view_mode == new_progress_view_mode)
     {
         return;
     }
 
     if (new_progress_view_mode == PROGRESS_VIEW_MODE_ERROR_PROGRESS)
     {
-        uhashtools_taskbar_list_com_api_set_progress_value(taskbar_list_com_api,
-                                                           100);
+        const BOOL set_progress_value_success = uhashtools_taskbar_list_com_api_set_progress_value(taskbar_list_com_api,
+                                                                                                   100);
+        
+        if (!set_progress_value_success)
+        {
+            return;
+        }
     }
 
-    uhashtools_taskbar_list_com_api_set_progress_view_mode(taskbar_list_com_api,
-                                                           new_progress_view_mode);
+    set_progress_view_success = uhashtools_taskbar_list_com_api_set_progress_view_mode(taskbar_list_com_api,
+                                                                                       new_progress_view_mode);
     
+    if (!set_progress_view_success)
+    {
+        return;
+    }
+
     own_state->current_progress_view_mode = new_progress_view_mode;
 }
 
@@ -77,6 +89,9 @@ uhashtools_taskbar_icon_progress_bar_on_work_progress
     unsigned int progress_in_percent
 )
 {
+    BOOL set_progress_value_success = FALSE;
+    enum ProgressViewMode current_expected_view_mode = PROGRESS_VIEW_MODE_NONE;
+
     UHASHTOOLS_ASSERT(own_state, L"Internal error: Entered with own_state == NULL!");
     UHASHTOOLS_ASSERT(taskbar_list_com_api, L"Internal error: Entered with taskbar_list_com_api == NULL!");
     UHASHTOOLS_ASSERT(progress_in_percent <= 100,
@@ -87,8 +102,24 @@ uhashtools_taskbar_icon_progress_bar_on_work_progress
         return;
     }
 
-    uhashtools_taskbar_list_com_api_set_progress_value(taskbar_list_com_api,
-                                                       progress_in_percent);
+    if (own_state->current_progress_view_mode != PROGRESS_VIEW_MODE_NORMAL_PROGRESS)
+    {
+        const BOOL set_progress_view_success = uhashtools_taskbar_list_com_api_set_progress_view_mode(taskbar_list_com_api,
+                                                                                                      PROGRESS_VIEW_MODE_NORMAL_PROGRESS);
+        
+        if (!set_progress_view_success)
+        {
+            return;
+        }
+    }
+
+    set_progress_value_success = uhashtools_taskbar_list_com_api_set_progress_value(taskbar_list_com_api,
+                                                                                    progress_in_percent);
+
+    if (!set_progress_value_success)
+    {
+        return;
+    }
 
     own_state->current_progress_in_percent = progress_in_percent;
 }
