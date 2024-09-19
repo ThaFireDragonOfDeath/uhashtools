@@ -48,6 +48,13 @@ worker thread within the source file "hash_calculation_worker.c"
 will check the return code of the blocking hash calculation function
 and will send a calculation failed message to the main window.
 
+# Printing non fatal error messages
+To print non fatal error messages we're including our C header file
+"print_utilities.h" and using the following code:
+```C
+UHASHTOOLS_PRINTF_LINE_ERROR(L"Error message");
+```
+
 # Printing warning messages
 To print warning messages we're including our C header file
 "print_utilities.h" and using the following code:
