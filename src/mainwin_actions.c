@@ -20,6 +20,7 @@
 #include "mainwin_lbl_result_hash.h"
 #include "mainwin_lbl_selected_file.h"
 #include "mainwin_pb_calc_result.h"
+#include "print_utilities.h"
 #include "product.h"
 #include "selectfiledialog.h"
 
@@ -79,8 +80,7 @@ uhashtools_register_message_type_taskbar_button_created
 
     if (!change_message_window_filter_result)
     {
-        (void) wprintf_s(L"[WARNING]: Failed to allow 'TaskbarButtonCreated' window message flow! Taskbar icon may not work!\n");
-        (void) fflush(stdout);
+        UHASHTOOLS_PRINTF_LINE_WARN(L"Failed to allow 'TaskbarButtonCreated' window message flow! Taskbar icon may not work!");
     }
 
     mainwin_ctx->wm_taskbar_button_created = register_window_message_result;
@@ -356,8 +356,7 @@ uhashtools_mainwin_hash_selected_file
 {
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
 
-    (void) wprintf_s(L"[INFO] Handling file selection of file: %s\n", mainwin_ctx->target_file);
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_INFO(L"Handling file selection of file: %s", mainwin_ctx->target_file);
 
     uhashtools_mainwin_change_state(mainwin_ctx, MAINWINDOWSTATE_WORKING);
     mainwin_ctx->worker_instance_data = uhashtools_hash_calculation_worker_start(&mainwin_ctx->worker_thread_param_buf,
@@ -368,8 +367,7 @@ uhashtools_mainwin_hash_selected_file
     
     if (!mainwin_ctx->worker_instance_data.created_successfully)
     {
-        (void) wprintf_s(L"[ERROR] Failed to create hash calculation worker thread!\n");
-        (void) fflush(stdout);
+        UHASHTOOLS_PRINTF_LINE_ERROR(L"Failed to create hash calculation worker thread!");
 
         (void) wcscpy_s(mainwin_ctx->error_txt,
                         GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
@@ -380,7 +378,6 @@ uhashtools_mainwin_hash_selected_file
         return;
     }
     
-    (void) wprintf_s(L"[DEBUG] Successfully created hash calculation worker thread with the thread id \"%lu\"\n",
-                     mainwin_ctx->worker_instance_data.thread_id);
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Successfully created hash calculation worker thread with the thread id \"%lu\".",
+                                 mainwin_ctx->worker_instance_data.thread_id);
 }

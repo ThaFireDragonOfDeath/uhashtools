@@ -245,6 +245,7 @@ UHASHTOOLS_HEADERS_COMMON        = src\buffer_sizes.h \
                                    src\mainwin_message_handler.h \
                                    src\mainwin_pb_calc_result.h \
                                    src\mainwin_state.h \
+                                   src\print_utilities.h \
                                    src\product.h \
                                    src\product_common.h \
                                    src\selectfiledialog.h \

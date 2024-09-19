@@ -13,6 +13,7 @@
 #include "mainwin_actions.h"
 #include "mainwin_ctx.h"
 #include "mainwin_event_handler.h"
+#include "print_utilities.h"
 
 #if _WIN32_WINNT >= 0x0601
     #include "com_lib.h"
@@ -36,8 +37,7 @@ uhashtools_mainwin_handle_message_WM_CREATE
 
     if (create_params == NULL || create_params->lpCreateParams == NULL)
     {
-        (void) wprintf_s(L"[ERROR] Main window: WM_CREATE failed! 'create_params' or 'create_params->lpCreateParams' were NULL!\n");
-        (void) fflush(stdout);
+        UHASHTOOLS_PRINTF_LINE_ERROR(L"Main window: WM_CREATE failed! 'create_params' or 'create_params->lpCreateParams' were NULL!");
 
         return -1;
     }
@@ -50,8 +50,7 @@ uhashtools_mainwin_handle_message_WM_CREATE
 
     if (!set_window_long_ptr_rc && GetLastError() != 0)
     {
-        (void) wprintf_s(L"[ERROR] Main window: WM_CREATE failed! Function 'SetWindowLongPtrW()' failed!\n");
-        (void) fflush(stdout);
+        UHASHTOOLS_PRINTF_LINE_ERROR(L"Main window: WM_CREATE failed! Function 'SetWindowLongPtrW()' failed!");
 
         return -1;
     }

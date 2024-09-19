@@ -9,6 +9,7 @@
 #include "hash_calculation_impl.h"
 
 #include "error_utilities.h"
+#include "print_utilities.h"
 #include "product.h"
 
 #include <bcrypt.h>
@@ -175,8 +176,7 @@ uhashtools_target_file_open
 
     target_file_size = (unsigned __int64) filelengthi64_rc;
 
-    (void) wprintf_s(L"[INFO] The opened file has a size of \"%I64u\" bytes.\n", target_file_size);
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_INFO(L"The opened file has a size of \"%I64u\" bytes.", target_file_size);
 
     (void) clearerr_s(target_file_handle);
 

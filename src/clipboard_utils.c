@@ -9,6 +9,7 @@
 #include "clipboard_utils.h"
 
 #include "error_utilities.h"
+#include "print_utilities.h"
 
 #include <Windows.h>
 
@@ -33,8 +34,7 @@ uhashtools_clipboard_utils_set_clipboard_text
     
     if (!open_clipboard_rc)
     {
-        (void) wprintf_s(L"[ERROR] OpenClipboard() failed!\n");
-        (void) fflush(stdout);
+        UHASHTOOLS_PRINTF_LINE_ERROR(L"OpenClipboard() failed!");
         
         return;
     }
@@ -48,8 +48,7 @@ uhashtools_clipboard_utils_set_clipboard_text
     
     if (!clipboard_text_copy_glba_handle)
     {
-        (void) wprintf_s(L"[ERROR] GlobalAlloc() failed!\n");
-        (void) fflush(stdout);
+        UHASHTOOLS_PRINTF_LINE_ERROR(L"GlobalAlloc() failed!");
         
         goto cleanup_and_out;
     }
@@ -58,7 +57,7 @@ uhashtools_clipboard_utils_set_clipboard_text
     
     if (!clipboard_text_copy)
     {
-        (void) wprintf_s(L"[ERROR] GlobalLock() failed!\n");
+        UHASHTOOLS_PRINTF_LINE_ERROR(L"GlobalLock() failed!");
         (void) fflush(stdout);
         
         goto cleanup_and_out;

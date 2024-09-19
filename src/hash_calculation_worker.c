@@ -10,6 +10,7 @@
 
 #include "error_utilities.h"
 #include "hash_calculation_impl.h"
+#include "print_utilities.h"
 
 #include <process.h>
 
@@ -77,8 +78,7 @@ uhashtools_send_worker_initialized_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending worker initialized message.\n");
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending worker initialized message.");
 
     event_message.event_type = HCWET_MESSAGE_RECEIVER_INITIALIZED;
 
@@ -101,8 +101,7 @@ uhashtools_send_worker_canceled_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculation canceled message.\n");
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculation canceled message.");
 
     event_message.event_type = HCWET_CALCULATION_CANCELED;
 
@@ -126,11 +125,11 @@ uhashtools_send_calculation_complete_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculated complete message with content \"%s\".\n",
-                     calculated_hash);
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculated complete message with content \"%s\".",
+                                 calculated_hash);
 
     event_message.event_type = HCWET_CALCULATION_COMPLETE;
+
     (void) wcscpy_s(event_message.event_data.operation_finished_data.calculated_hash,
                     HASH_RESULT_BUFFER_TSIZE,
                     calculated_hash);
@@ -155,9 +154,8 @@ uhashtools_send_calculation_failed_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculated failed message with content \"%s\".\n",
-                     user_error_message);
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculated failed message with content \"%s\".",
+                                 user_error_message);
 
     event_message.event_type = HCWET_CALCULATION_FAILED;
     (void) wcscpy_s(event_message.event_data.operation_failed_data.user_error_message,
@@ -184,9 +182,8 @@ uhashtools_send_calculation_progress_message
 
     (void) memset((void*) &event_message, 0, sizeof event_message);
 
-    (void) wprintf_s(L"[DEBUG] Sending calculated progress message with content \"%u\".\n",
-                     current_calculation_progress);
-    (void) fflush(stdout);
+    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculated progress message with content \"%u\".",
+                                 current_calculation_progress);
 
     event_message.event_type = HCWET_CALCULATION_PROGRESS_CHANGED;
     event_message.event_data.progress_changed_data.current_progress_in_percent = current_calculation_progress;

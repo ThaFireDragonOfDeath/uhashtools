@@ -14,6 +14,7 @@
 #include "hash_calculation_worker.h"
 #include "mainwin_actions.h"
 #include "mainwin_ctx.h"
+#include "print_utilities.h"
 #include "selectfiledialog.h"
 
 #if _WIN32_WINNT >= 0x0601
@@ -125,8 +126,7 @@ uhashtools_mainwin_on_file_dropped
 
         if (dropped_files_count > 1)
         {
-            (void) wprintf_s(L"[WARNING] The received \"WM_DROPFILES\" event contains multiple files! We're taking the first and ignoring the rest...\n");
-            (void) fflush(stdout);
+            UHASHTOOLS_PRINTF_LINE_WARN(L"The received \"WM_DROPFILES\" event contains multiple files! We're taking the first and ignoring the rest...");
         }
 
         get_drag_file_succeeded = DragQueryFileW(dropped_files_event_handle,
@@ -140,8 +140,7 @@ uhashtools_mainwin_on_file_dropped
         }
         else
         {
-            (void) wprintf_s(L"[WARNING] Failed to get the files from the \"WM_DROPFILES\" event! Ignoring the event...\n");
-            (void) fflush(stdout);
+            UHASHTOOLS_PRINTF_LINE_WARN(L"Failed to get the files from the \"WM_DROPFILES\" event! Ignoring the event...");
         }
     }
 }

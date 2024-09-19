@@ -12,6 +12,7 @@
 #include "mainwin_actions.h"
 #include "mainwin_ctx.h"
 #include "mainwin_message_handler.h"
+#include "print_utilities.h"
 #include "product.h"
 
 #if _WIN32_WINNT >= 0x0601
@@ -123,17 +124,16 @@ uhashtools_enter_main_message_loop
             int gui_rc = (int) msg.wParam;
             contLoop = FALSE;
 
-            (void) wprintf_s(L"[DEBUG] Exiting main loop normally with return code '%i'...\n", gui_rc);
-            (void) fflush(stdout);
+            UHASHTOOLS_PRINTF_LINE_DEBUG(L"Exiting main loop normally with return code '%i'...",
+                                         gui_rc);
         }
         else
         {
             DWORD lastError = GetLastError();
             contLoop = FALSE;
 
-            (void) wprintf_s(L"[ERROR] Internal error: GetMessage() failed with errno '%lu'...\n",
-                             lastError);
-            (void) fflush(stdout);
+            UHASHTOOLS_PRINTF_LINE_ERROR(L"Internal error: GetMessage() failed with errno '%lu'...",
+                                         lastError);
         }
     }
 }
