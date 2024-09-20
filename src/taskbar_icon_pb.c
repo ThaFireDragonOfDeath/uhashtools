@@ -90,7 +90,6 @@ uhashtools_taskbar_icon_progress_bar_on_work_progress
 )
 {
     BOOL set_progress_value_success = FALSE;
-    enum ProgressViewMode current_expected_view_mode = PROGRESS_VIEW_MODE_NONE;
 
     UHASHTOOLS_ASSERT(own_state, L"Internal error: Entered with own_state == NULL!");
     UHASHTOOLS_ASSERT(taskbar_list_com_api, L"Internal error: Entered with taskbar_list_com_api == NULL!");
