@@ -119,7 +119,7 @@ DIST_ARCHIVE_FILE                           = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_
 # Setting compile options.
 #
 
-CFLAGS_COMMON               = /nologo /W4 /we4013 /Zi /D_WIN32 /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS \
+CFLAGS_COMMON               = /nologo /W4 /we4013 /we4133 /Zi /D_WIN32 /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS \
                               /DUNICODE /D_UNICODE /DWINVER=$(MINIMUM_WIN32_API_VERSION) \
                               /D_WIN32_WINNT=$(MINIMUM_WIN32_API_VERSION)
 CFLAGS_DEBUG                = /Od /MDd /D_CRTDBG_MAP_ALLOC
