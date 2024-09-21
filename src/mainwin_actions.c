@@ -356,7 +356,7 @@ uhashtools_mainwin_hash_selected_file
 {
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
 
-    UHASHTOOLS_PRINTF_LINE_INFO(L"Handling file selection of file: %s", mainwin_ctx->target_file);
+    UHASHTOOLS_PRINTF_LINE_INFO(L"Handling file selection of file: \"%s\"", mainwin_ctx->target_file);
 
     uhashtools_mainwin_change_state(mainwin_ctx, MAINWINDOWSTATE_WORKING);
     mainwin_ctx->worker_instance_data = uhashtools_hash_calculation_worker_start(&mainwin_ctx->worker_thread_param_buf,

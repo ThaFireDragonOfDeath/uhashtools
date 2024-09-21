@@ -237,19 +237,23 @@ uhashtools_mainwin_handle_message_WM_USER
     struct MainWindowCtx* mainwin_ctx
 )
 {
-    struct HashCalculationWorkerEventMessage event_message_buf_clone;
     BOOL signal_event_success = FALSE;
 
     UHASHTOOLS_ASSERT(mainwin_ctx, L"Internal error: Entered with mainwin_ctx == NULL!");
     
-    event_message_buf_clone = mainwin_ctx->event_message_buf;
+    /*
+     * We're copying the data from the shared ownership event message buffer
+     * in the local one and work with that one to minimize the duration in
+     * which the shared buffer is blocked for writing.
+     */
+    mainwin_ctx->local_event_message_buf = mainwin_ctx->event_message_buf;
     
     signal_event_success = SetEvent(mainwin_ctx->event_message_buf_is_writeable_event);
     UHASHTOOLS_ASSERT(signal_event_success,
                       L"Failed reset the event synchronization object back into the signaled state!");
 
     uhashtools_mainwin_on_hash_calculation_worker_event_message_received(mainwin_ctx,
-                                                                         &event_message_buf_clone);
+                                                                         &mainwin_ctx->local_event_message_buf);
     
     return 0;
 }

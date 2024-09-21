@@ -408,6 +408,8 @@ uhashtools_check_is_cancelled
 enum HashCalculatorResultCode
 uhashtools_hash_calculator_impl_hash_file
 (
+    unsigned char* file_read_buf,
+	size_t file_read_buf_tsize,
     wchar_t* result_string_buf,
     size_t result_string_buf_tsize,
     const wchar_t* target_file,
@@ -423,7 +425,6 @@ uhashtools_hash_calculator_impl_hash_file
     BOOL hash_calculation_finished = FALSE;
     BOOL hash_calculation_failed = FALSE;
     BOOL cancel_requested = FALSE;
-    unsigned char file_read_buf[FILE_READ_BUF_SIZE];
     unsigned __int64 processed_bytes = 0;
     unsigned int last_reported_calculation_progress = 0;
 
@@ -484,12 +485,12 @@ uhashtools_hash_calculator_impl_hash_file
          */
 
         read_characters = fread_s((void*) file_read_buf,
-                                  FILE_READ_BUF_SIZE,
-                                  sizeof(unsigned char),
-                                  FILE_READ_BUF_SIZE,
+                                  file_read_buf_tsize * sizeof(*file_read_buf),
+                                  sizeof(*file_read_buf),
+                                  file_read_buf_tsize,
                                   opened_target_file.target_file_handle);
 
-        if (read_characters != FILE_READ_BUF_SIZE)
+        if (read_characters != file_read_buf_tsize)
         {
             if (ferror(opened_target_file.target_file_handle))
             {

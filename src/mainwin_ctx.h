@@ -59,6 +59,7 @@ struct MainWindowCtx
 
     struct HashCalculationWorkerEventMessage event_message_buf;
     HANDLE event_message_buf_is_writeable_event;
+    struct HashCalculationWorkerEventMessage local_event_message_buf;
     struct HashCalculationWorkerParam worker_thread_param_buf;
     struct HashCalculationWorkerInstanceData worker_instance_data;
 

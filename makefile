@@ -176,6 +176,8 @@ UHASHTOOLS_SOURCES_COMMON        = src\cli_arguments.c \
                                    src\gui_lbl_common.c \
                                    src\gui_pb_common.c \
                                    src\hash_calculation_impl.c \
+                                   src\hash_calculation_worker_com.c \
+                                   src\hash_calculation_worker_ctx.c \
                                    src\hash_calculation_worker.c \
                                    src\main.c \
                                    src\mainwin.c \
@@ -230,6 +232,8 @@ UHASHTOOLS_HEADERS_COMMON        = src\buffer_sizes.h \
                                    src\gui_lbl_common.h \
                                    src\gui_pb_common.h \
                                    src\hash_calculation_impl.h \
+                                   src\hash_calculation_worker_com.h \
+                                   src\hash_calculation_worker_ctx.h \
                                    src\hash_calculation_worker.h \
                                    src\mainwin.h \
                                    src\mainwin_actions.h \
@@ -278,6 +282,8 @@ UHASHTOOLS_OBJECTS_COMMON        = $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\cli_arg
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_lbl_common.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\gui_pb_common.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_impl.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\\hash_calculation_worker_com.obj \
+                                   $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\\hash_calculation_worker_ctx.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\hash_calculation_worker.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\main.obj \
                                    $(UHASHTOOLS_COMMON_BUILDOUT_OBJ_DIR)\mainwin.obj \

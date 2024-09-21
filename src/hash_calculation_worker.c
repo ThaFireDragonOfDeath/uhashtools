@@ -10,6 +10,8 @@
 
 #include "error_utilities.h"
 #include "hash_calculation_impl.h"
+#include "hash_calculation_worker_com.h"
+#include "hash_calculation_worker_ctx.h"
 #include "print_utilities.h"
 
 #include <process.h>
@@ -18,181 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define FILE_READ_BUF_SIZE 1024 * 512
-#define STATUS_SUCCESS ((NTSTATUS)0x00000000L)
-#define WORKER_CANCEL_REQUEST_MSG 1
-#define WORKER_THREAD_STACK_SIZE 1024 * 1024 * 2
-
-struct ReceivedThreadMessages
-{
-    BOOL cancel_requested;
-};
-
-struct OutgoingEventMessageTarget
-{
-    HWND event_message_receiver;
-    struct HashCalculationWorkerEventMessage* event_message_buf;
-    HANDLE event_message_buf_is_writeable_event;
-};
-
-static
-void
-uhashtools_send_event_message
-(
-    HWND event_message_receiver,
-    const struct HashCalculationWorkerEventMessage* event_message_to_send,
-    struct HashCalculationWorkerEventMessage* event_message_buf,
-    HANDLE event_message_buf_is_writeable_event
-)
-{
-    DWORD wait_for_write_result = 0;
-    errno_t event_msg_copy_error = 0;
-    BOOL event_msg_send_success = FALSE;
-    
-    wait_for_write_result = WaitForSingleObject(event_message_buf_is_writeable_event, INFINITE);
-    UHASHTOOLS_ASSERT(wait_for_write_result == WAIT_OBJECT_0,
-                      L"WaitForSingleObject() on event_message_buf_is_writeable_event failed!");
-
-    event_msg_copy_error = memcpy_s(event_message_buf,
-                                    sizeof *event_message_buf,
-                                    event_message_to_send,
-                                    sizeof *event_message_to_send);
-
-    UHASHTOOLS_ASSERT(!event_msg_copy_error,
-                      L"Failed to copy the generated event message into the shared buffer!");
-
-    event_msg_send_success = PostMessageW(event_message_receiver, WM_USER, (WPARAM) event_message_buf, 0);
-    UHASHTOOLS_ASSERT(event_msg_send_success, L"Failed to send the event message with PostMessageW()!");
-}
-
-static
-void
-uhashtools_send_worker_initialized_message
-(
-    HWND event_message_receiver,
-    struct HashCalculationWorkerEventMessage* event_message_buf,
-    HANDLE event_message_buf_is_writeable_event
-)
-{
-    struct HashCalculationWorkerEventMessage event_message;
-
-    (void) memset((void*) &event_message, 0, sizeof event_message);
-
-    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending worker initialized message.");
-
-    event_message.event_type = HCWET_MESSAGE_RECEIVER_INITIALIZED;
-
-    uhashtools_send_event_message(event_message_receiver,
-                                  &event_message,
-                                  event_message_buf,
-                                  event_message_buf_is_writeable_event);
-}
-
-static
-void
-uhashtools_send_worker_canceled_message
-(
-    HWND event_message_receiver,
-    struct HashCalculationWorkerEventMessage* event_message_buf,
-    HANDLE event_message_buf_is_writeable_event
-)
-{
-    struct HashCalculationWorkerEventMessage event_message;
-
-    (void) memset((void*) &event_message, 0, sizeof event_message);
-
-    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculation canceled message.");
-
-    event_message.event_type = HCWET_CALCULATION_CANCELED;
-
-    uhashtools_send_event_message(event_message_receiver,
-                                  &event_message,
-                                  event_message_buf,
-                                  event_message_buf_is_writeable_event);
-}
-
-static
-void
-uhashtools_send_calculation_complete_message
-(
-    HWND event_message_receiver,
-    struct HashCalculationWorkerEventMessage* event_message_buf,
-    HANDLE event_message_buf_is_writeable_event,
-    const wchar_t* calculated_hash
-)
-{
-    struct HashCalculationWorkerEventMessage event_message;
-
-    (void) memset((void*) &event_message, 0, sizeof event_message);
-
-    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculated complete message with content \"%s\".",
-                                 calculated_hash);
-
-    event_message.event_type = HCWET_CALCULATION_COMPLETE;
-
-    (void) wcscpy_s(event_message.event_data.operation_finished_data.calculated_hash,
-                    HASH_RESULT_BUFFER_TSIZE,
-                    calculated_hash);
-
-    uhashtools_send_event_message(event_message_receiver,
-                                  &event_message,
-                                  event_message_buf,
-                                  event_message_buf_is_writeable_event);
-}
-
-static
-void
-uhashtools_send_calculation_failed_message
-(
-    HWND event_message_receiver,
-    struct HashCalculationWorkerEventMessage* event_message_buf,
-    HANDLE event_message_buf_is_writeable_event,
-    const wchar_t* user_error_message
-)
-{
-    struct HashCalculationWorkerEventMessage event_message;
-
-    (void) memset((void*) &event_message, 0, sizeof event_message);
-
-    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculated failed message with content \"%s\".",
-                                 user_error_message);
-
-    event_message.event_type = HCWET_CALCULATION_FAILED;
-    (void) wcscpy_s(event_message.event_data.operation_failed_data.user_error_message,
-                    GENERIC_TXT_MESSAGES_BUFFER_TSIZE,
-                    user_error_message);
-
-    uhashtools_send_event_message(event_message_receiver,
-                                  &event_message,
-                                  event_message_buf,
-                                  event_message_buf_is_writeable_event);
-}
-
-static
-void
-uhashtools_send_calculation_progress_message
-(
-    HWND event_message_receiver,
-    struct HashCalculationWorkerEventMessage* event_message_buf,
-    HANDLE event_message_buf_is_writeable_event,
-    unsigned int current_calculation_progress
-)
-{
-    struct HashCalculationWorkerEventMessage event_message;
-
-    (void) memset((void*) &event_message, 0, sizeof event_message);
-
-    UHASHTOOLS_PRINTF_LINE_DEBUG(L"Sending calculated progress message with content \"%u\".",
-                                 current_calculation_progress);
-
-    event_message.event_type = HCWET_CALCULATION_PROGRESS_CHANGED;
-    event_message.event_data.progress_changed_data.current_progress_in_percent = current_calculation_progress;
-
-    uhashtools_send_event_message(event_message_receiver,
-                                  &event_message,
-                                  event_message_buf,
-                                  event_message_buf_is_writeable_event);
-}
+#define WORKER_THREAD_STACK_SIZE 1024 * 1024 * 1
 
 static
 void
@@ -232,7 +60,6 @@ uhashtools_check_is_cancel_requests_callback
 
     received_thread_messages = (struct ReceivedThreadMessages*) userdata;
     uhashtools_process_thread_messages(received_thread_messages);
-
     ret = received_thread_messages->cancel_requested;
 
     return ret;
@@ -246,6 +73,8 @@ uhashtools_on_progress_callback
     void* userdata
 )
 {
+    struct OnProgressCallbackArguments* callback_arguments = NULL;
+    struct HashCalculationWorkerEventMessage* sender_event_message_buf = NULL;
     struct OutgoingEventMessageTarget* event_message_target = NULL;
 
     if (!userdata)
@@ -253,12 +82,15 @@ uhashtools_on_progress_callback
         return;
     }
 
-    event_message_target = (struct OutgoingEventMessageTarget*) userdata;
+    callback_arguments = (struct OnProgressCallbackArguments*) userdata;
+    sender_event_message_buf = callback_arguments->sender_event_message_buf;
+    event_message_target = callback_arguments->event_message_target;
 
-    uhashtools_send_calculation_progress_message(event_message_target->event_message_receiver,
-                                                 event_message_target->event_message_buf,
-                                                 event_message_target->event_message_buf_is_writeable_event,
-                                                 current_calculation_progress);
+    uhashtools_hash_calculation_worker_com_send_calculation_progress_message(sender_event_message_buf,
+                                                                             event_message_target->event_message_receiver,
+                                                                             event_message_target->receiver_event_message_buf,
+                                                                             event_message_target->receiver_event_message_buf_is_writeable_event,
+                                                                             current_calculation_progress);
 }
 
 static
@@ -286,59 +118,62 @@ uhashtools_hash_calculation_worker_thread_function
     void* thread_param
 )
 {
-    struct HashCalculationWorkerParam* hash_calc_worker_param = NULL;
-    struct ReceivedThreadMessages received_thread_messages;
-    struct OutgoingEventMessageTarget event_message_target;
-    wchar_t calculation_result_string[GENERIC_TXT_MESSAGES_BUFFER_TSIZE];
-    const size_t calculation_result_string_tsize = GENERIC_TXT_MESSAGES_BUFFER_TSIZE;
+    /*
+     * We only need the buffers as long the current calculation is running. So
+     * we're binding the lifetime of the buffers to the lifetime of the current
+     * worker thread. Since we're using a thread local variable here we don't
+     * have to worry about freeing the memory. 
+     */
+    static __declspec(thread) struct HashCalculationWorkerCtx worker_ctx;
+
+    const struct HashCalculationWorkerParam* hash_calc_worker_param = NULL;
     enum HashCalculatorResultCode calculation_result_code = HashCalculatorResultCode_FAILED;
-    
+
     UHASHTOOLS_ASSERT(thread_param, L"Internal error: Entered with thread_param == NULL!");
 
-    hash_calc_worker_param = (struct HashCalculationWorkerParam*) thread_param;
-    (void) memset((void*) &received_thread_messages, 0, sizeof received_thread_messages);
-    (void) memset((void*) &event_message_target, 0, sizeof event_message_target);
-    (void) memset((void*) calculation_result_string, 0, sizeof calculation_result_string);
+    hash_calc_worker_param = (const struct HashCalculationWorkerParam*) thread_param;
 
-    received_thread_messages.cancel_requested = FALSE;
-    event_message_target.event_message_receiver = hash_calc_worker_param->event_message_receiver;
-    event_message_target.event_message_buf = hash_calc_worker_param->event_message_buf;
-    event_message_target.event_message_buf_is_writeable_event = hash_calc_worker_param->event_message_buf_is_writeable_event;
-
+    uhashtools_hash_calculation_worker_ctx_init(&worker_ctx, hash_calc_worker_param);
     uhashtools_thread_message_queue_init();
-    uhashtools_send_worker_initialized_message(hash_calc_worker_param->event_message_receiver,
-                                               hash_calc_worker_param->event_message_buf,
-                                               hash_calc_worker_param->event_message_buf_is_writeable_event);
+    uhashtools_hash_calculation_worker_com_send_worker_initialized_message(&worker_ctx.event_message_buf,
+                                                                           hash_calc_worker_param->event_message_receiver,
+                                                                           hash_calc_worker_param->event_message_buf,
+                                                                           hash_calc_worker_param->event_message_buf_is_writeable_event);
 
-    calculation_result_code = uhashtools_hash_calculator_impl_hash_file(calculation_result_string,
-                                                                        calculation_result_string_tsize,
+    calculation_result_code = uhashtools_hash_calculator_impl_hash_file(worker_ctx.file_read_buf,
+                                                                        worker_ctx.file_read_buf_tsize,
+                                                                        worker_ctx.calculation_result_string,
+                                                                        worker_ctx.calculation_result_string_tsize,
                                                                         hash_calc_worker_param->target_file,
                                                                         &uhashtools_check_is_cancel_requests_callback,
-                                                                        &received_thread_messages,
+                                                                        &worker_ctx.received_thread_messages,
                                                                         &uhashtools_on_progress_callback,
-                                                                        &event_message_target);
+                                                                        &worker_ctx.on_progress_cb_args);
 
     switch (calculation_result_code)
     {
         case HashCalculatorResultCode_SUCCESS:
         {
-            uhashtools_send_calculation_complete_message(hash_calc_worker_param->event_message_receiver,
-                                                         hash_calc_worker_param->event_message_buf,
-                                                         hash_calc_worker_param->event_message_buf_is_writeable_event,
-                                                         calculation_result_string);
+            uhashtools_hash_calculation_worker_com_send_calculation_complete_message(&worker_ctx.event_message_buf,
+                                                                                     hash_calc_worker_param->event_message_receiver,
+                                                                                     hash_calc_worker_param->event_message_buf,
+                                                                                     hash_calc_worker_param->event_message_buf_is_writeable_event,
+                                                                                     worker_ctx.calculation_result_string);
         } break;
         case HashCalculatorResultCode_CANCELED:
         {
-            uhashtools_send_worker_canceled_message(hash_calc_worker_param->event_message_receiver,
-                                                    hash_calc_worker_param->event_message_buf,
-                                                    hash_calc_worker_param->event_message_buf_is_writeable_event);
+            uhashtools_hash_calculation_worker_com_send_worker_canceled_message(&worker_ctx.event_message_buf,
+                                                                                hash_calc_worker_param->event_message_receiver,
+                                                                                hash_calc_worker_param->event_message_buf,
+                                                                                hash_calc_worker_param->event_message_buf_is_writeable_event);
         } break;
         case HashCalculatorResultCode_FAILED:
         {
-            uhashtools_send_calculation_failed_message(hash_calc_worker_param->event_message_receiver,
-                                                       hash_calc_worker_param->event_message_buf,
-                                                       hash_calc_worker_param->event_message_buf_is_writeable_event,
-                                                       calculation_result_string);
+            uhashtools_hash_calculation_worker_com_send_calculation_failed_message(&worker_ctx.event_message_buf,
+                                                                                   hash_calc_worker_param->event_message_receiver,
+                                                                                   hash_calc_worker_param->event_message_buf,
+                                                                                   hash_calc_worker_param->event_message_buf_is_writeable_event,
+                                                                                   worker_ctx.calculation_result_string);
         } break;
         default:
         {
@@ -400,5 +235,5 @@ uhashtools_hash_calculation_worker_request_cancellation
     DWORD worker_thread_id
 )
 {
-    return PostThreadMessageW(worker_thread_id, WM_USER, WORKER_CANCEL_REQUEST_MSG, 0);
+    return uhashtools_hash_calculation_worker_com_send_cancel_request(worker_thread_id);
 }

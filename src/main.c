@@ -25,8 +25,6 @@
 
 #include <stdlib.h>
 
-static struct MainWindowCtx global_main_window_state;
-
 int
 WINAPI
 wWinMain
@@ -37,13 +35,20 @@ wWinMain
     _In_ int nShowCmd
 )
 {
+    /*
+     * Since there can only exist one main window per process, the
+     * main window context instance will exist as long the process
+     * is running.
+     */
+    static struct MainWindowCtx main_window_state;
+
     /* Silencing the unused parameter warnings */
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    uhashtools_mainwin_ctx_init(&global_main_window_state);
-    uhashtools_cli_arguments_fill_from_argc_argv(&global_main_window_state.cli_arguments, __argc, __wargv);
-    uhashtools_start_main_window(hInstance, nShowCmd, &global_main_window_state);
+    uhashtools_mainwin_ctx_init(&main_window_state);
+    uhashtools_cli_arguments_fill_from_argc_argv(&main_window_state.cli_arguments, __argc, __wargv);
+    uhashtools_start_main_window(hInstance, nShowCmd, &main_window_state);
 
     return 0;
 }
