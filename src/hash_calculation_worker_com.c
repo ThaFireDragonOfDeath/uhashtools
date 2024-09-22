@@ -39,6 +39,25 @@ uhashtools_send_event_message
     UHASHTOOLS_ASSERT(event_msg_send_success, L"Failed to send the event message with PostMessageW()!");
 }
 
+static
+void
+uhashtools_send_request_code_to_thread
+(
+    DWORD receiver_thread_id,
+    enum HashCalculationWorkerRequestCodes request_code
+)
+{
+    BOOL post_thread_message_success = FALSE;
+
+    post_thread_message_success = PostThreadMessageW(receiver_thread_id,
+                                                    WM_USER,
+                                                    (WPARAM) request_code,
+                                                    0);
+    
+    UHASHTOOLS_ASSERT(post_thread_message_success,
+                      L"Failed to send the event message with PostThreadMessageW()!");
+}
+
 void
 uhashtools_hash_calculation_worker_com_send_worker_initialized_message
 (
@@ -209,11 +228,11 @@ uhashtools_hash_calculation_worker_com_send_calculation_progress_message
                                   receiver_event_message_buf_is_writeable_event);
 }
 
-BOOL
+void
 uhashtools_hash_calculation_worker_com_send_cancel_request
 (
-    DWORD worker_thread_id
+    DWORD receiver_thread_id
 )
 {
-    return PostThreadMessageW(worker_thread_id, WM_USER, WORKER_CANCEL_REQUEST_MSG, 0);
+    uhashtools_send_request_code_to_thread(receiver_thread_id, HCWRC_CANCEL_HASH_CALCULATION);
 }

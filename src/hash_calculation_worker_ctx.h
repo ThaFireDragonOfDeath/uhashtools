@@ -9,6 +9,7 @@
 #pragma once
 
 #include "buffer_sizes.h"
+#include "hash_calculation_worker_com.h"
 #include "hash_calculation_worker.h"
 
 #include <Windows.h>
@@ -46,10 +47,8 @@ struct HashCalculationWorkerCtx
 };
 
 /**
- * Initializes the context data.
- * Since on every member of the MainWindowCtx structure the default
- * state is zero this function will do effectively memset zero on
- * the whole memory block. 
+ * Initializes the context data with the information from the
+ * provided hash calculation worker parameters.
  * 
  * @param worker_ctx Allocated but uninitialized context data of
  *                   the target hash calculation worker instance.

@@ -9,44 +9,9 @@
 #pragma once
 
 #include "buffer_sizes.h"
+#include "hash_calculation_worker_com.h"
 
 #include <Windows.h>
-
-enum HashCalculationWorkerEventType
-{
-    HCWET_MESSAGE_RECEIVER_INITIALIZED,
-    HCWET_CALCULATION_PROGRESS_CHANGED,
-    HCWET_CALCULATION_CANCELED,
-    HCWET_CALCULATION_COMPLETE,
-    HCWET_CALCULATION_FAILED
-};
-
-struct HashCalculationWorkerProgressChangedEventData
-{
-    unsigned int current_progress_in_percent;
-};
-
-struct HashCalculationWorkerCompletedEventData
-{
-    wchar_t calculated_hash[HASH_RESULT_BUFFER_TSIZE];
-};
-
-struct HashCalculationWorkerFailedEventData
-{
-    wchar_t user_error_message[GENERIC_TXT_MESSAGES_BUFFER_TSIZE];
-};
-
-struct HashCalculationWorkerEventMessage
-{
-    enum HashCalculationWorkerEventType event_type;
-    union HashCalculationWorkerEventData
-    {
-        struct HashCalculationWorkerProgressChangedEventData progress_changed_data;
-        struct HashCalculationWorkerCompletedEventData operation_finished_data;
-        struct HashCalculationWorkerFailedEventData operation_failed_data;
-    } event_data;
-    
-};
 
 struct HashCalculationWorkerParam
 {
@@ -74,8 +39,13 @@ uhashtools_hash_calculation_worker_start
     const wchar_t* target_file
 );
 
+/**
+ * Sends a cancellation request to the given worker thread.
+ * 
+ * @param worker_thread_id Thread id of the hash calculation worker.
+ */
 extern
-BOOL
+void
 uhashtools_hash_calculation_worker_request_cancellation
 (
     DWORD worker_thread_id

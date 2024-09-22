@@ -8,14 +8,63 @@
 
 #pragma once
 
-#include "hash_calculation_worker.h"
+#include "buffer_sizes.h"
 
 #include <Windows.h>
 
-#define WORKER_CANCEL_REQUEST_MSG 1
 
+/*
+ * Enumerations and structures for transmitting hash calculation
+ * events from the hash calculation worker to the GUI thread.
+ */
 
-/* Methods for sending information from the worker thread to the GUI thread. */
+enum HashCalculationWorkerEventType
+{
+    HCWET_MESSAGE_RECEIVER_INITIALIZED,
+    HCWET_CALCULATION_PROGRESS_CHANGED,
+    HCWET_CALCULATION_CANCELED,
+    HCWET_CALCULATION_COMPLETE,
+    HCWET_CALCULATION_FAILED
+};
+
+struct HashCalculationWorkerProgressChangedEventData
+{
+    unsigned int current_progress_in_percent;
+};
+
+struct HashCalculationWorkerCompletedEventData
+{
+    wchar_t calculated_hash[HASH_RESULT_BUFFER_TSIZE];
+};
+
+struct HashCalculationWorkerFailedEventData
+{
+    wchar_t user_error_message[GENERIC_TXT_MESSAGES_BUFFER_TSIZE];
+};
+
+struct HashCalculationWorkerEventMessage
+{
+    enum HashCalculationWorkerEventType event_type;
+    union HashCalculationWorkerEventData
+    {
+        struct HashCalculationWorkerProgressChangedEventData progress_changed_data;
+        struct HashCalculationWorkerCompletedEventData operation_finished_data;
+        struct HashCalculationWorkerFailedEventData operation_failed_data;
+    } event_data;
+    
+};
+
+/*
+ * Enumerations and structures for transmitting requests from the
+ * GUI thread to the hash calculation worker thread.
+ */
+
+enum HashCalculationWorkerRequestCodes
+{
+    HCWRC_CANCEL_HASH_CALCULATION
+};
+
+/* Functions for sending information from the worker thread to the GUI thread. */
 
 /**
  * Signals the GUI thread that the preparations in the hash calculation
@@ -227,19 +276,16 @@ uhashtools_hash_calculation_worker_com_send_calculation_progress_message
 );
 
 
-/* Methods for sending information from the GUI thread to the worker thread. */
+/* Functions for sending information from the GUI thread to the worker thread. */
 
 /**
  * Sends a cancellation request to the given worker thread.
  * 
- * @param worker_thread_id Thread id of the hash calculation worker.
- * 
- * @return If the function succeeds, the return value is TRUE. Otherwise the return
- *         value is FALSE.
+ * @param receiver_thread_id Thread id of the hash calculation worker.
  */
 extern
-BOOL
+void
 uhashtools_hash_calculation_worker_com_send_cancel_request
 (
-    DWORD worker_thread_id
+    DWORD receiver_thread_id
 );

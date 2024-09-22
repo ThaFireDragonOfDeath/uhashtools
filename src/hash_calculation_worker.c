@@ -36,7 +36,7 @@ uhashtools_process_thread_messages
 
     while (PeekMessageW(&peeked_msg, (HWND) -1, WM_USER, WM_USER, PM_REMOVE))
     {
-        if (peeked_msg.wParam == WORKER_CANCEL_REQUEST_MSG)
+        if (peeked_msg.wParam == (WPARAM) HCWRC_CANCEL_HASH_CALCULATION)
         {
             received_thread_messages->cancel_requested = TRUE;
         }
@@ -229,11 +229,11 @@ uhashtools_hash_calculation_worker_start
     return return_value;
 }
 
-BOOL
+void
 uhashtools_hash_calculation_worker_request_cancellation
 (
     DWORD worker_thread_id
 )
 {
-    return uhashtools_hash_calculation_worker_com_send_cancel_request(worker_thread_id);
+    uhashtools_hash_calculation_worker_com_send_cancel_request(worker_thread_id);
 }
