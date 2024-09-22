@@ -24,19 +24,13 @@ uhashtools_send_event_message
 )
 {
     DWORD wait_for_write_result = 0;
-    errno_t event_msg_copy_error = 0;
     BOOL event_msg_send_success = FALSE;
     
     wait_for_write_result = WaitForSingleObject(receiver_event_message_buf_is_writeable_event, INFINITE);
     UHASHTOOLS_ASSERT(wait_for_write_result == WAIT_OBJECT_0,
                       L"WaitForSingleObject() on event_message_buf_is_writeable_event failed!");
 
-    event_msg_copy_error = memcpy_s(receiver_event_message_buf,
-                                    sizeof *receiver_event_message_buf,
-                                    event_message_to_send,
-                                    sizeof *event_message_to_send);
-    UHASHTOOLS_ASSERT(!event_msg_copy_error,
-                      L"Failed to copy the generated event message into the shared buffer!");
+    *receiver_event_message_buf = *event_message_to_send;
 
     event_msg_send_success = PostMessageW(event_message_receiver,
                                           WM_USER,
