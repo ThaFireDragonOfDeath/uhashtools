@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define WORKER_THREAD_STACK_SIZE 1024 * 1024 * 1
+const unsigned int WORKER_THREAD_STACK_SIZE = 1024 * 512;
 
 static
 void
