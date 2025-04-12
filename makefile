@@ -6,7 +6,7 @@
 
 
 #
-# Declaring the buildtools
+# Declaring the build tools
 #
 
 # CC and RC are predefined.
@@ -60,6 +60,23 @@ BUILD_MODE = Debug
 
 
 #
+# Determine the target build architecture.
+# This will be used in the file name of the release archive.
+#
+
+# The environment variable "VSCMD_ARG_TGT_ARCH" is set during the initialization
+# of the Visual Studio shell and can be "x86", "x64", "arm" or "arm64".
+# See "%VSINSTALLDIR%\Common7\Tools\vsdevcmd\ext\vcvars.bat" for details.
+!IF "$(VSCMD_ARG_TGT_ARCH)" != ""
+BUILD_TARGET_ARCH = $(VSCMD_ARG_TGT_ARCH)
+!ELSE
+# Old Visual Studio shell which doesn't set this environment variable.
+# Assuming x86 target.
+BUILD_TARGET_ARCH = x86
+!Endif
+
+
+#
 # Setting artifacts output options.
 #
 
@@ -102,9 +119,9 @@ UMD5_BUILDOUT_PDB_FILE                      = $(BUILDOUT_BIN_DIR)\$(UMD5_NAME_BA
 DISTOUT_BASE_DIR                            = dist_out
 
 !IF "$(BUILD_MODE)" == "Debug"
-DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)_debug
+DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)_bin_$(BUILD_TARGET_ARCH)_debug
 !ELSE
-DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)
+DIST_TARGET_NAME                            = $(PRODUCT_ASCII_NAME)_v$(PRODUCT_VERSION)_bin_$(BUILD_TARGET_ARCH)
 !Endif
 
 DISTOUT_DIR                                 = $(DISTOUT_BASE_DIR)\$(DIST_TARGET_NAME)
