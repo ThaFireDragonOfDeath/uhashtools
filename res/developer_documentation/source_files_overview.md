@@ -8,8 +8,13 @@ This application uses fixed sizes for the buffers containing
 filepaths, hash results and textual result messages. This file
 sets the sizes of those buffers.
 
+# cli_arguments.[ch]
+Contains the functionality to get the passed options from the command line
+and putting them into a structure. Also provides helper functions to get
+information about the options contained in the structure.
+
 # clipboard_utils.[ch]
-This file contains the functionality to set the clipboard content
+Contains the functionality to set the clipboard content
 to a provided string.
 
 # com_lib.[ch]
@@ -41,6 +46,19 @@ the file in the provided filepath. The functions of this unit should
 never be called from the UI thread since file hashing is a time
 expensive operation that could block the UI thread and leading to
 an unresponsive application.
+
+# hash_calculation_worker_com.[ch]
+Provides the functions for communication between the main window thread
+and the hash calculation worker thread. The main window thread uses this
+unit to send a cancellation request to the hash calculation worker and the
+hash calculation worker uses this unit to send result and progress messages
+to the main window.
+
+# hash_calculation_worker_ctx.[ch]
+Provides the definition and initialization function of the hash calculation
+worker thread memory. The thread memory will be allocated and initialized
+at the beginning of the worker thread and will be freed at the end of the
+worker thread.
 
 # hash_calculation_worker.[ch]
 This unit is the layer between the UI thread and the hashing
@@ -109,6 +127,14 @@ window message procedure for the main window. This message procedure
 receives all messages for the main window and forwards them to the
 "mainwin_message_handler.[ch]" unit.
 
+# print_utilities.h
+This header contains helper macros for printing debug, information, warning
+and error messages to stdout. Usually this messages are not visible in
+graphical applications (even if the application is started from a CMD
+window) but if the application is started from Visual Studio Code using the
+"Start Debugging" or "Run without debugging" commands the content of stdout
+will be printed within the "DEBUG CONSOLE" tab.
+
 # product_common.h
 This unit contains the application information which is the same
 across all generated executable files. For example this unit defines
@@ -157,7 +183,7 @@ progress bar within a context data structure.
 
 # taskbar_icon_pb.[ch]
 Representation of the taskbar icon progress bar as UI element. This
-unit follows the same scheme as the main window UI elements.
+unit follows the same scheme as the other main window UI elements.
 
 # taskbarlist_com_api.[ch]
 This unit is an abstraction over the COM API of the taskbar list
