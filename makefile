@@ -1,7 +1,7 @@
 # This file is part of µHashtools.
 # µHashtools is a small graphical file hashing tool for Microsoft Windows.
 # 
-# SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+# SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 
@@ -123,7 +123,7 @@ CFLAGS_COMMON               = /nologo /W4 /we4013 /we4133 /Zi /D_WIN32 \
                               /DUNICODE /D_UNICODE /DWINVER=$(MINIMUM_WIN32_API_VERSION) \
                               /D_WIN32_WINNT=$(MINIMUM_WIN32_API_VERSION)
 CFLAGS_DEBUG                = /Od /MDd /D_CRTDBG_MAP_ALLOC
-CFLAGS_RELEASE              = /O2 /MD
+CFLAGS_RELEASE              = /O1 /MD
 
 !IF "$(BUILD_MODE)" == "Debug"
 CFLAGS                      = $(CFLAGS_COMMON) $(CFLAGS_DEBUG)

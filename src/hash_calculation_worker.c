@@ -2,7 +2,7 @@
  * This file is part of µHashtools.
  * µHashtools is a small graphical file hashing tool for Microsoft Windows.
  * 
- * SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+ * SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
@@ -118,67 +118,69 @@ uhashtools_hash_calculation_worker_thread_function
     void* thread_param
 )
 {
-    /*
-     * We only need the buffers as long the current calculation is running. So
-     * we're binding the lifetime of the buffers to the lifetime of the current
-     * worker thread. Since we're using a thread local variable here we don't
-     * have to worry about freeing the memory. 
-     */
-    static __declspec(thread) struct HashCalculationWorkerCtx worker_ctx;
-
+    struct HashCalculationWorkerCtx* worker_ctx = NULL;
     const struct HashCalculationWorkerParam* hash_calc_worker_param = NULL;
     enum HashCalculatorResultCode calculation_result_code = HashCalculatorResultCode_FAILED;
 
     UHASHTOOLS_ASSERT(thread_param, L"Internal error: Entered with thread_param == NULL!");
 
+    worker_ctx = (struct HashCalculationWorkerCtx*) calloc(1, sizeof *worker_ctx);
+    UHASHTOOLS_ASSERT(worker_ctx, L"Out of memory error: Failed to allocate memory for the hash calculation worker context data!");
+
     hash_calc_worker_param = (const struct HashCalculationWorkerParam*) thread_param;
 
-    uhashtools_hash_calculation_worker_ctx_init(&worker_ctx, hash_calc_worker_param);
+    uhashtools_hash_calculation_worker_ctx_init(worker_ctx, hash_calc_worker_param);
     uhashtools_thread_message_queue_init();
-    uhashtools_hash_calculation_worker_com_send_worker_initialized_message(&worker_ctx.event_message_buf,
+    uhashtools_hash_calculation_worker_com_send_worker_initialized_message(&worker_ctx->event_message_buf,
                                                                            hash_calc_worker_param->event_message_receiver,
                                                                            hash_calc_worker_param->event_message_buf,
                                                                            hash_calc_worker_param->event_message_buf_is_writeable_event);
 
-    calculation_result_code = uhashtools_hash_calculator_impl_hash_file(worker_ctx.file_read_buf,
-                                                                        worker_ctx.file_read_buf_tsize,
-                                                                        worker_ctx.calculation_result_string,
-                                                                        worker_ctx.calculation_result_string_tsize,
+    calculation_result_code = uhashtools_hash_calculator_impl_hash_file(worker_ctx->file_read_buf,
+                                                                        worker_ctx->file_read_buf_tsize,
+                                                                        worker_ctx->calculation_result_string,
+                                                                        worker_ctx->calculation_result_string_tsize,
                                                                         hash_calc_worker_param->target_file,
                                                                         &uhashtools_check_is_cancel_requests_callback,
-                                                                        &worker_ctx.received_thread_messages,
+                                                                        &worker_ctx->received_thread_messages,
                                                                         &uhashtools_on_progress_callback,
-                                                                        &worker_ctx.on_progress_cb_args);
+                                                                        &worker_ctx->on_progress_cb_args);
 
     switch (calculation_result_code)
     {
         case HashCalculatorResultCode_SUCCESS:
         {
-            uhashtools_hash_calculation_worker_com_send_calculation_complete_message(&worker_ctx.event_message_buf,
+            uhashtools_hash_calculation_worker_com_send_calculation_complete_message(&worker_ctx->event_message_buf,
                                                                                      hash_calc_worker_param->event_message_receiver,
                                                                                      hash_calc_worker_param->event_message_buf,
                                                                                      hash_calc_worker_param->event_message_buf_is_writeable_event,
-                                                                                     worker_ctx.calculation_result_string);
+                                                                                     worker_ctx->calculation_result_string);
         } break;
         case HashCalculatorResultCode_CANCELED:
         {
-            uhashtools_hash_calculation_worker_com_send_worker_canceled_message(&worker_ctx.event_message_buf,
+            uhashtools_hash_calculation_worker_com_send_worker_canceled_message(&worker_ctx->event_message_buf,
                                                                                 hash_calc_worker_param->event_message_receiver,
                                                                                 hash_calc_worker_param->event_message_buf,
                                                                                 hash_calc_worker_param->event_message_buf_is_writeable_event);
         } break;
         case HashCalculatorResultCode_FAILED:
         {
-            uhashtools_hash_calculation_worker_com_send_calculation_failed_message(&worker_ctx.event_message_buf,
+            uhashtools_hash_calculation_worker_com_send_calculation_failed_message(&worker_ctx->event_message_buf,
                                                                                    hash_calc_worker_param->event_message_receiver,
                                                                                    hash_calc_worker_param->event_message_buf,
                                                                                    hash_calc_worker_param->event_message_buf_is_writeable_event,
-                                                                                   worker_ctx.calculation_result_string);
+                                                                                   worker_ctx->calculation_result_string);
         } break;
         default:
         {
             UHASHTOOLS_FATAL_ERROR(L"Internal error: calculation_result_code has an unexpected value!");
         }
+    }
+
+    if (worker_ctx)
+    {
+        free(worker_ctx);
+        worker_ctx = NULL;
     }
 
     return 0;

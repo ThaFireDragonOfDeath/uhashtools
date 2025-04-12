@@ -2,7 +2,7 @@
  * This file is part of µHashtools.
  * µHashtools is a small graphical file hashing tool for Microsoft Windows.
  * 
- * SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+ * SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
@@ -50,7 +50,7 @@ struct HashCalculationWorkerCtx
  * Initializes the context data with the information from the
  * provided hash calculation worker parameters.
  * 
- * @param worker_ctx Allocated but uninitialized context data of
+ * @param worker_ctx Allocated and zero initialized context data of
  *                   the target hash calculation worker instance.
  * @param worker_param Start parameters of the hash calculation worker
  *                     thread.
