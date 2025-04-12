@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
 SPDX-License-Identifier: CC0-1.0
 -->
 
@@ -11,7 +11,7 @@ It focuses on small executable file size, low memory footprint and easy usage.
 * Supports currently the algorithms MD5, SHA-1 and SHA-256.
 * Selecting the target file by the file selection dialog or by drag and drop.
 * Simplicity. For each supported algorithm exists one separate application. Instead of one application that does everything, this tool set has multiple applications that do one thing and do it well.
-* Portability. Each application of this tool set is a single, self contained .exe file without dependencies on external libraries.
+* Portability. Each application of this tool set is a small and self contained .exe file without dependencies on external libraries.
 
 # License
 Summery for documentation purposes:
