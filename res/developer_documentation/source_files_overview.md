@@ -1,32 +1,32 @@
 <!--
-SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
 SPDX-License-Identifier: CC0-1.0
 -->
 
-# buffer_sizes\\.h
+# buffer_sizes.h
 This application uses fixed sizes for the buffers containing
 filepaths, hash results and textual result messages. This file
 sets the sizes of those buffers.
 
-# clipboard_utils\\.[ch]
+# clipboard_utils.[ch]
 This file contains the functionality to set the clipboard content
 to a provided string.
 
-# com_lib\\.[ch]
+# com_lib.[ch]
 Helper utilities for initializing and uninitializing the COM
 (Component Object Model) library.
 
-# error_utilities\\.[ch]
+# error_utilities.[ch]
 Contains utilities for verifying expected conditions and signaling
 critical errors.
 
-# gui_common\\.[ch]
+# gui_common.[ch]
 Contains utility functions and constants that are valid for multiple
 or all graphical element types. For example the functions for
 getting the position or size of an element or resizing or moving
 an element are within this unit.
 
-# gui_[a-z]+_common\\.[ch]
+# gui_*_common.[ch]
 Contains utility functions and constants that are valid for one
 specific graphical element type. Here is a list with the element
 types:
@@ -35,33 +35,33 @@ types:
 * lbl = label
 * pb = progress bar
 
-# hash_calculation_impl\\.[ch]
+# hash_calculation_impl.[ch]
 This unit does the actual work and contains the code for hashing
 the file in the provided filepath. The functions of this unit should
 never be called from the UI thread since file hashing is a time
 expensive operation that could block the UI thread and leading to
 an unresponsive application.
 
-# hash_calculation_worker\\.[ch]
+# hash_calculation_worker.[ch]
 This unit is the layer between the UI thread and the hashing
 implementation. The UI thread uses this unit to start a background
 worker thread. This background worker then uses the hashing
-implementation from the unit "hash_calculation_impl\\.[ch]" to do the
+implementation from the unit "hash_calculation_impl.[ch]" to do the
 actual file hash calculation.
 
-# main\\.c
+# main.c
 The entry point of the application. It initializes the main window
 context data and then calls the main window startup function within
-the unit "mainwin\\.[ch]".
+the unit "mainwin.[ch]".
 
-# mainwin_actions\\.[ch]
+# mainwin_actions.[ch]
 This is the unit where the functionality like initializing the UI
 elements or changing the current state of the main window is placed.
 The functions of this unit should only be called during the startup
 phase or within the UI thread and not from within a background
 worker thread.
 
-# mainwin_(?:btn|eb|lbl|pb)[_a-z]*\\.[ch] (mainwin_btn_action.c|h, etc.)
+# mainwin_btn_*.[ch] mainwin_eb_*.[ch] mainwin_lbl_*.[ch] mainwin_pb_*.[ch]
 Those units are the UI elements in the main window. Each UI element
 is contained within a single .c/.h unit which provides
 functionality like creating the element, reacting on size changes of
@@ -69,7 +69,7 @@ the parent UI element or reacting on a state change of the main
 window. The functionality of each UI unit is called in the file
 "mainwin_actions.c". That file wires all functionality together.
 
-# mainwin_ctx\\.[ch]
+# mainwin_ctx.[ch]
 This unit contains the definition and initialization functionality
 of the main window context data. This data structure contains all
 data the main window needs to operate. The context data must live
@@ -78,22 +78,22 @@ we're going a step further and tying the lifecycle of the main
 window context data to the lifecycle of the application (see file
 "main.c").
 
-# mainwin_event_handler\\.[ch]
+# mainwin_event_handler.[ch]
 Here we are reacting on events for the main window. For example
 if a button is clicked, a file is dropped or we received an event
 from the background worker thread this unit will by called from
 the code within the file "mainwin_message_handler.c".
 
-# mainwin_message_handler\\.[ch]
+# mainwin_message_handler.[ch]
 In this unit we're processing the received window messages. The
 functionality of this unit is called by the window procedure in the
 file "mainwin.c". In the majority of the cases we're checking if we
 process the received event and if thats the case getting the
 relevant information from the received message and call upon the
-functionality in the unit "mainwin_event_handler\\.[ch]". In some
+functionality in the unit "mainwin_event_handler.[ch]". In some
 exceptional cases we handle the message directly in this unit.
 
-# mainwin_state\\.h
+# mainwin_state.h
 This unit defines the states in which the main window can be.
 Like for example if the main window has currently just started up or
 if the main window is currently doing a calculation of a file hash.
@@ -103,20 +103,20 @@ deciding factor on which UI elements are visible, enabled and in
 case of the action button even which icon the button has and what
 code will be executed when the button is clicked.
 
-# mainwin\\.[ch]
+# mainwin.[ch]
 This unit contains the startup code for the main window and the
 window message procedure for the main window. This message procedure
 receives all messages for the main window and forwards them to the
-"mainwin_message_handler\\.[ch]" unit.
+"mainwin_message_handler.[ch]" unit.
 
-# product_common\\.h
+# product_common.h
 This unit contains the application information which is the same
 across all generated executable files. For example this unit defines
 the version, author and copyright statement. This unit is included
 by the resource files which means the information from this unit
 are integrated in the final executable files.
 
-# product_(?!common)[a-z0-9]+\\.[ch] (product_umd5.c|h, etc.)
+# product_umd5.[ch] product_usha1.[ch] product_usha256.[ch]
 Those units declare application specific information like the
 application name, executable filename, file description, title of
 the main window, the initial width of the main window and the hash
@@ -125,11 +125,12 @@ are included by the resource files and are therefore embedded in
 the executable file. The C source files are also implementing the
 interface functions of the file "product.h".
 
-# product\\.h
+# product.h
 This unit declares interface functions for getting application
 specific information like title of the main window or the hash
 algorithm at runtime. Those interface functions are implemented by
-the source files of the "product_(?!common)[a-z0-9]+\\.[ch]" units.
+the source files of the
+"product_umd5.[ch] product_usha1.[ch] product_usha256.[ch]" units.
 Each application can only have one implementation of this interface
 functions and which implementation is the effective one for the
 specific application is resolved during the linking of the
@@ -139,11 +140,11 @@ file "product_usha256.obj" which is specific for usha256. This
 object file contains the complied implementation of the interface
 functions from the file "product.h".
 
-# selectfiledialog\\.[ch]
+# selectfiledialog.[ch]
 This unit allows to open a file selection dialog and is used if the
 select file button is clicked.
 
-# taskbar_icon_pb_ctx\\.h
+# taskbar_icon_pb_ctx.h
 This unit defines which information is contained within the context
 data of the taskbar icon progress bar UI element. The taskbar icon
 progress bar is currently the only UI element with separate context
@@ -154,25 +155,25 @@ that object is way more expensive than getting information from a
 window handle. So we're storing the context data of the taskbar icon
 progress bar within a context data structure.
 
-# taskbar_icon_pb\\.[ch]
+# taskbar_icon_pb.[ch]
 Representation of the taskbar icon progress bar as UI element. This
-unit follows the same scheme as the
-"mainwin_(?:btn|eb|lbl|pb)[_a-z]*\\.[ch]" units.
+unit follows the same scheme as the main window UI elements.
 
-# taskbarlist_com_api\\.[ch]
+# taskbarlist_com_api.[ch]
 This unit is an abstraction over the COM API of the taskbar list
 and the glue between the taskbar icon progress bar UI element and
 the COM interface "ITaskbarList3".
 
-# uhashtools_common\\.rc
+# uhashtools_common.rc
 This unit defines all resources embedded in the executable file.
 But this unit can't be used directly since it expects that the
 application specific information constants defined by the units
-"product_(?!common)[a-z0-9]+\\.h" are already set when this file is
-compiled. So this file is include by the application specific
-resource files after the application specific information is set.
+"product_umd5.h product_usha1.h product_usha256.h" are already set
+when this file is compiled. So this file is include by the application
+specific resource files after the application specific information is
+set.
 
-# [a-z0-9]+(?<!uhashtools_common)\\.rc (umd5.rc, usha1.rc, etc.)
+# umd5.rc usha1.rc usha256.rc
 Those units are the application specific resource files whose are
 compiled and linked into the resulting executable file of the
 specific application. The application specific resource files just
