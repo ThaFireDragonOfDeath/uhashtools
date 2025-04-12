@@ -21,9 +21,11 @@ The documentation files, Visual Studio Code files and Git configuration files ar
 
 Please refer the file "[COPYING](COPYING)" for the effective copyright and permission notice.
 
-# Known issues / ToDo
-* The developer documentation is there but can be improved.
-* The majority of the functions are undocumented.
+# Known issues / ToDo list
+* Feature: Allow specification of the expected hash result by the user and show an indicator if the current hash result matches with the user specified expected hash result.
+* Developer documentation: Add documentation of the control flow if a file has been selected.
+* Developer documentation: Add documentation of the control flow if the window size has changes.
+* Developer documentation: Add missing function documentation.
 
 # Building
 ## Build dependencies
