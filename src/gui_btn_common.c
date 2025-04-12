@@ -2,7 +2,7 @@
  * This file is part of µHashtools.
  * µHashtools is a small graphical file hashing tool for Microsoft Windows.
  * 
- * SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+ * SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
@@ -29,6 +29,15 @@ uhashtools_btn_create
 {
     HWND ret = NULL;
 
+    UHASHTOOLS_ASSERT(app_instance != NULL && app_instance != INVALID_HANDLE_VALUE,
+                      L"Internal error: Entered with invalid application instance handle!");
+
+    UHASHTOOLS_ASSERT(parent_window != NULL && parent_window != INVALID_HANDLE_VALUE,
+                      L"Internal error: Entered with invalid parent window handle!");
+
+    UHASHTOOLS_ASSERT(icon != NULL && icon != INVALID_HANDLE_VALUE,
+                      L"Internal error: Entered with invalid icon handle!");
+
     ret = CreateWindowExW(style_ex,
                           L"BUTTON",       /* Window class */
                           NULL,            /* Window title*/
@@ -42,9 +51,9 @@ uhashtools_btn_create
                           app_instance,
                           NULL);           /* LP param */
 
-    UHASHTOOLS_ASSERT(ret != NULL, L"Internal error: CreateWindowExW failed!");
+    UHASHTOOLS_ASSERT(ret != NULL, L"Internal error: CreateWindowExW() failed!");
 
-    SendMessageW(ret, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) icon);
+    (void) SendMessageW(ret, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) icon);
 
     return ret;
 }
@@ -56,5 +65,11 @@ uhashtools_btn_set_icon
     HICON icon
 )
 {
-    SendMessageW(self, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) icon);
+    UHASHTOOLS_ASSERT(self != NULL && self != INVALID_HANDLE_VALUE,
+                      L"Internal error: Entered with invalid own window handle!");
+
+    UHASHTOOLS_ASSERT(icon != NULL && icon != INVALID_HANDLE_VALUE,
+                      L"Internal error: Entered with invalid icon handle!");
+
+    (void) SendMessageW(self, BM_SETIMAGE, (WPARAM) IMAGE_ICON, (LPARAM) icon);
 }
