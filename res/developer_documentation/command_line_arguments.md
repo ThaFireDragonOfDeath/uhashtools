@@ -1,12 +1,15 @@
 <!--
-SPDX-FileCopyrightText: 2024 Marcel Gosmann <thafiredragonofdeath@gmail.com>
+This file is part of µHashtools.
+µHashtools is a small graphical file hashing tool for Microsoft Windows.
+
+SPDX-FileCopyrightText: 2024-2025 Marcel Gosmann <thafiredragonofdeath@gmail.com>
 SPDX-License-Identifier: CC0-1.0
 -->
 
 This application can be started with optional command line arguments.
 This document describes the possible arguments and its effects.
 
-# application.exe (no arguments)
+# application.exe
 If no arguments are passed then this application will start normally
 without preselected file.
 This happens if you double click on the executable file.
