@@ -44,7 +44,7 @@ build pipeline as base for the release.
 ## Prerequisites
 * The run of the "Github CI" workflow for last pushed commit was successful.
 * The executables from the last release archive produced by the "Github CI" workflow
-  are starting and after following the chapter "Basic Usage" from the
+  are starting and after following the chapter "Basic usage" from the
   [README.txt of the user documentation](../user_documentation/README.txt) produces expected
   results.
 * All files within the "src" directory are covered by the
@@ -68,7 +68,7 @@ build pipeline as base for the release.
     "documentation" directory), the change log (should be in the "documentation" directory),
     the source code and the debug symbols.
 7.  Test that the executables from the "uhashtools_vX.Y.Z_bin_x64.zip" file are starting
-    and after following the chapter "Basic Usage" from the README.txt produces expected
+    and after following the chapter "Basic usage" from the README.txt produces expected
     results.
 8.  Add and push the Git tag "vX.Y.Z" to the commit which produced the previously tested
     "release-archive.zip" file.
